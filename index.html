@@ -6,22 +6,23 @@
   <title>엔지니어링 팀 3D 프로젝트 오퍼레이션</title>
   <style>
     :root {
-      --bg: #f3f0ea;
-      --surface: rgba(255,255,255,.78);
-      --surface-strong: rgba(255,255,255,.94);
-      --ink: #192530;
-      --muted: #68737e;
-      --line: rgba(42,55,68,.14);
-      --navy: #111b26;
-      --blue: #356fe5;
-      --teal: #008d7f;
-      --amber: #c87b26;
-      --red: #c75050;
-      --green: #2f895b;
+      --bg: #e9edf1;
+      --surface: rgba(255,255,255,.82);
+      --surface-strong: rgba(255,255,255,.96);
+      --ink: #14202b;
+      --muted: #667684;
+      --line: rgba(21,32,43,.13);
+      --navy: #0c141f;
+      --blue: #2f6df6;
+      --teal: #008b84;
+      --amber: #bd7622;
+      --red: #bf4646;
+      --green: #277e56;
       --violet: #7357bd;
       --cyan: #178ea7;
-      --shadow: 0 24px 70px rgba(22,31,42,.16);
-      --soft-shadow: 0 12px 32px rgba(22,31,42,.10);
+      --steel: #223142;
+      --shadow: 0 30px 80px rgba(12,20,31,.18);
+      --soft-shadow: 0 14px 34px rgba(12,20,31,.11);
     }
 
     * { box-sizing: border-box; }
@@ -30,9 +31,8 @@
       margin: 0;
       color: var(--ink);
       background:
-        linear-gradient(115deg, rgba(17,27,38,.03), rgba(255,255,255,.7)),
-        radial-gradient(circle at 16% 12%, rgba(53,111,229,.12), transparent 28%),
-        radial-gradient(circle at 86% 8%, rgba(0,141,127,.13), transparent 24%),
+        linear-gradient(120deg, rgba(11,19,30,.08), rgba(255,255,255,.62) 42%, rgba(47,109,246,.08)),
+        linear-gradient(180deg, #f8fafb, var(--bg)),
         var(--bg);
       font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
       letter-spacing: 0;
@@ -45,8 +45,8 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      backdrop-filter: blur(18px);
-      background: rgba(243,240,234,.82);
+      backdrop-filter: blur(22px);
+      background: rgba(248,250,252,.88);
       border-bottom: 1px solid var(--line);
     }
 
@@ -74,7 +74,7 @@
       border-radius: 14px;
       background:
         linear-gradient(135deg, rgba(255,255,255,.58), rgba(255,255,255,.05)),
-        linear-gradient(135deg, var(--navy), #24415d);
+        linear-gradient(135deg, var(--navy), #223a54);
       box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 14px 28px rgba(17,27,38,.24);
       display: grid;
       place-items: center;
@@ -110,11 +110,13 @@
       padding: 9px 12px;
       font-size: 12px;
       font-weight: 900;
+      transition: .18s ease;
     }
 
     .nav a:hover {
       background: rgba(255,255,255,.72);
       border-color: var(--line);
+      box-shadow: 0 10px 22px rgba(12,20,31,.08);
     }
 
     .top-actions {
@@ -126,7 +128,8 @@
     .btn {
       border: 1px solid var(--line);
       border-radius: 999px;
-      background: var(--surface-strong);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.98), rgba(244,247,250,.88));
       color: var(--navy);
       min-height: 40px;
       padding: 9px 14px;
@@ -149,7 +152,10 @@
     .btn.primary {
       color: #fff;
       border-color: transparent;
-      background: linear-gradient(135deg, #1c2d41, #356fe5 56%, #008d7f);
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.16), transparent),
+        linear-gradient(135deg, #0c141f, #2f6df6 58%, #008b84);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 16px 34px rgba(47,109,246,.24);
     }
 
     .btn.compact {
@@ -169,13 +175,25 @@
     .hero {
       position: relative;
       min-height: 660px;
-      border: 1px solid rgba(255,255,255,.72);
+      border: 1px solid rgba(255,255,255,.62);
       border-radius: 30px;
       overflow: hidden;
       background:
-        linear-gradient(135deg, rgba(17,27,38,.94), rgba(28,50,70,.78)),
-        #172536;
+        linear-gradient(135deg, rgba(8,14,23,.98), rgba(22,38,56,.86) 56%, rgba(24,60,67,.78)),
+        #09111d;
       box-shadow: var(--shadow);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.055) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 58px 58px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,.72), transparent 72%);
+      pointer-events: none;
     }
 
     #threeStage {
@@ -207,7 +225,8 @@
     .stat-card,
     .glass-card {
       border: 1px solid rgba(255,255,255,.28);
-      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.20), rgba(255,255,255,.075));
       backdrop-filter: blur(18px);
       border-radius: 22px;
       box-shadow: 0 22px 60px rgba(0,0,0,.18);
@@ -241,7 +260,7 @@
       margin: 12px 0 12px;
       max-width: 760px;
       color: #fff;
-      font-size: 42px;
+      font-size: 48px;
       line-height: 1.15;
     }
 
@@ -271,6 +290,14 @@
       font-weight: 900;
     }
 
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+      pointer-events: auto;
+    }
+
     .stat-card b {
       display: block;
       margin-top: 8px;
@@ -297,9 +324,10 @@
     }
 
     .section {
-      border: 1px solid rgba(255,255,255,.82);
-      border-radius: 26px;
-      background: var(--surface);
+      border: 1px solid rgba(255,255,255,.74);
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(246,249,252,.72));
       backdrop-filter: blur(18px);
       box-shadow: var(--soft-shadow);
       overflow: hidden;
@@ -368,7 +396,7 @@
 
     .project-command {
       display: grid;
-      grid-template-columns: minmax(280px, .8fr) minmax(380px, 1.2fr);
+      grid-template-columns: minmax(300px, .72fr) minmax(520px, 1.28fr);
       gap: 14px;
       margin-bottom: 16px;
     }
@@ -390,6 +418,10 @@
       font-size: 14px;
       letter-spacing: .02em;
       text-transform: uppercase;
+    }
+
+    .project-detail-panel h4 {
+      color: rgba(238,246,255,.66);
     }
 
     .radar-grid {
@@ -436,6 +468,11 @@
 
     .project-detail-panel {
       min-height: 100%;
+      color: #eef6ff;
+      background:
+        linear-gradient(145deg, rgba(12,20,31,.96), rgba(24,43,59,.9));
+      border-color: rgba(255,255,255,.14);
+      box-shadow: 0 28px 70px rgba(12,20,31,.22);
     }
 
     .detail-title-row {
@@ -447,7 +484,7 @@
 
     .detail-title-row h3 {
       margin: 0;
-      color: var(--navy);
+      color: #fff;
       font-size: 24px;
       line-height: 1.25;
     }
@@ -468,13 +505,14 @@
 
     .detail-metric {
       border-radius: 16px;
-      background: rgba(25,37,48,.05);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.10);
       padding: 11px;
     }
 
     .detail-metric span {
       display: block;
-      color: var(--muted);
+      color: rgba(238,246,255,.62);
       font-size: 11px;
       font-weight: 900;
     }
@@ -482,18 +520,128 @@
     .detail-metric b {
       display: block;
       margin-top: 6px;
-      color: var(--navy);
+      color: #fff;
       font-size: 15px;
     }
 
     .next-action {
-      border-left: 4px solid var(--blue);
+      border-left: 4px solid #66d7ff;
       border-radius: 16px;
-      background: rgba(53,111,229,.08);
+      background: rgba(102,215,255,.10);
       padding: 13px 14px;
       line-height: 1.55;
-      color: var(--ink);
+      color: rgba(238,246,255,.86);
       font-size: 14px;
+    }
+
+    .detail-progress {
+      margin: 14px 0 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .detail-progress-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: rgba(238,246,255,.72);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .detail-progress .progress-track {
+      background: rgba(255,255,255,.14);
+      height: 12px;
+    }
+
+    .project-timeline {
+      margin-top: 16px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: rgba(238,246,255,.68);
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .timeline-title b {
+      color: #fff;
+      font-size: 14px;
+    }
+
+    .timeline-list {
+      position: relative;
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-list::before {
+      content: "";
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      left: 13px;
+      width: 2px;
+      background: linear-gradient(180deg, rgba(102,215,255,.8), rgba(255,255,255,.10));
+    }
+
+    .timeline-item {
+      position: relative;
+      display: grid;
+      grid-template-columns: 28px 1fr auto;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 18px;
+      background: rgba(255,255,255,.07);
+      padding: 12px;
+    }
+
+    .timeline-dot {
+      position: relative;
+      z-index: 1;
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #07111c;
+      font-size: 11px;
+      font-weight: 900;
+      background: var(--accent, #66d7ff);
+      box-shadow: 0 0 0 5px rgba(102,215,255,.10);
+    }
+
+    .timeline-copy b {
+      display: block;
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .timeline-copy span {
+      display: block;
+      margin-top: 4px;
+      color: rgba(238,246,255,.64);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .timeline-state {
+      white-space: nowrap;
+      border-radius: 999px;
+      padding: 6px 9px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      background: rgba(255,255,255,.12);
     }
 
     .project-form {
@@ -535,6 +683,28 @@
       grid-template-columns: minmax(360px, .94fr) minmax(520px, 1.06fr);
       gap: 16px;
       align-items: start;
+    }
+
+    .work-panel {
+      display: grid;
+      gap: 12px;
+    }
+
+    .panel-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .panel-label span {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: none;
     }
 
     .project-list {
@@ -1015,6 +1185,8 @@
       .hero-content { padding: 18px; }
       .hero h2 { font-size: 30px; }
       .hero-stats, .project-form, .project-toolbar, .detail-metrics, .board, .calendar, .detail-grid, .check-grid, .doc-flow, .decision-grid, .template-grid, .source-grid { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 28px 1fr; }
+      .timeline-state { grid-column: 2; justify-self: start; }
       .section-head { grid-template-columns: 1fr; }
       .toolbar { justify-content: start; }
     }
@@ -1052,8 +1224,12 @@
         <div class="hero-grid">
           <div class="hero-panel">
             <span class="eyebrow">Engineering Control Room</span>
-            <h2>엑셀 표가 아니라, 프로젝트를 움직이는 관제 화면처럼.</h2>
-            <p>수주 전 검토부터 FAT와 양산 안정화까지 20단계를 3D 라인으로 보여주고, 프로젝트별 현재 위치와 리스크를 카드·보드·캘린더로 연결했습니다. 신규사원은 흐름을 보고, 담당자는 바로 관리할 수 있습니다.</p>
+            <h2>엔지니어링 프로젝트를 한 화면에서 지휘합니다.</h2>
+            <p>수주 전 검토부터 FAT와 양산 안정화까지 프로젝트의 현재 위치, 리스크, 다음 액션, 진행 이력을 3D 프로세스와 운영 보드로 연결했습니다.</p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#projects">프로젝트 현황 보기</a>
+              <a class="btn" href="#manual">업무 단계 확인</a>
+            </div>
           </div>
           <div class="hero-stats">
             <div class="stat-card"><span>관리 프로젝트</span><b id="statProjects">0</b></div>
@@ -1070,8 +1246,8 @@
     <section class="section" id="projects">
       <div class="section-head">
         <div class="section-title">
-          <h3>프로젝트 포트폴리오</h3>
-          <span>프로젝트 추가, 현재 단계, 마감일, 협력업체/PM, 리스크를 카드형으로 관리합니다.</span>
+          <h3>프로젝트 커맨드 센터</h3>
+          <span>프로젝트를 선택하면 현재 상태, 진행 이력, 다음 액션, 단계별 위치를 한 화면에서 확인합니다.</span>
         </div>
         <div class="segmented">
           <button class="tab-btn active" data-status="전체" type="button">전체</button>
@@ -1113,8 +1289,14 @@
           <button class="btn primary" id="addProjectBtn" type="button">추가</button>
         </div>
         <div class="operations-grid">
-          <div class="project-list" id="projectList"></div>
-          <div class="board" id="projectBoard"></div>
+          <div class="work-panel">
+            <div class="panel-label">Project List <span>클릭하면 진행 이력 표시</span></div>
+            <div class="project-list" id="projectList"></div>
+          </div>
+          <div class="work-panel">
+            <div class="panel-label">Phase Board <span>단계별 프로젝트 위치</span></div>
+            <div class="board" id="projectBoard"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -1292,9 +1474,63 @@
     ];
 
     const defaultProjects = [
-      { id: "tm-auto", name: "TM적입 자동화", client: "국내 물류센터", owner: "엔지니어링팀", step: 10, due: "2026-08-07", status: "주의", priority: "높음", vendor: "PM/이행팀 협의", issue: "킥오프 자료와 협력업체 일정 취합 필요", nextAction: "킥오프 회의록에 역할, 일정, 스코프를 확정하고 장납기품 목록을 분리 관리합니다." },
-      { id: "globis-layout", name: "글로비스 레이아웃 검토", client: "글로비스", owner: "주니어 담당", step: 5, due: "2026-08-02", status: "정상", priority: "보통", vendor: "협력업체 후보", issue: "견적 범위와 공사 가능 일정 확인 중", nextAction: "협력업체 견적서의 사양 누락, 스코프 누락, 공사 가능 일정을 비교표로 정리합니다." },
-      { id: "fat-ready", name: "FAT 준비 샘플", client: "테스트 라인", owner: "PM", step: 18, due: "2026-08-18", status: "위험", priority: "긴급", vendor: "PLC/WCS", issue: "WCS 통합 테스트 미해결 항목 존재", nextAction: "이슈별 원인, 담당자, 조치 기한을 고정하고 FAT 전 재검증 일정을 캘린더에 올립니다." }
+      {
+        id: "tm-auto",
+        name: "TM적입 자동화",
+        client: "국내 물류센터",
+        owner: "엔지니어링팀",
+        step: 10,
+        due: "2026-08-07",
+        status: "주의",
+        priority: "높음",
+        vendor: "PM/이행팀 협의",
+        issue: "킥오프 자료와 협력업체 일정 취합 필요",
+        nextAction: "킥오프 회의록에 역할, 일정, 스코프를 확정하고 장납기품 목록을 분리 관리합니다.",
+        history: [
+          { date: "2026-07-21", step: 1, state: "완료", note: "영업부 검토 의뢰 접수 및 고객 요구 일정 확인" },
+          { date: "2026-07-23", step: 4, state: "완료", note: "사양서와 레이아웃을 협력업체 후보에 송부" },
+          { date: "2026-07-27", step: 7, state: "완료", note: "견적 범위와 원가집계표 1차 검토 완료" },
+          { date: "2026-07-30", step: 10, state: "진행", note: "킥오프 참석자와 역할 분담 확정 중" }
+        ]
+      },
+      {
+        id: "globis-layout",
+        name: "글로비스 레이아웃 검토",
+        client: "글로비스",
+        owner: "주니어 담당",
+        step: 5,
+        due: "2026-08-02",
+        status: "정상",
+        priority: "보통",
+        vendor: "협력업체 후보",
+        issue: "견적 범위와 공사 가능 일정 확인 중",
+        nextAction: "협력업체 견적서의 사양 누락, 스코프 누락, 공사 가능 일정을 비교표로 정리합니다.",
+        history: [
+          { date: "2026-07-22", step: 1, state: "완료", note: "레이아웃 검토 의뢰 접수" },
+          { date: "2026-07-24", step: 2, state: "완료", note: "고객 제공 레이아웃 최신본 확인" },
+          { date: "2026-07-28", step: 4, state: "완료", note: "협력업체에 사양서와 질의사항 송부" },
+          { date: "2026-07-30", step: 5, state: "진행", note: "견적서 사양 누락 여부 검토 중" }
+        ]
+      },
+      {
+        id: "fat-ready",
+        name: "FAT 준비 샘플",
+        client: "테스트 라인",
+        owner: "PM",
+        step: 18,
+        due: "2026-08-18",
+        status: "위험",
+        priority: "긴급",
+        vendor: "PLC/WCS",
+        issue: "WCS 통합 테스트 미해결 항목 존재",
+        nextAction: "이슈별 원인, 담당자, 조치 기한을 고정하고 FAT 전 재검증 일정을 캘린더에 올립니다.",
+        history: [
+          { date: "2026-07-10", step: 13, state: "완료", note: "승인도 고객 검토 완료" },
+          { date: "2026-07-17", step: 15, state: "완료", note: "제작 검수 결과와 보완 항목 공유" },
+          { date: "2026-07-24", step: 17, state: "완료", note: "설치·전장·제어 인터페이스 기준 확정" },
+          { date: "2026-07-30", step: 18, state: "진행", note: "WCS 통합 테스트 미해결 이슈 추적 중" }
+        ]
+      }
     ];
 
     const stateKey = "engineering3dProjectManualV4";
@@ -1336,10 +1572,41 @@
       return `${step.check} 후 ${step.caution}`;
     }
 
+    function projectHistory(project) {
+      if (Array.isArray(project.history) && project.history.length) return project.history;
+      const current = steps[project.step - 1] || steps[0];
+      const previous = steps[Math.max(0, project.step - 2)];
+      return [
+        { date: project.due || "일정 미정", step: Math.max(1, project.step - 2), state: "완료", note: previous ? `${previous.task} 기준 자료 확인` : "프로젝트 기본 정보 등록" },
+        { date: project.due || "일정 미정", step: project.step, state: "진행", note: `${current.task} 진행 중` },
+        { date: project.due || "일정 미정", step: Math.min(20, project.step + 1), state: "대기", note: nextAction(project) }
+      ];
+    }
+
+    function timelineStateColor(state) {
+      if (state === "완료") return "var(--green)";
+      if (state === "진행") return "var(--blue)";
+      if (state === "대기") return "var(--amber)";
+      return "rgba(255,255,255,.18)";
+    }
+
+    function normalizeProject(project, index = 0) {
+      const fallback = defaultProjects[index % defaultProjects.length] || defaultProjects[0];
+      return {
+        ...project,
+        client: project.client || fallback.client || "",
+        priority: project.priority || fallback.priority || "보통",
+        nextAction: project.nextAction || "",
+        history: Array.isArray(project.history) && project.history.length ? project.history : []
+      };
+    }
+
     function readState() {
       try {
         const parsed = JSON.parse(localStorage.getItem(stateKey));
-        if (parsed && Array.isArray(parsed.projects)) return parsed;
+        if (parsed && Array.isArray(parsed.projects)) {
+          return { checks: parsed.checks || {}, projects: parsed.projects.map(normalizeProject) };
+        }
       } catch {}
       return { checks: {}, projects: defaultProjects };
     }
@@ -1445,6 +1712,8 @@
       const step = steps[project.step - 1] || steps[0];
       const phase = phaseOf(project.step);
       const meta = phaseMeta(phase);
+      const progress = projectProgress(project);
+      const history = projectHistory(project).slice(-5);
       document.getElementById("projectDetailPanel").innerHTML = `
         <h4>Selected Project</h4>
         <div class="detail-title-row">
@@ -1456,6 +1725,10 @@
           <span class="badge" style="background:${priorityColor(project.priority)}">${project.priority || "보통"}</span>
           <span class="badge" style="background:var(--navy)">${dueText(project)}</span>
         </div>
+        <div class="detail-progress">
+          <div class="detail-progress-top"><span>Project Completion</span><b>${progress}%</b></div>
+          <div class="progress-track"><span style="width:${progress}%;background:${meta.color}"></span></div>
+        </div>
         <div class="detail-metrics">
           <div class="detail-metric"><span>고객사/현장</span><b>${escapeHtml(project.client || "미정")}</b></div>
           <div class="detail-metric"><span>담당자</span><b>${escapeHtml(project.owner || "미정")}</b></div>
@@ -1463,6 +1736,22 @@
           <div class="detail-metric"><span>마감일</span><b>${escapeHtml(project.due || "미정")}</b></div>
         </div>
         <div class="next-action"><b>${project.step}. ${escapeHtml(step.task)}</b><br>${escapeHtml(nextAction(project))}</div>
+        <div class="project-timeline">
+          <div class="timeline-title"><b>진행 이력</b><span>${history.length} logs</span></div>
+          <div class="timeline-list">
+            ${history.map(item => {
+              const itemStep = steps[item.step - 1] || steps[0];
+              return `<div class="timeline-item" style="--accent:${timelineStateColor(item.state)}">
+                <div class="timeline-dot">${escapeHtml(item.state.slice(0, 1))}</div>
+                <div class="timeline-copy">
+                  <b>${escapeHtml(item.date)} · ${escapeHtml(itemStep.task)}</b>
+                  <span>${escapeHtml(item.note)}</span>
+                </div>
+                <span class="timeline-state">${escapeHtml(item.state)}</span>
+              </div>`;
+            }).join("")}
+          </div>
+        </div>
       `;
     }
 
@@ -1608,7 +1897,10 @@
           priority: document.getElementById("projectPriorityInput").value,
           vendor: document.getElementById("projectVendorInput").value.trim(),
           issue: document.getElementById("projectIssueInput").value.trim(),
-          nextAction: ""
+          nextAction: "",
+          history: [
+            { date: new Date().toISOString().slice(0, 10), step: Number(document.getElementById("projectStepInput").value), state: "진행", note: "프로젝트 등록 후 현재 단계에서 관리 시작" }
+          ]
         });
         activeProjectId = next.projects[0].id;
         writeState(next);
