@@ -3,250 +3,501 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>엔지니어링 팀 3D 업무 매뉴얼</title>
+  <title>엔지니어링 팀 3D 프로젝트 매뉴얼</title>
   <style>
     :root {
-      --ink: #10283f;
-      --ink-2: #1d405d;
-      --blue: #2f80ed;
+      --navy: #122238;
+      --ink: #1c2b38;
+      --muted: #637083;
+      --line: #d8e0e8;
+      --soft: #f4f7fa;
+      --white: #ffffff;
+      --blue: #2f6fed;
       --teal: #00897b;
-      --orange: #f2994a;
-      --red: #c0392b;
-      --green: #2e7d32;
-      --violet: #6c5ce7;
-      --bg: #eef3f8;
-      --panel: #ffffff;
-      --line: #d6e0ea;
-      --text: #1f2933;
-      --muted: #64748b;
-      --shadow: 0 18px 40px rgba(16, 40, 63, .14);
+      --amber: #d88725;
+      --red: #c94b4b;
+      --green: #2f8f5b;
+      --violet: #7659c9;
+      --cyan: #1f9bb4;
+      --shadow: 0 16px 38px rgba(18, 34, 56, .13);
     }
 
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
+      color: var(--ink);
+      background: #edf2f6;
       font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      overflow-x: hidden;
+      letter-spacing: 0;
     }
 
-    .app-shell {
+    button, input, textarea, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .shell {
       min-height: 100vh;
       display: grid;
-      grid-template-columns: 360px 1fr;
+      grid-template-columns: 308px 1fr;
     }
 
-    aside {
+    .rail {
       position: sticky;
       top: 0;
       height: 100vh;
-      background: var(--ink);
-      color: white;
+      background: var(--navy);
+      color: var(--white);
       padding: 22px;
       overflow: auto;
-      z-index: 10;
+      z-index: 20;
     }
 
     .brand h1 {
       margin: 0;
       font-size: 24px;
-      line-height: 1.24;
-      letter-spacing: 0;
+      line-height: 1.25;
     }
 
     .brand p {
       margin: 10px 0 18px;
-      color: #d7e5f3;
+      color: #cad8e7;
       line-height: 1.55;
       font-size: 13px;
     }
 
-    .progress-card {
-      background: rgba(255,255,255,.08);
+    .metric {
       border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.08);
       border-radius: 8px;
-      padding: 14px;
-      margin-bottom: 14px;
+      padding: 13px;
+      margin: 10px 0;
     }
 
-    .progress-head {
+    .metric-row {
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      font-weight: 700;
+      gap: 8px;
       font-size: 13px;
-      margin-bottom: 9px;
+      font-weight: 800;
     }
 
     .bar {
-      height: 12px;
+      height: 10px;
       border-radius: 999px;
       background: rgba(255,255,255,.18);
       overflow: hidden;
+      margin-top: 10px;
     }
 
     .bar span {
       display: block;
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, var(--teal), var(--blue));
-      transition: width .2s ease;
+      background: linear-gradient(90deg, var(--teal), var(--blue), var(--amber));
+      transition: width .25s ease;
     }
 
-    .nav-group {
+    .rail-nav {
       display: grid;
       gap: 8px;
-      margin: 16px 0;
+      margin-top: 18px;
     }
 
-    .nav-btn, .tool-btn {
-      width: 100%;
+    .rail-link, .rail-button {
       border: 1px solid rgba(255,255,255,.16);
-      border-radius: 6px;
+      border-radius: 8px;
       background: rgba(255,255,255,.08);
-      color: white;
-      padding: 10px 11px;
-      text-align: left;
-      cursor: pointer;
-      font: inherit;
+      color: var(--white);
+      min-height: 40px;
+      padding: 9px 10px;
       text-decoration: none;
       display: flex;
-      justify-content: space-between;
-      gap: 8px;
       align-items: center;
-    }
-
-    .nav-btn.active {
-      background: white;
-      color: var(--ink);
-      border-color: white;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 13px;
       font-weight: 800;
     }
 
-    .tool-btn {
-      justify-content: center;
-      font-weight: 700;
-      background: var(--blue);
-      border-color: var(--blue);
+    .rail-link:hover, .rail-button:hover {
+      background: rgba(255,255,255,.14);
     }
 
-    main {
+    .rail-button.primary {
+      justify-content: center;
+      background: var(--blue);
+      border-color: var(--blue);
+      margin-top: 12px;
+    }
+
+    .main {
       min-width: 0;
       display: grid;
-      grid-template-rows: minmax(560px, 68vh) auto;
+      gap: 0;
     }
 
     .stage {
+      min-height: 680px;
       position: relative;
-      background:
-        radial-gradient(circle at 70% 15%, rgba(47,128,237,.22), transparent 28%),
-        linear-gradient(135deg, #eaf0f6, #f9fbfd);
-      border-bottom: 1px solid var(--line);
       overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(115deg, rgba(18,34,56,.06), rgba(255,255,255,.42)),
+        radial-gradient(circle at 18% 22%, rgba(31,155,180,.20), transparent 28%),
+        radial-gradient(circle at 82% 16%, rgba(216,135,37,.20), transparent 26%),
+        #eef4f8;
     }
 
-    #threeStage, .fallback-3d {
+    #threeStage {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       display: block;
     }
 
-    .scene-overlay {
-      position: absolute;
-      top: 22px;
-      left: 24px;
-      right: 24px;
+    .stage-copy {
+      position: relative;
+      z-index: 2;
+      min-height: 680px;
+      padding: 34px 34px 26px;
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
+      grid-template-rows: auto 1fr auto;
       pointer-events: none;
-      z-index: 3;
     }
 
-    .scene-title {
-      max-width: 740px;
-      background: rgba(255,255,255,.88);
-      border: 1px solid rgba(214,224,234,.92);
+    .stage-top {
+      display: grid;
+      grid-template-columns: minmax(320px, 760px) minmax(260px, 360px);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .hero-copy {
+      background: rgba(255,255,255,.90);
+      border: 1px solid rgba(216,224,232,.9);
       border-radius: 8px;
-      padding: 16px;
+      padding: 18px;
       box-shadow: var(--shadow);
     }
 
-    .scene-title h2 {
-      margin: 0 0 6px;
-      color: var(--ink);
-      font-size: 28px;
-      letter-spacing: 0;
+    .hero-copy h2 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 32px;
+      line-height: 1.18;
     }
 
-    .scene-title p {
+    .hero-copy p {
       margin: 0;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.62;
       font-size: 14px;
     }
 
-    .legend {
-      align-self: start;
-      background: rgba(255,255,255,.90);
+    .quick-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      pointer-events: auto;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.92);
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 12px;
+      padding: 13px;
       box-shadow: var(--shadow);
-      min-width: 210px;
     }
 
-    .legend div {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .stat span {
+      display: block;
+      color: var(--muted);
       font-size: 12px;
-      margin-top: 6px;
+      font-weight: 800;
     }
 
-    .dot {
-      width: 11px;
-      height: 11px;
+    .stat b {
+      display: block;
+      margin-top: 6px;
+      color: var(--navy);
+      font-size: 24px;
+    }
+
+    .stage-bottom {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      pointer-events: auto;
+    }
+
+    .phase-chip {
+      border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.88);
       border-radius: 999px;
-      display: inline-block;
+      padding: 8px 11px;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--navy);
+      box-shadow: 0 8px 22px rgba(18,34,56,.08);
     }
 
     .content {
       padding: 24px;
       display: grid;
-      gap: 18px;
+      gap: 20px;
     }
 
-    .panel {
-      background: var(--panel);
+    .section {
+      background: var(--white);
       border: 1px solid var(--line);
       border-radius: 8px;
       box-shadow: var(--shadow);
     }
 
-    .step-detail {
-      padding: 20px;
-      display: grid;
-      grid-template-columns: 1fr 360px;
-      gap: 18px;
-      align-items: start;
+    .section-head {
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
     }
 
-    .badge {
-      display: inline-flex;
-      padding: 5px 9px;
-      color: white;
-      border-radius: 999px;
+    .section-head h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 19px;
+    }
+
+    .section-head span {
+      color: var(--muted);
       font-size: 12px;
       font-weight: 800;
     }
 
-    .step-detail h2 {
-      margin: 12px 0;
+    .section-body { padding: 18px; }
+
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .tab-btn, .action-btn, .mini-btn {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      color: var(--navy);
+      min-height: 38px;
+      padding: 8px 11px;
+      font-weight: 900;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .tab-btn.active, .action-btn.primary {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .mini-btn {
+      min-height: 32px;
+      padding: 6px 9px;
+      font-size: 12px;
+    }
+
+    .project-layout {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .project-form {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
       color: var(--ink);
-      font-size: 26px;
-      letter-spacing: 0;
+      padding: 10px;
+      min-height: 40px;
+    }
+
+    textarea {
+      min-height: 150px;
+      line-height: 1.55;
+      resize: vertical;
+    }
+
+    .project-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .project-row {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .project-row.active {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 3px rgba(47,111,237,.12);
+    }
+
+    .project-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .badge {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 4px 8px;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .project-meta {
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(120px, 1fr));
+      gap: 10px;
+      overflow: auto;
+      padding-bottom: 4px;
+    }
+
+    .lane {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fafc;
+      min-height: 184px;
+      padding: 10px;
+    }
+
+    .lane h4 {
+      margin: 0 0 8px;
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .lane-item {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      border-radius: 8px;
+      padding: 9px;
+      margin-top: 8px;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(98px, 1fr));
+      gap: 8px;
+    }
+
+    .day {
+      min-height: 104px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .day.dim { background: #f4f7fa; color: #9aa6b2; }
+    .day strong { display: block; margin-bottom: 6px; color: var(--navy); }
+    .event {
+      border-left: 4px solid var(--teal);
+      background: #eef8f6;
+      border-radius: 6px;
+      padding: 5px 6px;
+      margin-top: 5px;
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    .manual-layout {
+      display: grid;
+      grid-template-columns: 330px 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    .step-list {
+      max-height: 600px;
+      overflow: auto;
+      display: grid;
+      gap: 7px;
+      padding-right: 4px;
+    }
+
+    .step-btn {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 8px;
+      padding: 9px;
+      text-align: left;
+      color: var(--ink);
+    }
+
+    .step-btn.active {
+      border-color: var(--blue);
+      background: #eef4ff;
+      font-weight: 900;
+    }
+
+    .step-title {
+      display: block;
+      line-height: 1.35;
+      font-size: 13px;
+    }
+
+    .step-phase {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .manual-detail {
+      display: grid;
+      gap: 14px;
     }
 
     .detail-grid {
@@ -257,62 +508,46 @@
 
     .info {
       border: 1px solid var(--line);
-      background: #fff;
       border-radius: 8px;
+      background: #fff;
       padding: 12px;
+      line-height: 1.55;
+      font-size: 13px;
     }
 
     .info label {
       display: block;
-      font-size: 12px;
-      font-weight: 800;
+      margin-bottom: 5px;
       color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .info div {
-      line-height: 1.55;
-      font-size: 14px;
-    }
-
-    .check-stack {
-      display: grid;
-      gap: 8px;
+      font-size: 11px;
+      font-weight: 900;
     }
 
     .check-row {
-      display: grid;
-      grid-template-columns: 26px 1fr;
-      gap: 8px;
       border: 1px solid var(--line);
       border-radius: 8px;
+      background: #fff;
       padding: 10px;
-      background: white;
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 8px;
       line-height: 1.45;
+      font-size: 13px;
     }
 
-    .check-row input { width: 18px; height: 18px; margin-top: 2px; }
-    .check-row.done { color: var(--muted); background: #f8fafc; }
+    .check-row input {
+      width: 18px;
+      height: 18px;
+      margin-top: 1px;
+    }
+
+    .check-row.done {
+      color: var(--muted);
+      background: #f8fafc;
+    }
+
     .check-row.done b { text-decoration: line-through; }
     .check-row small { display: block; margin-top: 4px; color: var(--muted); }
-
-    .data-grid {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 18px;
-    }
-
-    .panel-head {
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .panel-head h3 { margin: 0; color: var(--ink); font-size: 18px; }
-    .panel-body { padding: 16px; }
 
     table {
       width: 100%;
@@ -321,65 +556,56 @@
     }
 
     th, td {
-      text-align: left;
-      vertical-align: top;
       border-bottom: 1px solid var(--line);
       padding: 9px 8px;
+      text-align: left;
+      vertical-align: top;
       line-height: 1.45;
     }
 
     th {
-      color: var(--ink);
-      font-size: 12px;
+      color: var(--navy);
       background: #f4f7fa;
+      font-size: 12px;
     }
 
     .mail-layout {
       display: grid;
-      grid-template-columns: 330px 1fr;
+      grid-template-columns: 300px 1fr;
       gap: 16px;
     }
 
-    .flow-node {
+    .flow-step {
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 12px;
-      background: white;
+      background: #fff;
+      padding: 11px;
       margin-bottom: 8px;
-      font-size: 13px;
       line-height: 1.5;
+      font-size: 13px;
     }
 
-    .flow-arrow {
-      text-align: center;
-      font-size: 20px;
-      font-weight: 900;
-      color: var(--ink);
-      margin-bottom: 8px;
-    }
-
-    .template-buttons {
+    .flow-step b { color: var(--navy); }
+    .template-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(180px, 1fr));
+      grid-template-columns: repeat(2, minmax(160px, 1fr));
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .template-btn {
       border: 1px solid var(--line);
-      background: white;
       border-radius: 8px;
+      background: #fff;
       padding: 10px;
       text-align: left;
-      cursor: pointer;
-      font: inherit;
-      font-size: 13px;
+      font-size: 12px;
+      font-weight: 900;
     }
 
     .template-btn.active {
       border-color: var(--teal);
-      box-shadow: 0 0 0 2px rgba(0,137,123,.16);
-      font-weight: 800;
+      background: #edf8f6;
     }
 
     .composer {
@@ -387,274 +613,313 @@
       gap: 9px;
     }
 
-    input, textarea {
-      width: 100%;
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+    }
+
+    .source-item {
       border: 1px solid var(--line);
-      border-radius: 6px;
-      padding: 10px;
-      font: inherit;
-      background: white;
-      color: var(--text);
-    }
-
-    textarea {
-      min-height: 220px;
-      line-height: 1.55;
-      resize: vertical;
-    }
-
-    .button-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .action-btn {
-      border: 1px solid var(--teal);
-      background: var(--teal);
-      color: white;
-      border-radius: 6px;
-      padding: 10px 12px;
-      font-weight: 800;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .secondary-btn {
-      border-color: var(--line);
-      background: white;
-      color: var(--ink);
-    }
-
-    .fallback-3d {
-      display: none;
-      perspective: 1200px;
-      align-items: center;
-      justify-content: center;
-      padding: 90px 40px 40px;
-    }
-
-    .fallback-track {
-      width: min(980px, 90%);
-      transform-style: preserve-3d;
-      transform: rotateX(58deg) rotateZ(-32deg);
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 18px;
-    }
-
-    .fallback-block {
-      height: 110px;
       border-radius: 8px;
-      color: white;
-      display: grid;
-      place-items: center;
-      text-align: center;
-      font-weight: 900;
-      box-shadow: 18px 18px 0 rgba(16,40,63,.18);
-      transform: translateZ(18px);
-      padding: 10px;
+      background: #fff;
+      padding: 12px;
+      line-height: 1.55;
+      font-size: 13px;
     }
 
     .toast {
       position: fixed;
       right: 18px;
       bottom: 18px;
-      background: var(--ink);
-      color: white;
-      padding: 12px 14px;
+      z-index: 80;
       border-radius: 8px;
+      background: var(--navy);
+      color: #fff;
+      padding: 12px 14px;
       box-shadow: var(--shadow);
       opacity: 0;
-      transform: translateY(10px);
+      transform: translateY(8px);
       transition: .2s ease;
-      z-index: 50;
     }
 
     .toast.show { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 1180px) {
-      .app-shell { grid-template-columns: 1fr; }
-      aside { position: relative; height: auto; }
-      .nav-group { grid-template-columns: repeat(2, 1fr); }
-      main { grid-template-rows: 620px auto; }
-      .step-detail, .data-grid, .mail-layout { grid-template-columns: 1fr; }
+      .shell { grid-template-columns: 1fr; }
+      .rail { position: relative; height: auto; }
+      .rail-nav { grid-template-columns: repeat(3, 1fr); }
+      .stage-top, .project-layout, .manual-layout, .mail-layout { grid-template-columns: 1fr; }
+      .project-form { grid-template-columns: repeat(2, 1fr); }
+      .source-grid { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 720px) {
-      .scene-overlay { grid-template-columns: 1fr; }
-      .legend { display: none; }
-      .detail-grid, .template-buttons { grid-template-columns: 1fr; }
-      main { grid-template-rows: 560px auto; }
+      .stage, .stage-copy { min-height: 620px; }
+      .stage-copy { padding: 20px 16px; }
+      .hero-copy h2 { font-size: 25px; }
+      .quick-stats, .project-form, .detail-grid, .template-grid { grid-template-columns: 1fr; }
+      .rail-nav { grid-template-columns: 1fr; }
       .content { padding: 16px; }
-      .nav-group { grid-template-columns: 1fr; }
+      .calendar { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
     }
   </style>
 </head>
 <body>
-  <div class="app-shell">
-    <aside>
+  <div class="shell">
+    <aside class="rail">
       <div class="brand">
-        <h1>3D 업무 프로세스 매뉴얼</h1>
-        <p>공정 라인을 클릭하듯 업무 단계를 선택하고, 필요한 체크와 메일 송부까지 이어서 처리합니다.</p>
+        <h1>엔지니어링 3D 프로젝트 매뉴얼</h1>
+        <p>신규사원이 업무 순서를 이해하고, 담당자는 프로젝트별 단계·일정·문서·메일을 한 화면에서 관리합니다.</p>
       </div>
-      <div class="progress-card">
-        <div class="progress-head"><span>체크 완료율</span><span id="progressText">0%</span></div>
-        <div class="bar"><span id="progressFill"></span></div>
+      <div class="metric">
+        <div class="metric-row"><span>전체 체크 완료율</span><b id="globalProgressText">0%</b></div>
+        <div class="bar"><span id="globalProgressFill"></span></div>
       </div>
-      <div class="progress-card">
-        <div class="progress-head"><span>현재 단계</span><span id="currentStepLabel">1 / 20</span></div>
-        <div id="currentStepName">프로젝트 검토 의뢰 접수</div>
+      <div class="metric">
+        <div class="metric-row"><span>선택 프로젝트</span><b id="activeProjectShort">TM</b></div>
+        <div id="activeProjectName" style="margin-top:8px;color:#dbe6f2;font-size:13px;line-height:1.45">TM적입 자동화</div>
       </div>
-      <div class="nav-group" id="stepNav"></div>
-      <button class="tool-btn" id="exportBtn" type="button">체크 현황 CSV 저장</button>
-      <button class="nav-btn" id="resetBtn" type="button" style="margin-top:8px;justify-content:center">체크 초기화</button>
+      <nav class="rail-nav">
+        <a class="rail-link" href="#projects">프로젝트 관리 <span>→</span></a>
+        <a class="rail-link" href="#calendar">캘린더 <span>→</span></a>
+        <a class="rail-link" href="#manual">단계 매뉴얼 <span>→</span></a>
+        <a class="rail-link" href="#documents">서류/판단 <span>→</span></a>
+        <a class="rail-link" href="#mail">Gmail 준비 <span>→</span></a>
+        <a class="rail-link" href="#sources">원본 반영 <span>→</span></a>
+      </nav>
+      <button class="rail-button primary" id="exportBtn" type="button">체크/프로젝트 CSV 저장</button>
+      <button class="rail-button" id="resetBtn" type="button" style="justify-content:center;margin-top:8px">로컬 데이터 초기화</button>
     </aside>
 
-    <main>
-      <section class="stage" id="stage">
-        <canvas id="threeStage" aria-label="3D 업무 프로세스 라인"></canvas>
-        <div class="fallback-3d" id="fallback3d">
-          <div class="fallback-track">
-            <div class="fallback-block" style="background:var(--blue)">수주 전<br />견적·사양</div>
-            <div class="fallback-block" style="background:var(--teal)">수주 후<br />계약·이관</div>
-            <div class="fallback-block" style="background:var(--orange)">설계·제작<br />승인·검수</div>
-            <div class="fallback-block" style="background:var(--red)">테스트<br />FAT</div>
-            <div class="fallback-block" style="background:var(--green)">양산<br />안정화</div>
+    <main class="main">
+      <section class="stage" aria-label="3D 프로젝트 프로세스">
+        <canvas id="threeStage"></canvas>
+        <div class="stage-copy">
+          <div class="stage-top">
+            <div class="hero-copy">
+              <h2>프로젝트 흐름을 3D 공정 라인처럼 보고 관리합니다</h2>
+              <p>수주 전 견적 검토부터 FAT와 양산 안정화까지 20개 단계를 3D 라인으로 배치했습니다. 블록을 클릭하면 해당 단계 매뉴얼이 열리고, 프로젝트별 현재 단계와 마감 일정은 진행판과 캘린더에 함께 표시됩니다.</p>
+            </div>
+            <div class="quick-stats">
+              <div class="stat"><span>관리 프로젝트</span><b id="statProjects">0</b></div>
+              <div class="stat"><span>진행 중 이슈</span><b id="statIssues">0</b></div>
+              <div class="stat"><span>이번 달 일정</span><b id="statEvents">0</b></div>
+              <div class="stat"><span>원본 반영률</span><b>Notion 1차</b></div>
+            </div>
           </div>
-        </div>
-        <div class="scene-overlay">
-          <div class="scene-title">
-            <h2>엔지니어링 프로젝트를 3D 공정 라인처럼 따라가기</h2>
-            <p>색상 블록은 업무 구분, 움직이는 라인은 서류와 책임이 넘어가는 흐름을 의미합니다. 3D 블록을 클릭하면 해당 단계의 매뉴얼과 체크리스트가 아래에 표시됩니다.</p>
-          </div>
-          <div class="legend">
-            <strong>구분 색상</strong>
-            <div><span class="dot" style="background:var(--blue)"></span>수주 전</div>
-            <div><span class="dot" style="background:var(--teal)"></span>수주 후</div>
-            <div><span class="dot" style="background:var(--orange)"></span>설계·제작</div>
-            <div><span class="dot" style="background:var(--violet)"></span>설치</div>
-            <div><span class="dot" style="background:var(--red)"></span>테스트</div>
-            <div><span class="dot" style="background:var(--green)"></span>양산</div>
-          </div>
+          <div></div>
+          <div class="stage-bottom" id="phaseLegend"></div>
         </div>
       </section>
 
       <div class="content">
-        <section class="panel step-detail" id="manualPanel"></section>
+        <section class="section" id="projects">
+          <div class="section-head">
+            <div>
+              <h3>프로젝트별 진행 관리</h3>
+              <span>프로젝트 추가, 단계 이동, 담당/마감/리스크 확인</span>
+            </div>
+            <div class="toolbar">
+              <button class="tab-btn active" data-status="전체" type="button">전체</button>
+              <button class="tab-btn" data-status="정상" type="button">정상</button>
+              <button class="tab-btn" data-status="주의" type="button">주의</button>
+              <button class="tab-btn" data-status="위험" type="button">위험</button>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="project-form">
+              <input id="projectNameInput" placeholder="프로젝트명" />
+              <input id="projectOwnerInput" placeholder="담당자" />
+              <select id="projectStepInput"></select>
+              <input id="projectDueInput" type="date" />
+              <select id="projectStatusInput">
+                <option>정상</option>
+                <option>주의</option>
+                <option>위험</option>
+              </select>
+              <input id="projectVendorInput" placeholder="협력업체/PM" />
+              <input id="projectIssueInput" placeholder="현재 이슈" />
+              <button class="action-btn primary" id="addProjectBtn" type="button">프로젝트 추가</button>
+            </div>
+            <div class="project-layout">
+              <div class="project-list" id="projectList"></div>
+              <div>
+                <div class="board" id="projectBoard"></div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-        <section class="data-grid">
-          <div class="panel">
-            <div class="panel-head"><h3>서류 흐름</h3><span>인수인계 기준</span></div>
-            <div class="panel-body">
+        <section class="section" id="calendar">
+          <div class="section-head">
+            <div>
+              <h3>프로젝트 캘린더</h3>
+              <span>마감일, 킥오프, FAT, 양산 안정화 일정을 월간으로 확인</span>
+            </div>
+            <div class="toolbar">
+              <button class="mini-btn" id="prevMonth" type="button">‹</button>
+              <b id="calendarTitle"></b>
+              <button class="mini-btn" id="nextMonth" type="button">›</button>
+            </div>
+          </div>
+          <div class="section-body">
+            <div class="calendar" id="calendarGrid"></div>
+          </div>
+        </section>
+
+        <section class="section" id="manual">
+          <div class="section-head">
+            <div>
+              <h3>20단계 업무 매뉴얼</h3>
+              <span>Notion 원문 기준으로 체크 포인트와 주의사항 보강</span>
+            </div>
+            <div class="toolbar">
+              <button class="mini-btn" id="prevStep" type="button">이전 단계</button>
+              <button class="mini-btn" id="nextStep" type="button">다음 단계</button>
+            </div>
+          </div>
+          <div class="section-body manual-layout">
+            <div class="step-list" id="stepList"></div>
+            <div class="manual-detail" id="manualDetail"></div>
+          </div>
+        </section>
+
+        <section class="section" id="documents">
+          <div class="section-head">
+            <div>
+              <h3>서류 흐름과 판단 기준</h3>
+              <span>누락 방지용 인수인계 표준</span>
+            </div>
+          </div>
+          <div class="section-body" style="display:grid;gap:18px">
+            <div style="overflow:auto">
               <table>
                 <thead><tr><th>서류</th><th>작성/수령</th><th>전달 대상</th><th>확인 포인트</th></tr></thead>
                 <tbody id="docRows"></tbody>
               </table>
             </div>
-          </div>
-          <div class="panel">
-            <div class="panel-head"><h3>판단 기준</h3><span>헷갈릴 때 확인</span></div>
-            <div class="panel-body">
+            <div style="overflow:auto">
               <table>
-                <thead><tr><th>상황</th><th>질문</th><th>다음 행동</th></tr></thead>
+                <thead><tr><th>상황</th><th>판단 질문</th><th>다음 행동</th></tr></thead>
                 <tbody id="decisionRows"></tbody>
               </table>
             </div>
           </div>
         </section>
 
-        <section class="panel">
-          <div class="panel-head"><h3>메일 송부 순서도와 Gmail 작성 준비</h3><span>자동 발송 전 수동 확인</span></div>
-          <div class="panel-body mail-layout">
+        <section class="section" id="mail">
+          <div class="section-head">
             <div>
-              <div class="flow-node"><b>1. 메일 목적 선택</b><br />견적 요청, 일정 확인, 킥오프 안내 등 상황을 고릅니다.</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-node"><b>2. 첨부/수신자 확인</b><br />사양서, 레이아웃, 견적서, 회의록 누락을 확인합니다.</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-node"><b>3. 본문 보정</b><br />프로젝트명, 일정, 요청 기한을 실제 값으로 바꿉니다.</div>
-              <div class="flow-arrow">↓</div>
-              <div class="flow-node"><b>4. Gmail 작성창 열기</b><br />제목과 본문이 채워진 상태로 Gmail을 엽니다.</div>
+              <h3>메일 송부 순서도와 Gmail 작성 준비</h3>
+              <span>Gmail 작성창을 열되 발송은 사용자가 최종 확인</span>
+            </div>
+          </div>
+          <div class="section-body mail-layout">
+            <div>
+              <div class="flow-step"><b>1. 목적 선택</b><br>견적 요청, 일정 확인, 발주 요청, FAT 공유 중 선택합니다.</div>
+              <div class="flow-step"><b>2. 첨부 확인</b><br>사양서, 레이아웃, 견적서, 회의록, 검수성적서 누락을 확인합니다.</div>
+              <div class="flow-step"><b>3. 본문 보정</b><br>프로젝트명, 담당자, 회신 기한, 첨부 목록을 실제 값으로 바꿉니다.</div>
+              <div class="flow-step"><b>4. Gmail 작성창 열기</b><br>제목과 본문이 채워진 상태로 Gmail을 열고 최종 발송은 직접 확인합니다.</div>
             </div>
             <div>
-              <div class="template-buttons" id="templateButtons"></div>
+              <div class="template-grid" id="templateButtons"></div>
               <div class="composer">
                 <input id="mailTo" placeholder="받는 사람 이메일" />
                 <input id="mailCc" placeholder="참조 이메일" />
                 <input id="mailSubject" placeholder="제목" />
                 <textarea id="mailBody" placeholder="본문"></textarea>
-                <div class="button-row">
-                  <button class="action-btn" id="gmailBtn" type="button">Gmail 작성창 열기</button>
-                  <button class="action-btn secondary-btn" id="copyBtn" type="button">본문 복사</button>
-                  <a class="action-btn secondary-btn" id="mailtoBtn" href="#">기본 메일앱 열기</a>
+                <div class="toolbar">
+                  <button class="action-btn primary" id="gmailBtn" type="button">Gmail 작성창 열기</button>
+                  <button class="action-btn" id="copyBtn" type="button">본문 복사</button>
+                  <a class="action-btn" id="mailtoBtn" href="#">기본 메일앱 열기</a>
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        <section class="section" id="sources">
+          <div class="section-head">
+            <div>
+              <h3>원본 반영 확인</h3>
+              <span>현재 반영 기준과 추가 확인 필요 자료</span>
+            </div>
+          </div>
+          <div class="section-body source-grid">
+            <div class="source-item"><b>Notion 회의록</b><br>수주 전/후, 장납기품, 사급품, 승인도, 테스트, 양산 안정화, AI 활용 과제를 반영했습니다.</div>
+            <div class="source-item"><b>엑셀 정리본</b><br>이전 작업의 업무 지도, 체크리스트, 서류 흐름, 판단 기준을 사이트 데이터 구조로 옮겼습니다.</div>
+            <div class="source-item"><b>PPT 기준원본</b><br>현재 작업 폴더에는 PPT 파일이 없습니다. PPT를 첨부하면 문구·순서·디자인 기준까지 다시 대조하겠습니다.</div>
+          </div>
+        </section>
       </div>
     </main>
   </div>
-
   <div class="toast" id="toast"></div>
 
   <script type="module">
+    const phases = [
+      { name: "수주 전", color: "#2f6fed", three: 0x2f6fed },
+      { name: "수주 후", color: "#00897b", three: 0x00897b },
+      { name: "설계·제작", color: "#d88725", three: 0xd88725 },
+      { name: "설치", color: "#7659c9", three: 0x7659c9 },
+      { name: "테스트", color: "#c94b4b", three: 0xc94b4b },
+      { name: "양산", color: "#2f8f5b", three: 0x2f8f5b }
+    ];
+
     const steps = [
-      { id: 1, phase: "수주 전", task: "프로젝트 검토 의뢰 접수", owner: "영업부 → 엔지니어링팀", docs: "검토 의뢰, 고객 요구 일정", check: "원하는 공사 일정이 이미 있는지 먼저 확인", caution: "요구 일정이 짧으면 즉시 상급자와 일정 리스크 공유" },
-      { id: 2, phase: "수주 전", task: "사양서/레이아웃 수령 및 기준 확인", owner: "엔지니어링팀", docs: "글로비스 사양서, 레이아웃", check: "고객 제공안인지, 엔지니어링팀 설계 필요 건인지 구분", caution: "기준 사양이 없으면 자체 설계 범위가 커짐" },
-      { id: 3, phase: "수주 전", task: "협력업체 선정 검토", owner: "엔지니어링팀", docs: "후보 업체, 공사 가능 일정", check: "턴키 업체 활용 또는 개별 업체 분리 발주를 비교", caution: "고정 업체 없음. 가격뿐 아니라 일정/인력/품질 대응력 확인" },
-      { id: 4, phase: "수주 전", task: "협력업체에 사양서·레이아웃 송부", owner: "엔지니어링팀 → 협력업체", docs: "송부 자료, 질의사항", check: "견적 요청 시 공사 일정 가능 여부를 같이 요청", caution: "요청 범위가 모호하면 누락 견적 발생" },
-      { id: 5, phase: "수주 전", task: "협력업체 견적서 수신 및 사양 검토", owner: "엔지니어링팀", docs: "견적서, 사양 상세", check: "구매팀이 판단하기 어려우므로 엔지니어링팀이 직접 검토", caution: "사양 누락, 스코프 누락, 과소 견적을 특히 점검" },
-      { id: 6, phase: "수주 전", task: "원가집계표 작성", owner: "엔지니어링팀", docs: "원가집계표, 보험료 산출 시트", check: "맨데이, 안전관리비, 보험료, 보증보험 등을 반영", caution: "재료비 단가 5% 상향, 일반관리비 10%, 기업이윤 5% 구조 확인" },
-      { id: 7, phase: "수주 전", task: "영업부 견적서 작성 및 고객 제출", owner: "영업부 + 엔지니어링팀 검토", docs: "알티올 견적서", check: "영업팀 최종 견적을 엔지니어링팀이 함께 검토", caution: "누락 사례가 많으므로 제출 전 공동 검토 필수" },
+      { id: 1, phase: "수주 전", task: "프로젝트 검토 의뢰 접수", owner: "영업부 → 엔지니어링팀", docs: "검토 의뢰, 고객 요구 일정", check: "고객 요구 일정과 희망 공사 일정을 먼저 확인", caution: "일정이 촉박하면 즉시 상급자에게 일정 리스크 공유" },
+      { id: 2, phase: "수주 전", task: "사양서/레이아웃 수령 및 기준 확인", owner: "엔지니어링팀", docs: "글로비스 사양서, 레이아웃", check: "고객 제공안인지 자체 설계 범위인지 구분", caution: "기준 사양이 없으면 설계 범위와 책임이 커짐" },
+      { id: 3, phase: "수주 전", task: "협력업체 선정 검토", owner: "엔지니어링팀", docs: "후보 업체, 공사 가능 일정", check: "턴키 업체와 개별 업체 분리 발주를 비교", caution: "고정 업체 없음. 가격보다 일정, 역량, 현장 대응력을 같이 확인" },
+      { id: 4, phase: "수주 전", task: "협력업체에 사양서·레이아웃 송부", owner: "엔지니어링팀 → 협력업체", docs: "송부 자료, 질의사항", check: "견적 요청 시 공사 가능 일정도 함께 요청", caution: "요청 범위가 모호하면 누락 견적 발생" },
+      { id: 5, phase: "수주 전", task: "협력업체 견적서 수신 및 사양 검토", owner: "엔지니어링팀", docs: "견적서, 사양 상세", check: "구매팀 판단이 어려우므로 엔지니어링팀이 직접 검토", caution: "사양 누락, 스코프 누락, 과소 견적을 집중 확인" },
+      { id: 6, phase: "수주 전", task: "원가집계표 작성", owner: "엔지니어링팀", docs: "원가집계표, 보증보험 산출 시트", check: "맨데이, 안전관리비, 산재·계약·하자보증보험 반영", caution: "재료비 5%, 일반관리비 10%, 기업이윤 5% 구조 확인" },
+      { id: 7, phase: "수주 전", task: "영업부 견적서 작성 및 고객 제출", owner: "영업부 + 엔지니어링팀", docs: "알티올 견적서", check: "영업 최종 견적서는 엔지니어링팀이 공동 검토", caution: "누락 사례가 많으므로 제출 전 공동 검토 필수" },
       { id: 8, phase: "수주 후", task: "발주서·계약서 수령 확인", owner: "사업지원팀 + 엔지니어링팀", docs: "발주서, 계약서", check: "사업지원팀 오이석 선임에게 수령 여부 확인", caution: "미수령 상태 선진행은 상급자 보고 후 판단" },
-      { id: 9, phase: "수주 후", task: "외주업체 발주·계약 요청", owner: "엔지니어링팀 → 사업지원팀", docs: "발주 요청서, 계약 요청서", check: "외주업체 발송은 사업지원팀이 진행", caution: "요청서에 범위와 금액이 명확해야 함" },
-      { id: 10, phase: "수주 후", task: "킥오프 미팅", owner: "엔지니어링팀, 이행팀, 외주업체, 관련 담당자", docs: "회의록, 역할분담, 일정표", check: "사양, 레이아웃, 스코프, 일정을 모두 확정", caution: "누락 방지의 핵심 단계. 참석자와 책임자를 명확히 남김" },
+      { id: 9, phase: "수주 후", task: "외주업체 발주·계약 요청", owner: "엔지니어링팀 → 사업지원팀", docs: "발주 요청서, 계약 요청서", check: "외주업체 공식 발송은 사업지원팀 기준으로 진행", caution: "요청서에 범위와 금액이 명확해야 함" },
+      { id: 10, phase: "수주 후", task: "킥오프 미팅", owner: "엔지니어링팀, 이행팀, 외주업체, 관련 담당자", docs: "회의록, 역할분담, 일정표", check: "사양, 레이아웃, 스코프, 일정, 책임자 확정", caution: "누락 방지의 핵심 단계. 참석자별 책임을 명확히 남김" },
       { id: 11, phase: "수주 후", task: "장납기품 검토 및 선제 발주", owner: "엔지니어링팀", docs: "장납기품 목록, 발주 일정", check: "납기 1개월 이상 품목은 별도 관리", caution: "키엔스 라이트커튼, PCR, 오토 라벨 프린터 등 사급품 확인" },
-      { id: 12, phase: "수주 후", task: "PM/이행팀 자료 이관", owner: "엔지니어링팀 → 이행팀", docs: "레이아웃, 원가집계표, 알티올 견적, 외주 견적", check: "이행팀이 내부 발주 기준으로 집행 진행", caution: "이관자료 누락 시 현장 단계에서 일정 지연" },
-      { id: 13, phase: "설계·제작", task: "승인도 검토", owner: "협력업체 + 엔지니어링팀 + 고객사", docs: "모듈별 2D 승인도", check: "모듈별 어셈블리 도면을 검토 후 고객 승인 요청", caution: "승인 전 제작은 원칙적으로 불가. 필요 시 사전 협의" },
+      { id: 12, phase: "수주 후", task: "PM/이행팀 자료 이관", owner: "엔지니어링팀 → 이행팀", docs: "레이아웃, 원가집계표, 알티올 견적, 외주 견적", check: "이행팀이 발주 집행 기준으로 쓸 자료 확인", caution: "이관 자료 누락 시 현장 단계에서 일정 지연" },
+      { id: 13, phase: "설계·제작", task: "승인도 검토", owner: "협력업체 + 엔지니어링팀 + 고객사", docs: "모듈별 2D 승인도", check: "모듈별 상세 어셈블리 도면 검토 후 고객 승인 요청", caution: "승인 전 제작은 원칙적으로 불가. 필요 시 사전 협의" },
       { id: 14, phase: "설계·제작", task: "상세설계 및 제작 진행", owner: "협력업체, 엔지니어링팀", docs: "상세도, 제작 일정", check: "승인 완료 후 제작 진행", caution: "레이아웃은 평균 20회 이상 변경될 수 있어 최신본 관리 필수" },
-      { id: 15, phase: "설계·제작", task: "제작 검수", owner: "PM/이행팀 + 엔지니어링팀", docs: "검수성적서, 검수보고서", check: "제작 현장 방문 및 진행 상황 확인", caution: "검수보고서는 엔지니어링팀 작성 필요" },
-      { id: 16, phase: "설치", task: "현장 반입 및 PM 인계", owner: "이행팀, 현장 PM, 안전관리자", docs: "반입 일정, 안전관리 계획", check: "반입 시점부터 현장 PM 중심으로 운영", caution: "안전관리자 상주 여부 확인" },
-      { id: 17, phase: "설치", task: "설치·전장·제어·WCS 진행", owner: "외주업체, 전장, PLC, WCS 담당", docs: "설치 기록, 프로그램 버전", check: "기구 설치 → 전기 설치 → PLC → WCS 순으로 진행", caution: "단계 병렬 진행 가능하지만 인터페이스 기준 공유 필요" },
-      { id: 18, phase: "테스트", task: "단동/연동/WCS 통합 테스트", owner: "엔지니어링팀, 이행팀, 외주업체", docs: "테스트 결과, 이슈 목록", check: "단동 Test → 연동 Test → WCS 통합 Test 순서 준수", caution: "이슈는 원인/담당/기한으로 관리" },
-      { id: 19, phase: "테스트", task: "FAT 진행 및 고객 승인", owner: "고객사 + 엔지니어링팀 + 이행팀", docs: "FAT 결과, 고객 승인", check: "고객사 기준으로 완료 승인 획득", caution: "FAT 미승인 항목은 양산 전 반드시 클로징" },
-      { id: 20, phase: "양산", task: "양산 대기 및 초기 안정화", owner: "현장 PM, 엔지니어링팀 지원", docs: "에러 대응 내역, 디버깅 기록", check: "FAT 후 약 30일간 실자재 운영 중 문제 대응", caution: "반복 에러는 개선안과 재발방지로 정리" }
+      { id: 15, phase: "설계·제작", task: "제작 검수", owner: "PM/이행팀 + 엔지니어링팀", docs: "검수성적서, 검수보고서", check: "제작 현장 방문 및 진행 상황 확인", caution: "현재 이행팀 여력 부족 시 엔지니어링팀 공동 수행" },
+      { id: 16, phase: "설치", task: "현장 반입 및 PM 인계", owner: "이행팀, 현장 PM, 안전관리자", docs: "반입 일정, 안전관리 계획", check: "현장 반입 시점부터 PM 중심으로 운영", caution: "안전관리자 상주 여부 확인" },
+      { id: 17, phase: "설치", task: "설치·전장·제어·WCS 진행", owner: "외주업체, 현장, PLC, WCS 담당", docs: "설치 기록, 프로그램 버전", check: "기구 설치 → 전기 설치 → PLC → WCS 순서로 진행", caution: "병렬 진행 가능하나 인터페이스 기준 공유 필요" },
+      { id: 18, phase: "테스트", task: "단동/연동/WCS 통합 테스트", owner: "엔지니어링팀, 이행팀, 외주업체", docs: "테스트 결과, 이슈 목록", check: "단동 Test → 연동 Test → WCS 통합 Test 순서 준수", caution: "이슈는 원인, 담당, 기한으로 관리" },
+      { id: 19, phase: "테스트", task: "FAT 진행 및 고객 승인", owner: "고객사 + 엔지니어링팀 + 이행팀", docs: "FAT 결과, 고객 승인", check: "고객사 기준으로 완료 승인 획득", caution: "FAT 미승인 항목은 양산 전 반드시 관리" },
+      { id: 20, phase: "양산", task: "양산 대기 및 초기 안정화", owner: "현장 PM, 엔지니어링팀 지원", docs: "에러 대응 내역, 디버깅 기록", check: "FAT 후 약 30일 실자재 운영 중 문제 대응", caution: "반복 에러는 개선안과 재발방지로 정리" }
     ];
 
     const checklist = [
       ["수주 전", "고객 요구 일정 또는 희망 공사 일정 확인", "일정이 촉박하면 상급자 보고"],
-      ["수주 전", "사양서/레이아웃 제공 여부와 자체 설계 필요 범위 구분", "기준 사양 유무 표시"],
+      ["수주 전", "사양서·레이아웃 제공 여부와 자체 설계 필요 범위 구분", "기준 사양 유무 표시"],
       ["수주 전", "협력업체 견적 요청 시 공사 가능 일정 함께 요청", "회신 일정 기록"],
       ["수주 전", "견적서의 사양 누락, 스코프 누락, 과소 견적 확인", "검토 의견 남김"],
       ["수주 전", "원가집계표에 맨데이, 안전관리비, 보험료 반영", "보험 산출 시트와 대조"],
       ["수주 전", "영업 최종 견적서 제출 전 엔지니어링팀 공동 검토", "누락 항목 체크"],
-      ["수주 후", "발주서·계약서 수령 여부 확인", "사업지원팀 확인"],
-      ["수주 후", "킥오프 미팅 참석자, 역할, 일정, 스코프 확정", "회의록 공유"],
-      ["수주 후", "장납기품 목록 작성 및 1개월 이상 품목 별도 관리", "발주 상태 업데이트"],
-      ["수주 후", "이행팀 이관자료 4종 확인", "레이아웃/원가집계표/알티올 견적/외주 견적"],
-      ["설계·제작", "승인도 모듈별 검토 후 고객 승인 요청", "승인 전 제작 금지 원칙"],
-      ["설계·제작", "레이아웃 최신본 배포 및 변경 이력 관리", "버전·배포일 기록"],
-      ["설계·제작", "제작 검수 후 검수성적서 수령 및 보고서 작성", "사진/성적서 첨부"],
-      ["설치", "현장 반입 시 현장 PM과 안전관리자 지정 확인", "비상연락망 공유"],
-      ["설치", "기구/전기/PLC/WCS 간 인터페이스 기준 공유", "담당자별 확인"],
+      ["수주 후", "발주서·계약서 수령 여부 확인", "사업지원팀 오이석 선임 확인"],
+      ["수주 후", "킥오프 미팅에서 역할, 일정, 스코프 확정", "회의록 공유"],
+      ["수주 후", "장납기품과 사급품 목록 작성", "발주 상태 업데이트"],
+      ["수주 후", "이행팀 이관 자료 4종 확인", "레이아웃/원가집계표/알티올 견적/외주 견적"],
+      ["설계·제작", "승인도 모듈별 검토 및 고객 승인 요청", "승인 전 제작 금지 원칙"],
+      ["설계·제작", "레이아웃 최신본 배포 및 변경 이력 관리", "버전과 배포처 기록"],
+      ["설계·제작", "제작 검수 후 검수성적서와 보고서 작성", "사진과 조치사항 첨부"],
+      ["설치", "현장 반입 일정, 안전관리자, PM 인계 확인", "현장 비상연락망 공유"],
+      ["설치", "기구/전기/PLC/WCS 인터페이스 기준 공유", "담당자별 확인"],
       ["테스트", "단동 → 연동 → WCS 통합 → FAT 순서로 테스트", "테스트 결과표 작성"],
-      ["테스트", "FAT 미승인 항목 클로징", "담당·기한 지정"],
-      ["양산", "초기 양산 30일 에러 대응 및 디버깅 기록", "재발방지 포함"]
+      ["테스트", "FAT 미승인 항목 이슈화", "담당·기한 지정"],
+      ["양산", "초기 양산 30일 에러 대응 및 디버깅 기록", "재발방지안 포함"]
     ];
 
-    const docs = [
+    const documents = [
       ["검토 의뢰", "영업부", "엔지니어링팀", "고객 요구 일정, 요구 범위"],
-      ["글로비스 사양서", "고객사/영업부", "엔지니어링팀", "기준 사양 존재 여부"],
+      ["사양서", "고객사/영업부", "엔지니어링팀", "기준 사양 존재 여부"],
       ["레이아웃", "고객사/엔지니어링팀", "협력업체/고객사/이행팀", "최신본, 변경 이력, 배포 대상"],
       ["협력업체 견적서", "협력업체", "엔지니어링팀", "스코프·사양 누락, 일정 가능 여부"],
       ["원가집계표", "엔지니어링팀", "영업부/이행팀", "맨데이, 보험료, 안전관리비, 마진 구조"],
-      ["알티올 견적서", "영업부", "고객사/엔지니어링팀", "엔지니어링팀 공동 검토"],
       ["발주서·계약서", "고객사/사업지원팀", "엔지니어링팀", "수령 여부, 선진행 판단"],
       ["킥오프 회의록", "엔지니어링팀", "전체 담당자", "역할, 일정, 스코프, 누락 항목"],
+      ["장납기품/사급품 목록", "엔지니어링팀", "이행팀/외주업체", "키엔스 라이트커튼, PCR, 오토 라벨 프린터"],
       ["승인도", "협력업체", "엔지니어링팀/고객사", "모듈별 상세도, 고객 승인"],
       ["검수성적서/보고서", "협력업체/엔지니어링팀", "내부 공유", "현장 사진, 이슈, 조치"],
       ["테스트 결과표", "엔지니어링팀/이행팀", "고객사/외주업체", "단동, 연동, WCS 통합, FAT 결과"]
@@ -672,120 +937,198 @@
     ];
 
     const templates = [
-      ["협력업체 견적 요청", "[견적요청] {프로젝트명} 사양서/레이아웃 검토 및 견적 요청", "안녕하세요.\n\n{프로젝트명} 관련하여 사양서 및 레이아웃 검토 후 견적 회신 요청드립니다.\n\n확인 요청사항\n1. 견적 범위 및 제외 범위\n2. 공사 가능 일정 및 투입 가능 인원\n3. 장납기품 여부\n4. 추가 확인이 필요한 사양\n\n첨부 예정 자료\n- 사양서\n- 레이아웃\n\n회신 요청일: {회신요청일}\n\n감사합니다."],
-      ["협력업체 일정 확인", "[일정확인] {프로젝트명} 공사 가능 일정 확인 요청", "안녕하세요.\n\n{프로젝트명} 진행 가능 일정 확인 요청드립니다.\n\n확인 부탁드릴 내용\n1. 설계 가능 시작일\n2. 제작 가능 기간\n3. 현장 설치 가능 기간\n4. 병행 진행 가능 여부\n5. 일정상 리스크 또는 사전 발주 필요 품목\n\n감사합니다."],
-      ["발주/계약 요청", "[발주요청] {프로젝트명} 외주업체 발주 및 계약 진행 요청", "안녕하세요.\n\n{프로젝트명} 관련 외주업체 발주 및 계약 진행 요청드립니다.\n\n요청 내용\n1. 업체명: {업체명}\n2. 발주 범위: {발주범위}\n3. 금액: {금액}\n4. 요청 일정: {요청일정}\n\n외주업체로의 공식 발송은 사업지원팀에서 진행 부탁드립니다.\n\n감사합니다."],
+      ["협력업체 견적 요청", "[견적요청] {프로젝트명} 사양서/레이아웃 검토 및 견적 요청", "안녕하세요.\n\n{프로젝트명} 관련 사양서 및 레이아웃 검토 후 견적 회신 요청드립니다.\n\n확인 요청사항\n1. 견적 범위 및 제외 범위\n2. 공사 가능 일정 및 투입 가능 인원\n3. 장납기품 여부\n4. 추가 확인이 필요한 사양\n\n첨부 예정 자료\n- 사양서\n- 레이아웃\n\n회신 요청일: {회신요청일}\n\n감사합니다."],
+      ["협력업체 일정 확인", "[일정확인] {프로젝트명} 공사 가능 일정 확인 요청", "안녕하세요.\n\n{프로젝트명} 진행 가능 일정 확인 요청드립니다.\n\n확인 부탁드리는 내용\n1. 설계 가능 시작일\n2. 제작 가능 기간\n3. 현장 설치 가능 기간\n4. 병행 진행 가능 여부\n5. 일정 리스크 또는 사전 발주 필요 항목\n\n감사합니다."],
+      ["발주/계약 요청", "[발주요청] {프로젝트명} 외주업체 발주 및 계약 진행 요청", "안녕하세요.\n\n{프로젝트명} 관련 외주업체 발주 및 계약 진행 요청드립니다.\n\n요청 내용\n1. 업체명: {업체명}\n2. 발주 범위: {발주범위}\n3. 금액: {금액}\n4. 요청 일정: {요청일정}\n\n외주업체 공식 발송은 사업지원팀 기준으로 진행 부탁드립니다.\n\n감사합니다."],
       ["킥오프 미팅 안내", "[킥오프] {프로젝트명} 킥오프 미팅 안내", "안녕하세요.\n\n{프로젝트명} 킥오프 미팅을 아래와 같이 진행하고자 합니다.\n\n일시: {미팅일시}\n장소/방식: {장소}\n참석 대상: 엔지니어링팀, 이행팀/PM, 협력업체, 관련 담당자\n\n주요 안건\n1. 사양 및 레이아웃 확인\n2. 담당 범위와 스코프 확정\n3. 일정 및 장납기품 확인\n4. 자료 공유 및 이슈 정리\n\n감사합니다."],
       ["승인도 검토 요청", "[승인도검토] {프로젝트명} 모듈별 승인도 검토 요청", "안녕하세요.\n\n{프로젝트명} 모듈별 승인도 검토 요청드립니다.\n\n검토 요청사항\n1. 레이아웃 최신본 반영 여부\n2. 모듈별 어셈블리 구성 적정성\n3. 고객 요구 사양 반영 여부\n4. 제작 전 보완 필요 사항\n\n감사합니다."],
-      ["검수 결과 공유", "[검수결과] {프로젝트명} 제작 검수 결과 공유", "안녕하세요.\n\n{프로젝트명} 제작 검수 결과 공유드립니다.\n\n검수 개요\n- 검수일: {검수일}\n- 검수 장소: {장소}\n- 참석자: {참석자}\n\n주요 확인 결과\n1. 제작 진행 상태\n2. 보완 필요 사항\n3. 검수성적서 수령 여부\n4. 후속 조치 담당 및 기한\n\n감사합니다."],
-      ["FAT 일정/결과 공유", "[FAT] {프로젝트명} FAT 일정 및 확인 요청", "안녕하세요.\n\n{프로젝트명} FAT 진행 관련하여 일정 및 확인사항 공유드립니다.\n\n진행 순서\n1. 단동 Test\n2. 연동 Test\n3. WCS 통합 Test\n4. FAT 고객 승인\n\n확인 요청사항\n- FAT 예정일: {FAT일정}\n- 미승인/보완 항목 여부\n- 고객 승인 기준\n- 양산 전 클로징 필요 항목\n\n감사합니다."]
+      ["FAT 일정/결과 공유", "[FAT] {프로젝트명} FAT 일정 및 확인 요청", "안녕하세요.\n\n{프로젝트명} FAT 진행 관련 일정 및 확인사항 공유드립니다.\n\n진행 순서\n1. 단동 Test\n2. 연동 Test\n3. WCS 통합 Test\n4. FAT 고객 승인\n\n확인 요청사항\n- FAT 예정일: {FAT일정}\n- 미승인 보완 항목 여부\n- 고객 승인 기준\n- 양산 전 이슈화 필요 항목\n\n감사합니다."]
     ];
 
-    const phaseColors = {
-      "수주 전": 0x2f80ed,
-      "수주 후": 0x00897b,
-      "설계·제작": 0xf2994a,
-      "설치": 0x6c5ce7,
-      "테스트": 0xc0392b,
-      "양산": 0x2e7d32
-    };
-    const phaseCss = {
-      "수주 전": "var(--blue)",
-      "수주 후": "var(--teal)",
-      "설계·제작": "var(--orange)",
-      "설치": "var(--violet)",
-      "테스트": "var(--red)",
-      "양산": "var(--green)"
-    };
-    const phaseHex = {
-      "수주 전": "#2f80ed",
-      "수주 후": "#00897b",
-      "설계·제작": "#f2994a",
-      "설치": "#6c5ce7",
-      "테스트": "#c0392b",
-      "양산": "#2e7d32"
-    };
+    const defaultProjects = [
+      { id: "tm-auto", name: "TM적입 자동화", owner: "엔지니어링팀", step: 10, due: "2026-08-07", status: "주의", vendor: "PM/이행팀 협의", issue: "킥오프 자료와 협력업체 일정 취합 필요" },
+      { id: "globis-layout", name: "글로비스 레이아웃 검토", owner: "주니어 담당", step: 5, due: "2026-08-02", status: "정상", vendor: "협력업체 후보", issue: "견적 범위와 공사 가능 일정 확인 중" },
+      { id: "fat-ready", name: "FAT 준비 샘플", owner: "PM", step: 18, due: "2026-08-18", status: "위험", vendor: "PLC/WCS", issue: "WCS 통합 테스트 미해결 항목 존재" }
+    ];
 
-    const stateKey = "engineering3dManualChecksV1";
-    let selected = 1;
-    let threeObjects = [];
+    const stateKey = "engineering3dProjectManualV3";
+    let selectedStep = 1;
+    let activeProjectId = "tm-auto";
+    let statusFilter = "전체";
     let selectedTemplate = 0;
+    let calendarDate = new Date(2026, 7, 1);
+    let threeObjects = [];
 
-    function getState() {
-      try { return JSON.parse(localStorage.getItem(stateKey)) || {}; } catch { return {}; }
+    function phaseOf(stepId) {
+      return steps.find(s => s.id === Number(stepId))?.phase || "수주 전";
     }
 
-    function setState(state) {
+    function phaseMeta(name) {
+      return phases.find(p => p.name === name) || phases[0];
+    }
+
+    function readState() {
+      try {
+        const parsed = JSON.parse(localStorage.getItem(stateKey));
+        if (parsed && Array.isArray(parsed.projects)) return parsed;
+      } catch {}
+      return { checks: {}, projects: defaultProjects };
+    }
+
+    function writeState(state) {
       localStorage.setItem(stateKey, JSON.stringify(state));
     }
 
-    function toast(text) {
+    function toast(message) {
       const el = document.getElementById("toast");
-      el.textContent = text;
+      el.textContent = message;
       el.classList.add("show");
       setTimeout(() => el.classList.remove("show"), 1800);
     }
 
-    function renderNav() {
-      const nav = document.getElementById("stepNav");
-      nav.innerHTML = steps.map(step => `<button class="nav-btn ${step.id === selected ? "active" : ""}" data-step="${step.id}" type="button"><span>${step.id}. ${step.task}</span><b>${step.phase}</b></button>`).join("");
-      nav.querySelectorAll("[data-step]").forEach(btn => {
-        btn.addEventListener("click", () => selectStep(Number(btn.dataset.step), true));
+    function projectProgress(project) {
+      return Math.round((project.step - 1) / (steps.length - 1) * 100);
+    }
+
+    function renderLegend() {
+      document.getElementById("phaseLegend").innerHTML = phases.map(p => `<span class="phase-chip"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${p.color};margin-right:6px"></span>${p.name}</span>`).join("");
+    }
+
+    function renderStepSelect() {
+      const select = document.getElementById("projectStepInput");
+      select.innerHTML = steps.map(step => `<option value="${step.id}">${step.id}. ${step.task}</option>`).join("");
+    }
+
+    function renderStats() {
+      const state = readState();
+      const done = Object.values(state.checks).filter(Boolean).length;
+      const pct = Math.round(done / checklist.length * 100);
+      const active = state.projects.find(p => p.id === activeProjectId) || state.projects[0];
+      const issueCount = state.projects.filter(p => p.issue && p.issue.trim()).length;
+      const month = calendarDate.getMonth();
+      const year = calendarDate.getFullYear();
+      const eventCount = state.projects.filter(p => {
+        const d = new Date(p.due + "T00:00:00");
+        return d.getMonth() === month && d.getFullYear() === year;
+      }).length;
+      document.getElementById("globalProgressText").textContent = `${pct}%`;
+      document.getElementById("globalProgressFill").style.width = `${pct}%`;
+      document.getElementById("statProjects").textContent = state.projects.length;
+      document.getElementById("statIssues").textContent = issueCount;
+      document.getElementById("statEvents").textContent = eventCount;
+      if (active) {
+        document.getElementById("activeProjectShort").textContent = active.name.slice(0, 2);
+        document.getElementById("activeProjectName").textContent = `${active.name} · ${active.step}단계 ${steps[active.step - 1].task}`;
+      }
+    }
+
+    function renderProjects() {
+      const state = readState();
+      const filtered = state.projects.filter(p => statusFilter === "전체" || p.status === statusFilter);
+      document.getElementById("projectList").innerHTML = filtered.map(project => {
+        const phase = phaseOf(project.step);
+        const meta = phaseMeta(phase);
+        return `<button class="project-row ${project.id === activeProjectId ? "active" : ""}" data-project="${project.id}" type="button">
+          <div>
+            <div class="project-title"><span>${project.name}</span><span class="badge" style="background:${statusColor(project.status)}">${project.status}</span><span class="badge" style="background:${meta.color}">${phase}</span></div>
+            <div class="project-meta">담당: ${project.owner || "-"} · 협력/PM: ${project.vendor || "-"} · 마감: ${project.due || "-"}<br>${project.issue || "등록된 이슈 없음"}</div>
+            <div class="bar" style="background:#e8eef4"><span style="width:${projectProgress(project)}%;background:${meta.color}"></span></div>
+          </div>
+          <div style="display:grid;gap:6px;justify-items:end">
+            <span style="font-size:22px;font-weight:900;color:var(--navy)">${projectProgress(project)}%</span>
+            <span style="font-size:12px;color:var(--muted)">${project.step}/20</span>
+          </div>
+        </button>`;
+      }).join("");
+      document.querySelectorAll("[data-project]").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeProjectId = btn.dataset.project;
+          const active = readState().projects.find(p => p.id === activeProjectId);
+          if (active) selectStep(active.step, false);
+          renderAll();
+        });
       });
+      renderBoard();
+    }
+
+    function statusColor(status) {
+      if (status === "위험") return "var(--red)";
+      if (status === "주의") return "var(--amber)";
+      return "var(--green)";
+    }
+
+    function renderBoard() {
+      const state = readState();
+      document.getElementById("projectBoard").innerHTML = phases.map(phase => {
+        const items = state.projects.filter(p => phaseOf(p.step) === phase.name);
+        return `<div class="lane">
+          <h4><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${phase.color};margin-right:6px"></span>${phase.name}</h4>
+          ${items.map(p => `<div class="lane-item" style="border-left-color:${phase.color}"><b>${p.name}</b><br>${p.step}. ${steps[p.step - 1].task}<br><span style="color:var(--muted)">마감 ${p.due || "-"} · ${p.status}</span></div>`).join("") || `<div style="color:var(--muted);font-size:12px">등록 프로젝트 없음</div>`}
+        </div>`;
+      }).join("");
+    }
+
+    function renderCalendar() {
+      const state = readState();
+      const y = calendarDate.getFullYear();
+      const m = calendarDate.getMonth();
+      const first = new Date(y, m, 1);
+      const start = new Date(y, m, 1 - first.getDay());
+      document.getElementById("calendarTitle").textContent = `${y}년 ${m + 1}월`;
+      const cells = [];
+      for (let i = 0; i < 42; i++) {
+        const d = new Date(start);
+        d.setDate(start.getDate() + i);
+        const iso = d.toISOString().slice(0, 10);
+        const events = state.projects.filter(p => p.due === iso);
+        cells.push(`<div class="day ${d.getMonth() === m ? "" : "dim"}">
+          <strong>${d.getDate()}</strong>
+          ${events.map(p => `<div class="event" style="border-left-color:${statusColor(p.status)}"><b>${p.name}</b><br>${p.step}. ${steps[p.step - 1].task}</div>`).join("")}
+        </div>`);
+      }
+      document.getElementById("calendarGrid").innerHTML = cells.join("");
     }
 
     function renderManual() {
-      const step = steps.find(s => s.id === selected);
-      const state = getState();
-      const related = checklist.map((c, index) => ({ index, ...{ phase: c[0], item: c[1], standard: c[2] }})).filter(c => c.phase === step.phase);
-      document.getElementById("currentStepLabel").textContent = `${step.id} / ${steps.length}`;
-      document.getElementById("currentStepName").textContent = step.task;
-      document.getElementById("manualPanel").innerHTML = `
+      document.getElementById("stepList").innerHTML = steps.map(step => `<button class="step-btn ${step.id === selectedStep ? "active" : ""}" data-step="${step.id}" type="button"><span class="step-title">${step.id}. ${step.task}</span><span class="step-phase">${step.phase}</span></button>`).join("");
+      document.querySelectorAll("[data-step]").forEach(btn => btn.addEventListener("click", () => selectStep(Number(btn.dataset.step), true)));
+      const step = steps[selectedStep - 1];
+      const state = readState();
+      const related = checklist.map((row, index) => ({ index, phase: row[0], item: row[1], standard: row[2] })).filter(row => row.phase === step.phase);
+      document.getElementById("manualDetail").innerHTML = `
         <div>
-          <span class="badge" style="background:${phaseCss[step.phase]}">${step.phase} · ${step.id}단계</span>
-          <h2>${step.task}</h2>
-          <div class="detail-grid">
-            <div class="info"><label>담당/협업</label><div>${step.owner}</div></div>
-            <div class="info"><label>산출물/확인자료</label><div>${step.docs}</div></div>
-            <div class="info"><label>핵심 체크</label><div>${step.check}</div></div>
-            <div class="info"><label>주의사항</label><div>${step.caution}</div></div>
-          </div>
+          <span class="badge" style="background:${phaseMeta(step.phase).color}">${step.phase} · ${step.id}단계</span>
+          <h2 style="margin:10px 0;color:var(--navy)">${step.task}</h2>
         </div>
-        <div class="check-stack">
-          ${related.map(c => `<label class="check-row ${state[c.index] ? "done" : ""}">
-            <input type="checkbox" data-check="${c.index}" ${state[c.index] ? "checked" : ""} />
-            <span><b>${c.item}</b><small>${c.standard}</small></span>
+        <div class="detail-grid">
+          <div class="info"><label>담당/협업</label>${step.owner}</div>
+          <div class="info"><label>산출물/확인자료</label>${step.docs}</div>
+          <div class="info"><label>핵심 체크</label>${step.check}</div>
+          <div class="info"><label>주의사항</label>${step.caution}</div>
+        </div>
+        <div style="display:grid;gap:8px">
+          ${related.map(row => `<label class="check-row ${state.checks[row.index] ? "done" : ""}">
+            <input type="checkbox" data-check="${row.index}" ${state.checks[row.index] ? "checked" : ""}>
+            <span><b>${row.item}</b><small>${row.standard}</small></span>
           </label>`).join("")}
-        </div>
-      `;
-      document.querySelectorAll("[data-check]").forEach(input => {
-        input.addEventListener("change", event => {
-          const next = getState();
-          next[event.target.dataset.check] = event.target.checked;
-          setState(next);
-          renderManual();
-          renderProgress();
-        });
-      });
-    }
-
-    function renderProgress() {
-      const state = getState();
-      const done = checklist.filter((_, i) => state[i]).length;
-      const pct = Math.round(done / checklist.length * 100);
-      document.getElementById("progressText").textContent = `${pct}%`;
-      document.getElementById("progressFill").style.width = `${pct}%`;
+        </div>`;
+      document.querySelectorAll("[data-check]").forEach(input => input.addEventListener("change", event => {
+        const next = readState();
+        next.checks[event.target.dataset.check] = event.target.checked;
+        writeState(next);
+        renderAll();
+      }));
+      updateThreeSelection();
     }
 
     function renderTables() {
-      document.getElementById("docRows").innerHTML = docs.map(row => `<tr>${row.map(v => `<td>${v}</td>`).join("")}</tr>`).join("");
-      document.getElementById("decisionRows").innerHTML = decisions.map(row => `<tr>${row.map(v => `<td>${v}</td>`).join("")}</tr>`).join("");
+      document.getElementById("docRows").innerHTML = documents.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("");
+      document.getElementById("decisionRows").innerHTML = decisions.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("");
     }
 
     function renderMail() {
-      const wrap = document.getElementById("templateButtons");
-      wrap.innerHTML = templates.map((t, index) => `<button class="template-btn ${index === selectedTemplate ? "active" : ""}" data-template="${index}" type="button">${t[0]}</button>`).join("");
-      wrap.querySelectorAll("[data-template]").forEach(btn => btn.addEventListener("click", () => {
+      document.getElementById("templateButtons").innerHTML = templates.map((t, i) => `<button class="template-btn ${i === selectedTemplate ? "active" : ""}" data-template="${i}" type="button">${t[0]}</button>`).join("");
+      document.querySelectorAll("[data-template]").forEach(btn => btn.addEventListener("click", () => {
         selectedTemplate = Number(btn.dataset.template);
         fillMail();
       }));
@@ -801,36 +1144,61 @@
     }
 
     function updateMailto() {
-      const to = document.getElementById("mailTo").value;
-      const cc = document.getElementById("mailCc").value;
-      const subject = document.getElementById("mailSubject").value;
-      const body = document.getElementById("mailBody").value;
-      const params = new URLSearchParams({ subject, body });
+      const params = new URLSearchParams({
+        subject: document.getElementById("mailSubject").value,
+        body: document.getElementById("mailBody").value
+      });
+      const cc = document.getElementById("mailCc").value.trim();
       if (cc) params.set("cc", cc);
-      document.getElementById("mailtoBtn").href = `mailto:${encodeURIComponent(to)}?${params.toString()}`;
+      document.getElementById("mailtoBtn").href = `mailto:${encodeURIComponent(document.getElementById("mailTo").value.trim())}?${params.toString()}`;
+    }
+
+    function selectStep(id, scroll) {
+      selectedStep = Math.max(1, Math.min(steps.length, id));
+      if (scroll) document.getElementById("manual").scrollIntoView({ behavior: "smooth", block: "start" });
+      renderManual();
     }
 
     function bindUi() {
+      document.querySelectorAll("[data-status]").forEach(btn => btn.addEventListener("click", () => {
+        statusFilter = btn.dataset.status;
+        document.querySelectorAll("[data-status]").forEach(b => b.classList.toggle("active", b === btn));
+        renderProjects();
+      }));
+      document.getElementById("addProjectBtn").addEventListener("click", () => {
+        const name = document.getElementById("projectNameInput").value.trim();
+        if (!name) return toast("프로젝트명을 입력해주세요.");
+        const next = readState();
+        next.projects.unshift({
+          id: `${Date.now()}`,
+          name,
+          owner: document.getElementById("projectOwnerInput").value.trim(),
+          step: Number(document.getElementById("projectStepInput").value),
+          due: document.getElementById("projectDueInput").value,
+          status: document.getElementById("projectStatusInput").value,
+          vendor: document.getElementById("projectVendorInput").value.trim(),
+          issue: document.getElementById("projectIssueInput").value.trim()
+        });
+        activeProjectId = next.projects[0].id;
+        writeState(next);
+        ["projectNameInput","projectOwnerInput","projectDueInput","projectVendorInput","projectIssueInput"].forEach(id => document.getElementById(id).value = "");
+        renderAll();
+        toast("프로젝트를 추가했습니다.");
+      });
+      document.getElementById("prevMonth").addEventListener("click", () => { calendarDate.setMonth(calendarDate.getMonth() - 1); renderAll(); });
+      document.getElementById("nextMonth").addEventListener("click", () => { calendarDate.setMonth(calendarDate.getMonth() + 1); renderAll(); });
+      document.getElementById("prevStep").addEventListener("click", () => selectStep(selectedStep - 1, true));
+      document.getElementById("nextStep").addEventListener("click", () => selectStep(selectedStep + 1, true));
       document.getElementById("resetBtn").addEventListener("click", () => {
-        if (confirm("저장된 체크 상태를 초기화할까요?")) {
+        if (confirm("프로젝트와 체크 상태를 초기 샘플 데이터로 되돌릴까요?")) {
           localStorage.removeItem(stateKey);
-          renderManual();
-          renderProgress();
-          toast("체크 상태를 초기화했습니다.");
+          activeProjectId = "tm-auto";
+          selectedStep = 1;
+          renderAll();
+          toast("초기화했습니다.");
         }
       });
-      document.getElementById("exportBtn").addEventListener("click", () => {
-        const state = getState();
-        const rows = [["상태","구분","체크 항목","확인 기준"], ...checklist.map((row, i) => [state[i] ? "완료" : "미완료", ...row])];
-        const csv = rows.map(row => row.map(cell => `"${String(cell).replaceAll('"','""')}"`).join(",")).join("\n");
-        const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "엔지니어링_3D매뉴얼_체크현황.csv";
-        a.click();
-        URL.revokeObjectURL(url);
-      });
+      document.getElementById("exportBtn").addEventListener("click", exportCsv);
       document.getElementById("gmailBtn").addEventListener("click", () => {
         const params = new URLSearchParams({
           view: "cm",
@@ -849,106 +1217,93 @@
       ["mailTo", "mailCc", "mailSubject", "mailBody"].forEach(id => document.getElementById(id).addEventListener("input", updateMailto));
     }
 
-    function selectStep(id, scroll) {
-      selected = id;
-      renderNav();
+    function exportCsv() {
+      const state = readState();
+      const projectRows = [["구분","프로젝트","담당","단계","단계명","마감","상태","협력/PM","이슈"], ...state.projects.map(p => ["프로젝트", p.name, p.owner, p.step, steps[p.step - 1].task, p.due, p.status, p.vendor, p.issue])];
+      const checkRows = [["구분","완료여부","단계구분","체크항목","확인기준"], ...checklist.map((row, i) => ["체크리스트", state.checks[i] ? "완료" : "미완료", ...row])];
+      const csv = [...projectRows, [], ...checkRows].map(row => row.map(cell => `"${String(cell ?? "").replaceAll('"','""')}"`).join(",")).join("\n");
+      const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "엔지니어링_프로젝트_체크현황.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function renderAll() {
+      renderStats();
+      renderProjects();
+      renderCalendar();
       renderManual();
-      updateThreeSelection();
-      if (scroll) document.getElementById("manualPanel").scrollIntoView({ behavior: "smooth", block: "start" });
+      renderTables();
     }
 
     async function initThree() {
       try {
         const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js");
         const canvas = document.getElementById("threeStage");
-        const stage = document.getElementById("stage");
+        const stage = document.querySelector(".stage");
         const scene = new THREE.Scene();
-        scene.background = null;
-        const camera = new THREE.PerspectiveCamera(48, stage.clientWidth / stage.clientHeight, 0.1, 1000);
-        camera.position.set(0, 15, 30);
+        const camera = new THREE.PerspectiveCamera(48, stage.clientWidth / stage.clientHeight, .1, 1000);
+        camera.position.set(0, 16, 32);
         camera.lookAt(0, 0, 0);
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(stage.clientWidth, stage.clientHeight);
 
-        scene.add(new THREE.HemisphereLight(0xffffff, 0x59708b, 2.2));
-        const light = new THREE.DirectionalLight(0xffffff, 2.8);
-        light.position.set(8, 18, 12);
+        scene.add(new THREE.HemisphereLight(0xffffff, 0x506680, 2.2));
+        const light = new THREE.DirectionalLight(0xffffff, 2.7);
+        light.position.set(10, 18, 12);
         scene.add(light);
 
-        const floorGeo = new THREE.PlaneGeometry(48, 22);
-        const floorMat = new THREE.MeshStandardMaterial({ color: 0xdfe8f1, roughness: .78, metalness: .08 });
-        const floor = new THREE.Mesh(floorGeo, floorMat);
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(52, 24), new THREE.MeshStandardMaterial({ color: 0xdfe8ef, roughness: .82, metalness: .05 }));
         floor.rotation.x = -Math.PI / 2;
-        floor.position.y = -1.1;
+        floor.position.y = -1.15;
         scene.add(floor);
 
-        const railMat = new THREE.MeshStandardMaterial({ color: 0x6d8196, roughness: .5, metalness: .25 });
-        [-1.2, 1.2].forEach(z => {
-          const rail = new THREE.Mesh(new THREE.BoxGeometry(45, .16, .18), railMat);
-          rail.position.set(0, -.58, z);
+        const railMat = new THREE.MeshStandardMaterial({ color: 0x536779, roughness: .45, metalness: .25 });
+        [-1.25, 1.25].forEach(z => {
+          const rail = new THREE.Mesh(new THREE.BoxGeometry(46, .16, .20), railMat);
+          rail.position.set(0, -.52, z);
           scene.add(rail);
         });
 
-        threeObjects = [];
         const raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
-        const labelCanvas = document.createElement("canvas");
-        const ctx = labelCanvas.getContext("2d");
-        labelCanvas.width = 512;
-        labelCanvas.height = 160;
-
-        function makeLabel(text, color) {
-          ctx.clearRect(0, 0, labelCanvas.width, labelCanvas.height);
-          ctx.fillStyle = "rgba(255,255,255,.94)";
-          ctx.fillRect(0, 0, labelCanvas.width, labelCanvas.height);
-          ctx.strokeStyle = "#d6e0ea";
-          ctx.lineWidth = 8;
-          ctx.strokeRect(4, 4, labelCanvas.width - 8, labelCanvas.height - 8);
-          ctx.fillStyle = color;
-          ctx.fillRect(0, 0, 14, labelCanvas.height);
-          ctx.fillStyle = "#10283f";
-          ctx.font = "700 34px Malgun Gothic, sans-serif";
-          const lines = text.match(/.{1,14}/g) || [text];
-          lines.slice(0, 2).forEach((line, i) => ctx.fillText(line, 34, 58 + i * 42));
-          const texture = new THREE.CanvasTexture(labelCanvas);
-          const material = new THREE.SpriteMaterial({ map: texture });
-          const sprite = new THREE.Sprite(material);
-          sprite.scale.set(5.1, 1.6, 1);
-          return sprite;
-        }
+        const movers = [];
+        threeObjects = [];
 
         steps.forEach((step, index) => {
-          const x = (index - 9.5) * 2.2;
-          const y = index % 2 === 0 ? 0 : .65;
-          const color = phaseColors[step.phase];
-          const mat = new THREE.MeshStandardMaterial({ color, roughness: .42, metalness: .16 });
-          const mesh = new THREE.Mesh(new THREE.BoxGeometry(1.55, 1.15, 1.55), mat);
-          mesh.position.set(x, y, 0);
-          mesh.userData.stepId = step.id;
-          scene.add(mesh);
-          const top = new THREE.Mesh(new THREE.CylinderGeometry(.43, .43, .15, 32), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .35 }));
-          top.position.set(x, y + .68, 0);
-          top.userData.stepId = step.id;
-          scene.add(top);
-          const label = makeLabel(`${step.id}. ${step.task}`, phaseHex[step.phase]);
-          label.position.set(x, y + 2.0, index % 2 === 0 ? -1.8 : 1.8);
+          const x = (index - 9.5) * 2.22;
+          const y = index % 2 ? .58 : 0;
+          const meta = phaseMeta(step.phase);
+          const body = new THREE.Mesh(new THREE.BoxGeometry(1.55, 1.1, 1.55), new THREE.MeshStandardMaterial({ color: meta.three, roughness: .38, metalness: .16 }));
+          body.position.set(x, y, 0);
+          body.userData.stepId = step.id;
+          scene.add(body);
+          const cap = new THREE.Mesh(new THREE.CylinderGeometry(.46, .46, .16, 32), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .4, metalness: .08 }));
+          cap.position.set(x, y + .68, 0);
+          cap.userData.stepId = step.id;
+          scene.add(cap);
+          const label = makeLabel(THREE, `${step.id}. ${step.task}`, meta.color);
+          label.position.set(x, y + 1.95, index % 2 ? 1.85 : -1.85);
           scene.add(label);
-          threeObjects.push(mesh, top);
+          movers.push(body, cap);
+          threeObjects.push(body, cap);
         });
 
-        const shuttle = new THREE.Mesh(new THREE.SphereGeometry(.33, 32, 16), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x2f80ed, emissiveIntensity: .4 }));
+        const shuttle = new THREE.Mesh(new THREE.SphereGeometry(.34, 32, 16), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x1f9bb4, emissiveIntensity: .6 }));
         scene.add(shuttle);
 
-        function onClick(event) {
+        canvas.addEventListener("click", event => {
           const rect = canvas.getBoundingClientRect();
           pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
           pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
           raycaster.setFromCamera(pointer, camera);
           const hit = raycaster.intersectObjects(threeObjects)[0];
-          if (hit) selectStep(hit.object.userData.stepId, true);
-        }
-        canvas.addEventListener("click", onClick);
+          if (hit?.object?.userData?.stepId) selectStep(hit.object.userData.stepId, true);
+        });
 
         window.addEventListener("resize", () => {
           renderer.setSize(stage.clientWidth, stage.clientHeight);
@@ -957,34 +1312,51 @@
         });
 
         function animate(time) {
-          const selectedIndex = selected - 1;
-          const targetX = (selectedIndex - 9.5) * 2.2;
+          const targetX = (selectedStep - 1 - 9.5) * 2.22;
           shuttle.position.x += (targetX - shuttle.position.x) * .08;
           shuttle.position.y = 1.4 + Math.sin(time * .004) * .16;
-          shuttle.position.z = Math.sin(time * .002) * .8;
-          threeObjects.forEach(obj => {
-            if (obj.userData.stepId) {
-              const active = obj.userData.stepId === selected;
-              obj.rotation.y += active ? .025 : .005;
-              obj.scale.setScalar(active ? 1.18 : 1);
-            }
+          shuttle.position.z = Math.sin(time * .002) * .9;
+          movers.forEach(obj => {
+            const active = obj.userData.stepId === selectedStep;
+            obj.rotation.y += active ? .028 : .006;
+            obj.scale.setScalar(active ? 1.18 : 1);
           });
           renderer.render(scene, camera);
           requestAnimationFrame(animate);
         }
         requestAnimationFrame(animate);
-        window.updateThreeSelection = updateThreeSelection;
       } catch (error) {
-        drawFallbackCanvas();
-        document.getElementById("fallback3d").style.display = "flex";
+        drawFallback();
       }
+    }
+
+    function makeLabel(THREE, text, color) {
+      const canvas = document.createElement("canvas");
+      canvas.width = 560;
+      canvas.height = 160;
+      const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "rgba(255,255,255,.94)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = color;
+      ctx.fillRect(0, 0, 16, canvas.height);
+      ctx.strokeStyle = "#d8e0e8";
+      ctx.lineWidth = 8;
+      ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
+      ctx.fillStyle = "#122238";
+      ctx.font = "800 34px Malgun Gothic, sans-serif";
+      const lines = text.match(/.{1,14}/g) || [text];
+      lines.slice(0, 2).forEach((line, i) => ctx.fillText(line, 34, 58 + i * 42));
+      const texture = new THREE.CanvasTexture(canvas);
+      const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture }));
+      sprite.scale.set(5.5, 1.6, 1);
+      return sprite;
     }
 
     function updateThreeSelection() {}
 
-    function drawFallbackCanvas() {
+    function drawFallback() {
       const canvas = document.getElementById("threeStage");
-      const stage = document.getElementById("stage");
+      const stage = document.querySelector(".stage");
       const ctx = canvas.getContext("2d");
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       function size() {
@@ -994,85 +1366,28 @@
         canvas.style.height = stage.clientHeight + "px";
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
-      function iso(x, y, z) {
-        const cx = stage.clientWidth / 2;
-        const cy = stage.clientHeight / 2 + 80;
-        return {
-          x: cx + (x - z) * 26,
-          y: cy + (x + z) * 12 - y * 30
-        };
-      }
-      function block(x, z, w, d, h, color, label) {
-        const p = iso(x, h, z);
-        ctx.fillStyle = "rgba(16,40,63,.12)";
-        ctx.beginPath();
-        ctx.ellipse(p.x + 10, p.y + 44, 48, 18, 0, 0, Math.PI * 2);
-        ctx.fill();
-        const top = [iso(x, h, z), iso(x + w, h, z + d), iso(x, h, z + d), iso(x - w, h, z + d)];
-        const front = [iso(x, h, z + d), iso(x + w, h, z + d), iso(x + w, 0, z + d), iso(x, 0, z + d)];
-        const side = [iso(x, h, z), iso(x + w, h, z + d), iso(x + w, 0, z + d), iso(x, 0, z)];
-        function poly(points, fill) {
-          ctx.fillStyle = fill;
-          ctx.beginPath();
-          points.forEach((pt, i) => i ? ctx.lineTo(pt.x, pt.y) : ctx.moveTo(pt.x, pt.y));
-          ctx.closePath();
-          ctx.fill();
-        }
-        poly(side, shade(color, -28));
-        poly(front, shade(color, -16));
-        poly(top, color);
-        ctx.fillStyle = "#10283f";
-        ctx.font = "700 12px Malgun Gothic, sans-serif";
-        ctx.textAlign = "center";
-        const labelPoint = iso(x + .4, h + .6, z + d + .7);
-        ctx.fillText(label, labelPoint.x, labelPoint.y);
-      }
-      function shade(hex, amt) {
-        const n = parseInt(hex.slice(1), 16);
-        const r = Math.max(0, Math.min(255, (n >> 16) + amt));
-        const g = Math.max(0, Math.min(255, ((n >> 8) & 255) + amt));
-        const b = Math.max(0, Math.min(255, (n & 255) + amt));
-        return `rgb(${r},${g},${b})`;
-      }
-      function render() {
+      function draw() {
+        size();
         ctx.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
-        const grd = ctx.createLinearGradient(0, 0, stage.clientWidth, stage.clientHeight);
-        grd.addColorStop(0, "#eaf0f6");
-        grd.addColorStop(1, "#f9fbfd");
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, stage.clientWidth, stage.clientHeight);
-        ctx.strokeStyle = "#9fb1c2";
-        ctx.lineWidth = 5;
-        ctx.beginPath();
-        const a = iso(-10, 0, 0), b = iso(11, 0, 0);
-        ctx.moveTo(a.x, a.y);
-        ctx.lineTo(b.x, b.y);
-        ctx.stroke();
-        const phaseStarts = [
-          ["수주 전", -9, "#2f80ed"],
-          ["수주 후", -4, "#00897b"],
-          ["설계·제작", .5, "#f2994a"],
-          ["설치", 4.5, "#6c5ce7"],
-          ["테스트", 7.5, "#c0392b"],
-          ["양산", 10, "#2e7d32"]
-        ];
-        phaseStarts.forEach(([label, x, color], i) => block(x, i % 2 ? .8 : -.8, 1.2, 1.2, 1.5, color, label));
-        const active = steps[selected - 1];
-        const activeX = -9 + (selected - 1) * 1.05;
-        block(activeX, -2.7, 1.4, 1.4, 2.2, phaseHex[active.phase], `${selected}. ${active.phase}`);
-        requestAnimationFrame(render);
+        steps.forEach((step, index) => {
+          const x = 80 + (index % 5) * 150;
+          const y = 270 + Math.floor(index / 5) * 82;
+          ctx.fillStyle = phaseMeta(step.phase).color;
+          ctx.fillRect(x, y, 118, 48);
+          ctx.fillStyle = "#fff";
+          ctx.font = "700 12px Malgun Gothic";
+          ctx.fillText(`${step.id}. ${step.task}`.slice(0, 13), x + 8, y + 28);
+        });
       }
-      size();
-      window.addEventListener("resize", size);
-      render();
+      draw();
+      window.addEventListener("resize", draw);
     }
 
-    renderNav();
-    renderManual();
-    renderProgress();
-    renderTables();
-    renderMail();
+    renderLegend();
+    renderStepSelect();
     bindUi();
+    renderAll();
+    renderMail();
     initThree();
   </script>
 </body>
