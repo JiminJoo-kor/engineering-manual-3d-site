@@ -176,6 +176,10 @@
       display: none;
     }
 
+    .app.home-mode .workspace-shell {
+      display: none;
+    }
+
     .hero {
       position: relative;
       min-height: 660px;
@@ -384,6 +388,12 @@
       transition: .18s ease;
     }
 
+    .lane,
+    .agent-card {
+      position: relative;
+      overflow: hidden;
+    }
+
     .menu-btn span:first-child {
       width: 28px;
       height: 28px;
@@ -524,6 +534,147 @@
       padding: 7px 11px;
       font-size: 12px;
       font-weight: 900;
+    }
+
+    body {
+      background:
+        linear-gradient(135deg, rgba(5,10,18,.96), rgba(13,24,36,.92)),
+        #070d16;
+    }
+
+    .topbar {
+      background: rgba(7,13,22,.86);
+      border-bottom-color: rgba(148,173,198,.14);
+    }
+
+    .brand h1,
+    .nav a,
+    .btn,
+    .section-title h3,
+    .panel-label,
+    .project-name,
+    .side-menu h3,
+    .ai-panel h3 {
+      color: #f4f8fc;
+    }
+
+    .brand p,
+    .section-title span,
+    .panel-label span,
+    .project-meta,
+    .ai-card p,
+    .agent-card p {
+      color: rgba(224,236,247,.64);
+    }
+
+    .btn {
+      border-color: rgba(154,184,214,.18);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.045));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 12px 26px rgba(0,0,0,.22);
+    }
+
+    .btn.primary,
+    .tab-btn.active {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.20), transparent),
+        linear-gradient(135deg, #1b2b42, #2f6df6 58%, #00a896);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.26), 0 20px 42px rgba(47,109,246,.28);
+    }
+
+    .section,
+    .side-menu,
+    .ai-panel {
+      border-color: rgba(154,184,214,.16);
+      background:
+        linear-gradient(145deg, rgba(24,37,52,.94), rgba(10,18,30,.88));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 26px 60px rgba(0,0,0,.28);
+    }
+
+    .section {
+      position: relative;
+    }
+
+    .section::before,
+    .side-menu::before,
+    .ai-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      border-radius: inherit;
+      background:
+        linear-gradient(135deg, rgba(102,215,255,.14), transparent 34%),
+        linear-gradient(315deg, rgba(47,109,246,.12), transparent 36%);
+      opacity: .86;
+    }
+
+    .section > *,
+    .side-menu > *,
+    .ai-panel > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    input,
+    textarea,
+    select,
+    .project-card,
+    .lane,
+    .radar-card,
+    .doc-card,
+    .decision-card,
+    .source-item,
+    .flow-step,
+    .template-btn,
+    .agent-card,
+    .ai-card {
+      border-color: rgba(154,184,214,.15);
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.105), rgba(255,255,255,.045));
+      color: #eef6ff;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 18px 38px rgba(0,0,0,.18);
+    }
+
+    .project-card::after,
+    .lane::after,
+    .agent-card::after {
+      content: "";
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(102,215,255,.20), rgba(47,109,246,.06));
+      transform: rotateX(52deg) rotateZ(35deg);
+      opacity: .58;
+      pointer-events: none;
+    }
+
+    .project-issue,
+    .project-action,
+    .detail-metric,
+    .info,
+    .check-row,
+    .day,
+    .event {
+      background: rgba(255,255,255,.06);
+      color: rgba(238,246,255,.88);
+      border-color: rgba(154,184,214,.12);
+    }
+
+    .menu-btn {
+      color: rgba(238,246,255,.86);
+    }
+
+    .menu-btn.active,
+    .menu-btn:hover {
+      background:
+        linear-gradient(145deg, rgba(47,109,246,.22), rgba(102,215,255,.08));
+      border-color: rgba(102,215,255,.28);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 14px 30px rgba(0,0,0,.24);
     }
 
     .section-head {
@@ -876,6 +1027,7 @@
       grid-template-columns: minmax(360px, .94fr) minmax(520px, 1.06fr);
       gap: 16px;
       align-items: start;
+      margin-bottom: 16px;
     }
 
     .work-panel {
@@ -1397,6 +1549,7 @@
         </div>
       </div>
       <nav class="nav">
+        <a href="#home">Home</a>
         <a href="#projects">프로젝트</a>
         <a href="#calendar">캘린더</a>
         <a href="#manual">매뉴얼</a>
@@ -1440,6 +1593,7 @@
     <div class="workspace-shell">
       <aside class="side-menu" aria-label="업무 화면 메뉴">
         <h3>Operation Menu</h3>
+        <button class="menu-btn" data-view="home" type="button"><span>H</span><span>Home<small>3D 오퍼레이션 시작</small></span></button>
         <button class="menu-btn active" data-view="projects" type="button"><span>P</span><span>프로젝트<small>현황·이력·보드</small></span></button>
         <button class="menu-btn" data-view="calendar" type="button"><span>C</span><span>캘린더<small>마감·마일스톤</small></span></button>
         <button class="menu-btn" data-view="manual" type="button"><span>M</span><span>매뉴얼<small>20단계 체크</small></span></button>
@@ -1463,6 +1617,16 @@
         </div>
       </div>
       <div class="section-body">
+        <div class="operations-grid">
+          <div class="work-panel">
+            <div class="panel-label">Project List <span>클릭하면 진행 이력 표시</span></div>
+            <div class="project-list" id="projectList"></div>
+          </div>
+          <div class="work-panel">
+            <div class="panel-label">Phase Board <span>단계별 프로젝트 위치</span></div>
+            <div class="board" id="projectBoard"></div>
+          </div>
+        </div>
         <div class="project-command">
           <div class="project-radar">
             <h4>Project Radar</h4>
@@ -1493,16 +1657,6 @@
           <input id="projectVendorInput" placeholder="협력업체/PM" />
           <input id="projectIssueInput" placeholder="현재 이슈" />
           <button class="btn primary" id="addProjectBtn" type="button">추가</button>
-        </div>
-        <div class="operations-grid">
-          <div class="work-panel">
-            <div class="panel-label">Project List <span>클릭하면 진행 이력 표시</span></div>
-            <div class="project-list" id="projectList"></div>
-          </div>
-          <div class="work-panel">
-            <div class="panel-label">Phase Board <span>단계별 프로젝트 위치</span></div>
-            <div class="board" id="projectBoard"></div>
-          </div>
         </div>
       </div>
     </section>
@@ -1864,8 +2018,11 @@
 
     function switchView(view, pushHash = true) {
       activeView = view || "projects";
-      document.querySelector(".app")?.classList.add("is-view-mode");
-      document.querySelectorAll("[data-view-section]").forEach(section => section.classList.toggle("active-view", section.dataset.viewSection === activeView));
+      const app = document.querySelector(".app");
+      const isHome = activeView === "home";
+      app?.classList.toggle("is-view-mode", !isHome);
+      app?.classList.toggle("home-mode", isHome);
+      document.querySelectorAll("[data-view-section]").forEach(section => section.classList.toggle("active-view", !isHome && section.dataset.viewSection === activeView));
       document.querySelectorAll("[data-view]").forEach(btn => btn.classList.toggle("active", btn.dataset.view === activeView));
       if (pushHash) history.replaceState(null, "", `#${activeView}`);
       updateAiPrompt();
@@ -2211,14 +2368,14 @@
       document.querySelectorAll(".nav a, .hero-actions a").forEach(link => link.addEventListener("click", event => {
         const hash = link.getAttribute("href") || "";
         const view = hash.replace("#", "");
-        if (document.querySelector(`[data-view-section="${view}"]`)) {
+        if (view === "home" || document.querySelector(`[data-view-section="${view}"]`)) {
           event.preventDefault();
           switchView(view);
         }
       }));
       window.addEventListener("hashchange", () => {
         const view = location.hash.replace("#", "");
-        if (document.querySelector(`[data-view-section="${view}"]`)) switchView(view, false);
+        if (view === "home" || document.querySelector(`[data-view-section="${view}"]`)) switchView(view, false);
       });
       document.addEventListener("click", event => {
         const projectMail = event.target.closest("[data-project-mail]");
