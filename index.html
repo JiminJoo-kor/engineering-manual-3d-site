@@ -3,23 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>엔지니어링 팀 3D 프로젝트 매뉴얼</title>
+  <title>엔지니어링 팀 3D 프로젝트 오퍼레이션</title>
   <style>
     :root {
-      --navy: #122238;
-      --ink: #1c2b38;
-      --muted: #637083;
-      --line: #d8e0e8;
-      --soft: #f4f7fa;
-      --white: #ffffff;
-      --blue: #2f6fed;
-      --teal: #00897b;
-      --amber: #d88725;
-      --red: #c94b4b;
-      --green: #2f8f5b;
-      --violet: #7659c9;
-      --cyan: #1f9bb4;
-      --shadow: 0 16px 38px rgba(18, 34, 56, .13);
+      --bg: #f3f0ea;
+      --surface: rgba(255,255,255,.78);
+      --surface-strong: rgba(255,255,255,.94);
+      --ink: #192530;
+      --muted: #68737e;
+      --line: rgba(42,55,68,.14);
+      --navy: #111b26;
+      --blue: #356fe5;
+      --teal: #008d7f;
+      --amber: #c87b26;
+      --red: #c75050;
+      --green: #2f895b;
+      --violet: #7357bd;
+      --cyan: #178ea7;
+      --shadow: 0 24px 70px rgba(22,31,42,.16);
+      --soft-shadow: 0 12px 32px rgba(22,31,42,.10);
     }
 
     * { box-sizing: border-box; }
@@ -27,7 +29,11 @@
     body {
       margin: 0;
       color: var(--ink);
-      background: #edf2f6;
+      background:
+        linear-gradient(115deg, rgba(17,27,38,.03), rgba(255,255,255,.7)),
+        radial-gradient(circle at 16% 12%, rgba(53,111,229,.12), transparent 28%),
+        radial-gradient(circle at 86% 8%, rgba(0,141,127,.13), transparent 24%),
+        var(--bg);
       font-family: "Malgun Gothic", "Apple SD Gothic Neo", system-ui, sans-serif;
       letter-spacing: 0;
     }
@@ -35,118 +41,141 @@
     button, input, textarea, select { font: inherit; }
     button { cursor: pointer; }
 
-    .shell {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 308px 1fr;
-    }
-
-    .rail {
+    .topbar {
       position: sticky;
       top: 0;
-      height: 100vh;
-      background: var(--navy);
-      color: var(--white);
-      padding: 22px;
-      overflow: auto;
-      z-index: 20;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(243,240,234,.82);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-inner {
+      max-width: 1480px;
+      margin: 0 auto;
+      min-height: 72px;
+      padding: 12px 22px;
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto auto;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.58), rgba(255,255,255,.05)),
+        linear-gradient(135deg, var(--navy), #24415d);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.3), 0 14px 28px rgba(17,27,38,.24);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 900;
     }
 
     .brand h1 {
       margin: 0;
-      font-size: 24px;
+      color: var(--navy);
+      font-size: 18px;
       line-height: 1.25;
     }
 
     .brand p {
-      margin: 10px 0 18px;
-      color: #cad8e7;
-      line-height: 1.55;
-      font-size: 13px;
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
     }
 
-    .metric {
-      border: 1px solid rgba(255,255,255,.16);
-      background: rgba(255,255,255,.08);
-      border-radius: 8px;
-      padding: 13px;
-      margin: 10px 0;
-    }
-
-    .metric-row {
+    .nav {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 8px;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .bar {
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.18);
-      overflow: hidden;
-      margin-top: 10px;
-    }
-
-    .bar span {
-      display: block;
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, var(--teal), var(--blue), var(--amber));
-      transition: width .25s ease;
-    }
-
-    .rail-nav {
-      display: grid;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .rail-link, .rail-button {
-      border: 1px solid rgba(255,255,255,.16);
-      border-radius: 8px;
-      background: rgba(255,255,255,.08);
-      color: var(--white);
-      min-height: 40px;
-      padding: 9px 10px;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .rail-link:hover, .rail-button:hover {
-      background: rgba(255,255,255,.14);
-    }
-
-    .rail-button.primary {
+      gap: 6px;
+      flex-wrap: wrap;
       justify-content: center;
-      background: var(--blue);
-      border-color: var(--blue);
-      margin-top: 12px;
     }
 
-    .main {
-      min-width: 0;
+    .nav a {
+      color: var(--ink);
+      text-decoration: none;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .nav a:hover {
+      background: rgba(255,255,255,.72);
+      border-color: var(--line);
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: end;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-strong);
+      color: var(--navy);
+      min-height: 40px;
+      padding: 9px 14px;
+      font-weight: 900;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 8px 18px rgba(22,31,42,.07);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 26px rgba(22,31,42,.12);
+      border-color: rgba(53,111,229,.32);
+    }
+
+    .btn.primary {
+      color: #fff;
+      border-color: transparent;
+      background: linear-gradient(135deg, #1c2d41, #356fe5 56%, #008d7f);
+    }
+
+    .btn.compact {
+      min-height: 34px;
+      padding: 7px 11px;
+      font-size: 12px;
+    }
+
+    .app {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 22px;
       display: grid;
-      gap: 0;
+      gap: 22px;
     }
 
-    .stage {
-      min-height: 680px;
+    .hero {
       position: relative;
+      min-height: 660px;
+      border: 1px solid rgba(255,255,255,.72);
+      border-radius: 30px;
       overflow: hidden;
-      border-bottom: 1px solid var(--line);
       background:
-        linear-gradient(115deg, rgba(18,34,56,.06), rgba(255,255,255,.42)),
-        radial-gradient(circle at 18% 22%, rgba(31,155,180,.20), transparent 28%),
-        radial-gradient(circle at 82% 16%, rgba(216,135,37,.20), transparent 26%),
-        #eef4f8;
+        linear-gradient(135deg, rgba(17,27,38,.94), rgba(28,50,70,.78)),
+        #172536;
+      box-shadow: var(--shadow);
     }
 
     #threeStage {
@@ -157,300 +186,401 @@
       display: block;
     }
 
-    .stage-copy {
+    .hero-content {
       position: relative;
       z-index: 2;
-      min-height: 680px;
-      padding: 34px 34px 26px;
+      min-height: 660px;
+      padding: 32px;
       display: grid;
       grid-template-rows: auto 1fr auto;
       pointer-events: none;
     }
 
-    .stage-top {
+    .hero-grid {
       display: grid;
-      grid-template-columns: minmax(320px, 760px) minmax(260px, 360px);
-      gap: 16px;
+      grid-template-columns: minmax(320px, 720px) minmax(280px, 420px);
+      gap: 18px;
       align-items: start;
     }
 
-    .hero-copy {
-      background: rgba(255,255,255,.90);
-      border: 1px solid rgba(216,224,232,.9);
-      border-radius: 8px;
-      padding: 18px;
-      box-shadow: var(--shadow);
+    .hero-panel,
+    .stat-card,
+    .glass-card {
+      border: 1px solid rgba(255,255,255,.28);
+      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.08));
+      backdrop-filter: blur(18px);
+      border-radius: 22px;
+      box-shadow: 0 22px 60px rgba(0,0,0,.18);
     }
 
-    .hero-copy h2 {
-      margin: 0 0 8px;
-      color: var(--navy);
-      font-size: 32px;
-      line-height: 1.18;
+    .hero-panel {
+      padding: 22px;
+      color: #fff;
     }
 
-    .hero-copy p {
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #cde9ff;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #31d1b7;
+      box-shadow: 0 0 18px #31d1b7;
+    }
+
+    .hero h2 {
+      margin: 12px 0 12px;
+      max-width: 760px;
+      color: #fff;
+      font-size: 42px;
+      line-height: 1.15;
+    }
+
+    .hero p {
       margin: 0;
-      color: var(--muted);
-      line-height: 1.62;
-      font-size: 14px;
+      color: rgba(255,255,255,.76);
+      line-height: 1.7;
+      font-size: 15px;
     }
 
-    .quick-stats {
+    .hero-stats {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      gap: 12px;
       pointer-events: auto;
     }
 
-    .stat {
-      background: rgba(255,255,255,.92);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 13px;
-      box-shadow: var(--shadow);
+    .stat-card {
+      padding: 16px;
+      color: #fff;
     }
 
-    .stat span {
+    .stat-card span {
       display: block;
-      color: var(--muted);
+      color: rgba(255,255,255,.64);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
     }
 
-    .stat b {
+    .stat-card b {
       display: block;
-      margin-top: 6px;
-      color: var(--navy);
-      font-size: 24px;
+      margin-top: 8px;
+      font-size: 27px;
+      line-height: 1;
     }
 
-    .stage-bottom {
+    .hero-bottom {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       flex-wrap: wrap;
       pointer-events: auto;
     }
 
     .phase-chip {
-      border: 1px solid rgba(255,255,255,.7);
-      background: rgba(255,255,255,.88);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.2);
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(12px);
       border-radius: 999px;
-      padding: 8px 11px;
+      padding: 9px 13px;
       font-size: 12px;
       font-weight: 900;
-      color: var(--navy);
-      box-shadow: 0 8px 22px rgba(18,34,56,.08);
-    }
-
-    .content {
-      padding: 24px;
-      display: grid;
-      gap: 20px;
     }
 
     .section {
-      background: var(--white);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
+      border: 1px solid rgba(255,255,255,.82);
+      border-radius: 26px;
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--soft-shadow);
+      overflow: hidden;
     }
 
     .section-head {
-      padding: 16px 18px;
-      border-bottom: 1px solid var(--line);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
+      padding: 22px 24px 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
     }
 
-    .section-head h3 {
+    .section-title h3 {
       margin: 0;
       color: var(--navy);
-      font-size: 19px;
+      font-size: 24px;
+      line-height: 1.2;
     }
 
-    .section-head span {
+    .section-title span {
+      display: block;
+      margin-top: 7px;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 800;
     }
 
-    .section-body { padding: 18px; }
+    .section-body {
+      padding: 0 24px 24px;
+    }
 
     .toolbar {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
       align-items: center;
+      justify-content: flex-end;
     }
 
-    .tab-btn, .action-btn, .mini-btn {
+    .segmented {
+      display: flex;
+      gap: 4px;
+      padding: 4px;
       border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--white);
-      color: var(--navy);
-      min-height: 38px;
-      padding: 8px 11px;
-      font-weight: 900;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.64);
     }
 
-    .tab-btn.active, .action-btn.primary {
-      border-color: var(--blue);
-      background: var(--blue);
-      color: var(--white);
-    }
-
-    .mini-btn {
-      min-height: 32px;
-      padding: 6px 9px;
+    .tab-btn {
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      min-height: 34px;
+      padding: 7px 12px;
       font-size: 12px;
+      font-weight: 900;
     }
 
-    .project-layout {
-      display: grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 16px;
-      align-items: start;
+    .tab-btn.active {
+      color: #fff;
+      background: var(--navy);
+      box-shadow: 0 8px 18px rgba(17,27,38,.18);
     }
 
     .project-form {
       display: grid;
-      grid-template-columns: repeat(4, minmax(130px, 1fr));
+      grid-template-columns: 1.4fr 1fr 1.35fr .85fr .85fr 1fr 1.25fr auto;
       gap: 10px;
-      margin-bottom: 16px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: rgba(255,255,255,.62);
+      margin-bottom: 18px;
     }
 
     input, textarea, select {
       width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
+      border: 1px solid rgba(42,55,68,.16);
+      border-radius: 14px;
+      background: rgba(255,255,255,.88);
       color: var(--ink);
-      padding: 10px;
-      min-height: 40px;
+      min-height: 42px;
+      padding: 10px 12px;
+      outline: none;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.7);
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: rgba(53,111,229,.55);
+      box-shadow: 0 0 0 4px rgba(53,111,229,.10);
     }
 
     textarea {
-      min-height: 150px;
-      line-height: 1.55;
+      min-height: 178px;
+      line-height: 1.6;
       resize: vertical;
+    }
+
+    .operations-grid {
+      display: grid;
+      grid-template-columns: minmax(360px, .94fr) minmax(520px, 1.06fr);
+      gap: 16px;
+      align-items: start;
     }
 
     .project-list {
       display: grid;
-      gap: 10px;
+      gap: 12px;
     }
 
-    .project-row {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 12px;
+    .project-card {
+      position: relative;
+      border: 1px solid rgba(42,55,68,.12);
+      border-radius: 22px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.96), rgba(255,255,255,.70));
+      padding: 16px;
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      align-items: center;
+      gap: 12px;
+      text-align: left;
+      box-shadow: 0 14px 34px rgba(22,31,42,.08);
+      overflow: hidden;
     }
 
-    .project-row.active {
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(47,111,237,.12);
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 6px;
+      background: var(--accent, var(--blue));
     }
 
-    .project-title {
+    .project-card.active {
+      border-color: rgba(53,111,229,.36);
+      box-shadow: 0 22px 48px rgba(53,111,229,.16);
+      transform: translateY(-1px);
+    }
+
+    .project-top {
       display: flex;
-      align-items: center;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .project-name {
+      color: var(--navy);
+      font-size: 17px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .project-meta {
+      display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      font-weight: 900;
-      color: var(--navy);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .badge {
       display: inline-flex;
+      align-items: center;
       border-radius: 999px;
-      padding: 4px 8px;
+      padding: 5px 9px;
       color: #fff;
       font-size: 11px;
       font-weight: 900;
       white-space: nowrap;
     }
 
-    .project-meta {
-      color: var(--muted);
-      font-size: 12px;
-      margin-top: 6px;
+    .project-issue {
+      color: var(--ink);
+      background: rgba(25,37,48,.05);
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 13px;
       line-height: 1.5;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(25,37,48,.10);
+      overflow: hidden;
+    }
+
+    .progress-track span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--accent, var(--blue));
     }
 
     .board {
       display: grid;
-      grid-template-columns: repeat(6, minmax(120px, 1fr));
-      gap: 10px;
-      overflow: auto;
-      padding-bottom: 4px;
+      grid-template-columns: repeat(3, minmax(170px, 1fr));
+      gap: 12px;
     }
 
     .lane {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #f8fafc;
-      min-height: 184px;
-      padding: 10px;
+      min-height: 210px;
+      border: 1px solid rgba(42,55,68,.12);
+      border-radius: 22px;
+      background: rgba(255,255,255,.55);
+      padding: 13px;
     }
 
     .lane h4 {
-      margin: 0 0 8px;
+      margin: 0;
       color: var(--navy);
       font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lane h4::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent, var(--blue));
+      box-shadow: 0 0 0 4px rgba(25,37,48,.06);
     }
 
     .lane-item {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-left: 5px solid var(--blue);
-      border-radius: 8px;
-      padding: 9px;
-      margin-top: 8px;
+      margin-top: 10px;
+      border: 1px solid rgba(42,55,68,.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,.88);
+      padding: 11px;
       font-size: 12px;
       line-height: 1.45;
+      box-shadow: 0 10px 22px rgba(22,31,42,.06);
     }
 
     .calendar {
       display: grid;
-      grid-template-columns: repeat(7, minmax(98px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(7, minmax(104px, 1fr));
+      gap: 10px;
     }
 
     .day {
-      min-height: 104px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 8px;
+      min-height: 118px;
+      border: 1px solid rgba(42,55,68,.12);
+      border-radius: 20px;
+      background: rgba(255,255,255,.70);
+      padding: 10px;
       font-size: 12px;
+      box-shadow: 0 8px 20px rgba(22,31,42,.05);
     }
 
-    .day.dim { background: #f4f7fa; color: #9aa6b2; }
-    .day strong { display: block; margin-bottom: 6px; color: var(--navy); }
+    .day.dim {
+      opacity: .48;
+      background: rgba(255,255,255,.40);
+    }
+
+    .day strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--navy);
+      font-size: 13px;
+    }
+
     .event {
-      border-left: 4px solid var(--teal);
-      background: #eef8f6;
-      border-radius: 6px;
-      padding: 5px 6px;
-      margin-top: 5px;
+      border: 1px solid rgba(42,55,68,.08);
+      border-left: 5px solid var(--accent, var(--teal));
+      border-radius: 13px;
+      background: rgba(255,255,255,.92);
+      padding: 7px 8px;
+      margin-top: 6px;
       color: var(--ink);
-      line-height: 1.35;
+      line-height: 1.4;
+      box-shadow: 0 8px 16px rgba(22,31,42,.06);
     }
 
-    .manual-layout {
+    .manual-grid {
       display: grid;
       grid-template-columns: 330px 1fr;
       gap: 16px;
@@ -458,38 +588,41 @@
     }
 
     .step-list {
-      max-height: 600px;
+      max-height: 660px;
       overflow: auto;
       display: grid;
-      gap: 7px;
+      gap: 8px;
       padding-right: 4px;
     }
 
     .step-btn {
       width: 100%;
-      border: 1px solid var(--line);
-      background: #fff;
-      border-radius: 8px;
-      padding: 9px;
+      border: 1px solid rgba(42,55,68,.12);
+      border-radius: 17px;
+      background: rgba(255,255,255,.62);
+      padding: 11px 12px;
       text-align: left;
       color: var(--ink);
+      transition: transform .18s ease, background .18s ease, border-color .18s ease;
     }
 
+    .step-btn:hover { transform: translateX(2px); background: rgba(255,255,255,.88); }
     .step-btn.active {
-      border-color: var(--blue);
-      background: #eef4ff;
-      font-weight: 900;
+      border-color: rgba(53,111,229,.38);
+      background: #fff;
+      box-shadow: 0 12px 26px rgba(53,111,229,.12);
     }
 
     .step-title {
       display: block;
       line-height: 1.35;
       font-size: 13px;
+      font-weight: 900;
     }
 
     .step-phase {
       display: block;
-      margin-top: 4px;
+      margin-top: 5px;
       color: var(--muted);
       font-size: 11px;
       font-weight: 900;
@@ -500,37 +633,58 @@
       gap: 14px;
     }
 
+    .manual-hero {
+      border: 1px solid rgba(42,55,68,.12);
+      border-radius: 24px;
+      padding: 18px;
+      background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(255,255,255,.68));
+      box-shadow: 0 14px 34px rgba(22,31,42,.08);
+    }
+
+    .manual-hero h2 {
+      margin: 10px 0 0;
+      color: var(--navy);
+      font-size: 26px;
+      line-height: 1.25;
+    }
+
     .detail-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(220px, 1fr));
-      gap: 10px;
+      gap: 12px;
     }
 
     .info {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 12px;
+      border: 1px solid rgba(42,55,68,.10);
+      border-radius: 20px;
+      background: rgba(255,255,255,.72);
+      padding: 14px;
       line-height: 1.55;
       font-size: 13px;
     }
 
     .info label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       color: var(--muted);
       font-size: 11px;
       font-weight: 900;
     }
 
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(240px, 1fr));
+      gap: 10px;
+    }
+
     .check-row {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 10px;
+      border: 1px solid rgba(42,55,68,.10);
+      border-radius: 18px;
+      background: rgba(255,255,255,.72);
+      padding: 12px;
       display: grid;
       grid-template-columns: 24px 1fr;
-      gap: 8px;
+      gap: 9px;
       line-height: 1.45;
       font-size: 13px;
     }
@@ -539,34 +693,80 @@
       width: 18px;
       height: 18px;
       margin-top: 1px;
+      accent-color: var(--blue);
     }
 
     .check-row.done {
       color: var(--muted);
-      background: #f8fafc;
+      background: rgba(255,255,255,.44);
     }
 
     .check-row.done b { text-decoration: line-through; }
     .check-row small { display: block; margin-top: 4px; color: var(--muted); }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
+    .doc-flow,
+    .decision-grid,
+    .source-grid {
+      display: grid;
+      gap: 12px;
     }
 
-    th, td {
-      border-bottom: 1px solid var(--line);
-      padding: 9px 8px;
-      text-align: left;
-      vertical-align: top;
-      line-height: 1.45;
+    .doc-flow {
+      grid-template-columns: repeat(4, minmax(180px, 1fr));
     }
 
-    th {
+    .decision-grid {
+      grid-template-columns: repeat(2, minmax(260px, 1fr));
+      margin-top: 16px;
+    }
+
+    .doc-card,
+    .decision-card,
+    .source-item,
+    .flow-step,
+    .template-btn {
+      border: 1px solid rgba(42,55,68,.10);
+      border-radius: 20px;
+      background: rgba(255,255,255,.72);
+      box-shadow: 0 10px 24px rgba(22,31,42,.06);
+    }
+
+    .doc-card {
+      padding: 14px;
+      min-height: 160px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .doc-card::after {
+      content: "";
+      position: absolute;
+      right: 14px;
+      top: 14px;
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: rgba(53,111,229,.11);
+    }
+
+    .doc-card b,
+    .decision-card b {
+      display: block;
       color: var(--navy);
-      background: #f4f7fa;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .doc-card p,
+    .decision-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
       font-size: 12px;
+    }
+
+    .decision-card {
+      padding: 14px;
     }
 
     .mail-layout {
@@ -576,55 +776,47 @@
     }
 
     .flow-step {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 11px;
-      margin-bottom: 8px;
-      line-height: 1.5;
+      padding: 14px;
+      margin-bottom: 10px;
+      line-height: 1.55;
       font-size: 13px;
     }
 
     .flow-step b { color: var(--navy); }
+
     .template-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(160px, 1fr));
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .template-btn {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 10px;
+      padding: 12px;
       text-align: left;
       font-size: 12px;
       font-weight: 900;
+      color: var(--navy);
     }
 
     .template-btn.active {
-      border-color: var(--teal);
-      background: #edf8f6;
+      border-color: rgba(0,141,127,.34);
+      background: rgba(234,250,247,.9);
+      box-shadow: 0 16px 28px rgba(0,141,127,.10);
     }
 
     .composer {
       display: grid;
-      gap: 9px;
-    }
-
-    .source-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 10px;
     }
 
+    .source-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
     .source-item {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fff;
-      padding: 12px;
-      line-height: 1.55;
+      padding: 16px;
+      line-height: 1.6;
       font-size: 13px;
     }
 
@@ -633,7 +825,7 @@
       right: 18px;
       bottom: 18px;
       z-index: 80;
-      border-radius: 8px;
+      border-radius: 18px;
       background: var(--navy);
       color: #fff;
       padding: 12px 14px;
@@ -646,225 +838,209 @@
     .toast.show { opacity: 1; transform: translateY(0); }
 
     @media (max-width: 1180px) {
-      .shell { grid-template-columns: 1fr; }
-      .rail { position: relative; height: auto; }
-      .rail-nav { grid-template-columns: repeat(3, 1fr); }
-      .stage-top, .project-layout, .manual-layout, .mail-layout { grid-template-columns: 1fr; }
+      .topbar-inner { grid-template-columns: 1fr; }
+      .nav, .top-actions { justify-content: start; }
+      .hero-grid, .operations-grid, .manual-grid, .mail-layout { grid-template-columns: 1fr; }
       .project-form { grid-template-columns: repeat(2, 1fr); }
-      .source-grid { grid-template-columns: 1fr; }
+      .doc-flow, .source-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
-    @media (max-width: 720px) {
-      .stage, .stage-copy { min-height: 620px; }
-      .stage-copy { padding: 20px 16px; }
-      .hero-copy h2 { font-size: 25px; }
-      .quick-stats, .project-form, .detail-grid, .template-grid { grid-template-columns: 1fr; }
-      .rail-nav { grid-template-columns: 1fr; }
-      .content { padding: 16px; }
-      .calendar { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+    @media (max-width: 760px) {
+      .app { padding: 14px; }
+      .hero, .hero-content { min-height: 620px; }
+      .hero-content { padding: 18px; }
+      .hero h2 { font-size: 30px; }
+      .hero-stats, .project-form, .board, .calendar, .detail-grid, .check-grid, .doc-flow, .decision-grid, .template-grid, .source-grid { grid-template-columns: 1fr; }
+      .section-head { grid-template-columns: 1fr; }
+      .toolbar { justify-content: start; }
     }
   </style>
 </head>
 <body>
-  <div class="shell">
-    <aside class="rail">
+  <header class="topbar">
+    <div class="topbar-inner">
       <div class="brand">
-        <h1>엔지니어링 3D 프로젝트 매뉴얼</h1>
-        <p>신규사원이 업무 순서를 이해하고, 담당자는 프로젝트별 단계·일정·문서·메일을 한 화면에서 관리합니다.</p>
-      </div>
-      <div class="metric">
-        <div class="metric-row"><span>전체 체크 완료율</span><b id="globalProgressText">0%</b></div>
-        <div class="bar"><span id="globalProgressFill"></span></div>
-      </div>
-      <div class="metric">
-        <div class="metric-row"><span>선택 프로젝트</span><b id="activeProjectShort">TM</b></div>
-        <div id="activeProjectName" style="margin-top:8px;color:#dbe6f2;font-size:13px;line-height:1.45">TM적입 자동화</div>
-      </div>
-      <nav class="rail-nav">
-        <a class="rail-link" href="#projects">프로젝트 관리 <span>→</span></a>
-        <a class="rail-link" href="#calendar">캘린더 <span>→</span></a>
-        <a class="rail-link" href="#manual">단계 매뉴얼 <span>→</span></a>
-        <a class="rail-link" href="#documents">서류/판단 <span>→</span></a>
-        <a class="rail-link" href="#mail">Gmail 준비 <span>→</span></a>
-        <a class="rail-link" href="#sources">원본 반영 <span>→</span></a>
-      </nav>
-      <button class="rail-button primary" id="exportBtn" type="button">체크/프로젝트 CSV 저장</button>
-      <button class="rail-button" id="resetBtn" type="button" style="justify-content:center;margin-top:8px">로컬 데이터 초기화</button>
-    </aside>
-
-    <main class="main">
-      <section class="stage" aria-label="3D 프로젝트 프로세스">
-        <canvas id="threeStage"></canvas>
-        <div class="stage-copy">
-          <div class="stage-top">
-            <div class="hero-copy">
-              <h2>프로젝트 흐름을 3D 공정 라인처럼 보고 관리합니다</h2>
-              <p>수주 전 견적 검토부터 FAT와 양산 안정화까지 20개 단계를 3D 라인으로 배치했습니다. 블록을 클릭하면 해당 단계 매뉴얼이 열리고, 프로젝트별 현재 단계와 마감 일정은 진행판과 캘린더에 함께 표시됩니다.</p>
-            </div>
-            <div class="quick-stats">
-              <div class="stat"><span>관리 프로젝트</span><b id="statProjects">0</b></div>
-              <div class="stat"><span>진행 중 이슈</span><b id="statIssues">0</b></div>
-              <div class="stat"><span>이번 달 일정</span><b id="statEvents">0</b></div>
-              <div class="stat"><span>원본 반영률</span><b>Notion 1차</b></div>
-            </div>
-          </div>
-          <div></div>
-          <div class="stage-bottom" id="phaseLegend"></div>
+        <div class="brand-mark">3D</div>
+        <div>
+          <h1>엔지니어링 프로젝트 오퍼레이션</h1>
+          <p>업무 매뉴얼, 프로젝트 진행, 캘린더, 메일 준비를 하나의 고급 관제 화면으로 관리합니다.</p>
         </div>
-      </section>
-
-      <div class="content">
-        <section class="section" id="projects">
-          <div class="section-head">
-            <div>
-              <h3>프로젝트별 진행 관리</h3>
-              <span>프로젝트 추가, 단계 이동, 담당/마감/리스크 확인</span>
-            </div>
-            <div class="toolbar">
-              <button class="tab-btn active" data-status="전체" type="button">전체</button>
-              <button class="tab-btn" data-status="정상" type="button">정상</button>
-              <button class="tab-btn" data-status="주의" type="button">주의</button>
-              <button class="tab-btn" data-status="위험" type="button">위험</button>
-            </div>
-          </div>
-          <div class="section-body">
-            <div class="project-form">
-              <input id="projectNameInput" placeholder="프로젝트명" />
-              <input id="projectOwnerInput" placeholder="담당자" />
-              <select id="projectStepInput"></select>
-              <input id="projectDueInput" type="date" />
-              <select id="projectStatusInput">
-                <option>정상</option>
-                <option>주의</option>
-                <option>위험</option>
-              </select>
-              <input id="projectVendorInput" placeholder="협력업체/PM" />
-              <input id="projectIssueInput" placeholder="현재 이슈" />
-              <button class="action-btn primary" id="addProjectBtn" type="button">프로젝트 추가</button>
-            </div>
-            <div class="project-layout">
-              <div class="project-list" id="projectList"></div>
-              <div>
-                <div class="board" id="projectBoard"></div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="calendar">
-          <div class="section-head">
-            <div>
-              <h3>프로젝트 캘린더</h3>
-              <span>마감일, 킥오프, FAT, 양산 안정화 일정을 월간으로 확인</span>
-            </div>
-            <div class="toolbar">
-              <button class="mini-btn" id="prevMonth" type="button">‹</button>
-              <b id="calendarTitle"></b>
-              <button class="mini-btn" id="nextMonth" type="button">›</button>
-            </div>
-          </div>
-          <div class="section-body">
-            <div class="calendar" id="calendarGrid"></div>
-          </div>
-        </section>
-
-        <section class="section" id="manual">
-          <div class="section-head">
-            <div>
-              <h3>20단계 업무 매뉴얼</h3>
-              <span>Notion 원문 기준으로 체크 포인트와 주의사항 보강</span>
-            </div>
-            <div class="toolbar">
-              <button class="mini-btn" id="prevStep" type="button">이전 단계</button>
-              <button class="mini-btn" id="nextStep" type="button">다음 단계</button>
-            </div>
-          </div>
-          <div class="section-body manual-layout">
-            <div class="step-list" id="stepList"></div>
-            <div class="manual-detail" id="manualDetail"></div>
-          </div>
-        </section>
-
-        <section class="section" id="documents">
-          <div class="section-head">
-            <div>
-              <h3>서류 흐름과 판단 기준</h3>
-              <span>누락 방지용 인수인계 표준</span>
-            </div>
-          </div>
-          <div class="section-body" style="display:grid;gap:18px">
-            <div style="overflow:auto">
-              <table>
-                <thead><tr><th>서류</th><th>작성/수령</th><th>전달 대상</th><th>확인 포인트</th></tr></thead>
-                <tbody id="docRows"></tbody>
-              </table>
-            </div>
-            <div style="overflow:auto">
-              <table>
-                <thead><tr><th>상황</th><th>판단 질문</th><th>다음 행동</th></tr></thead>
-                <tbody id="decisionRows"></tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="mail">
-          <div class="section-head">
-            <div>
-              <h3>메일 송부 순서도와 Gmail 작성 준비</h3>
-              <span>Gmail 작성창을 열되 발송은 사용자가 최종 확인</span>
-            </div>
-          </div>
-          <div class="section-body mail-layout">
-            <div>
-              <div class="flow-step"><b>1. 목적 선택</b><br>견적 요청, 일정 확인, 발주 요청, FAT 공유 중 선택합니다.</div>
-              <div class="flow-step"><b>2. 첨부 확인</b><br>사양서, 레이아웃, 견적서, 회의록, 검수성적서 누락을 확인합니다.</div>
-              <div class="flow-step"><b>3. 본문 보정</b><br>프로젝트명, 담당자, 회신 기한, 첨부 목록을 실제 값으로 바꿉니다.</div>
-              <div class="flow-step"><b>4. Gmail 작성창 열기</b><br>제목과 본문이 채워진 상태로 Gmail을 열고 최종 발송은 직접 확인합니다.</div>
-            </div>
-            <div>
-              <div class="template-grid" id="templateButtons"></div>
-              <div class="composer">
-                <input id="mailTo" placeholder="받는 사람 이메일" />
-                <input id="mailCc" placeholder="참조 이메일" />
-                <input id="mailSubject" placeholder="제목" />
-                <textarea id="mailBody" placeholder="본문"></textarea>
-                <div class="toolbar">
-                  <button class="action-btn primary" id="gmailBtn" type="button">Gmail 작성창 열기</button>
-                  <button class="action-btn" id="copyBtn" type="button">본문 복사</button>
-                  <a class="action-btn" id="mailtoBtn" href="#">기본 메일앱 열기</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section" id="sources">
-          <div class="section-head">
-            <div>
-              <h3>원본 반영 확인</h3>
-              <span>현재 반영 기준과 추가 확인 필요 자료</span>
-            </div>
-          </div>
-          <div class="section-body source-grid">
-            <div class="source-item"><b>Notion 회의록</b><br>수주 전/후, 장납기품, 사급품, 승인도, 테스트, 양산 안정화, AI 활용 과제를 반영했습니다.</div>
-            <div class="source-item"><b>엑셀 정리본</b><br>이전 작업의 업무 지도, 체크리스트, 서류 흐름, 판단 기준을 사이트 데이터 구조로 옮겼습니다.</div>
-            <div class="source-item"><b>PPT 기준원본</b><br>현재 작업 폴더에는 PPT 파일이 없습니다. PPT를 첨부하면 문구·순서·디자인 기준까지 다시 대조하겠습니다.</div>
-          </div>
-        </section>
       </div>
-    </main>
-  </div>
+      <nav class="nav">
+        <a href="#projects">프로젝트</a>
+        <a href="#calendar">캘린더</a>
+        <a href="#manual">매뉴얼</a>
+        <a href="#documents">문서 흐름</a>
+        <a href="#mail">Gmail</a>
+        <a href="#sources">원본 확인</a>
+      </nav>
+      <div class="top-actions">
+        <button class="btn" id="resetBtn" type="button">초기화</button>
+        <button class="btn primary" id="exportBtn" type="button">CSV 저장</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="hero" aria-label="3D 프로젝트 프로세스">
+      <canvas id="threeStage"></canvas>
+      <div class="hero-content">
+        <div class="hero-grid">
+          <div class="hero-panel">
+            <span class="eyebrow">Engineering Control Room</span>
+            <h2>엑셀 표가 아니라, 프로젝트를 움직이는 관제 화면처럼.</h2>
+            <p>수주 전 검토부터 FAT와 양산 안정화까지 20단계를 3D 라인으로 보여주고, 프로젝트별 현재 위치와 리스크를 카드·보드·캘린더로 연결했습니다. 신규사원은 흐름을 보고, 담당자는 바로 관리할 수 있습니다.</p>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-card"><span>관리 프로젝트</span><b id="statProjects">0</b></div>
+            <div class="stat-card"><span>진행 이슈</span><b id="statIssues">0</b></div>
+            <div class="stat-card"><span>이번 달 일정</span><b id="statEvents">0</b></div>
+            <div class="stat-card"><span>체크 완료율</span><b id="globalProgressText">0%</b></div>
+          </div>
+        </div>
+        <div></div>
+        <div class="hero-bottom" id="phaseLegend"></div>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-head">
+        <div class="section-title">
+          <h3>프로젝트 포트폴리오</h3>
+          <span>프로젝트 추가, 현재 단계, 마감일, 협력업체/PM, 리스크를 카드형으로 관리합니다.</span>
+        </div>
+        <div class="segmented">
+          <button class="tab-btn active" data-status="전체" type="button">전체</button>
+          <button class="tab-btn" data-status="정상" type="button">정상</button>
+          <button class="tab-btn" data-status="주의" type="button">주의</button>
+          <button class="tab-btn" data-status="위험" type="button">위험</button>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="project-form">
+          <input id="projectNameInput" placeholder="프로젝트명" />
+          <input id="projectOwnerInput" placeholder="담당자" />
+          <select id="projectStepInput"></select>
+          <input id="projectDueInput" type="date" />
+          <select id="projectStatusInput">
+            <option>정상</option>
+            <option>주의</option>
+            <option>위험</option>
+          </select>
+          <input id="projectVendorInput" placeholder="협력업체/PM" />
+          <input id="projectIssueInput" placeholder="현재 이슈" />
+          <button class="btn primary" id="addProjectBtn" type="button">추가</button>
+        </div>
+        <div class="operations-grid">
+          <div class="project-list" id="projectList"></div>
+          <div class="board" id="projectBoard"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="calendar">
+      <div class="section-head">
+        <div class="section-title">
+          <h3>마일스톤 캘린더</h3>
+          <span>마감일, 킥오프, FAT, 양산 안정화 일정을 월간으로 확인합니다.</span>
+        </div>
+        <div class="toolbar">
+          <button class="btn compact" id="prevMonth" type="button">이전</button>
+          <b id="calendarTitle"></b>
+          <button class="btn compact" id="nextMonth" type="button">다음</button>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="calendar" id="calendarGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="manual">
+      <div class="section-head">
+        <div class="section-title">
+          <h3>20단계 업무 매뉴얼</h3>
+          <span>Notion 회의록 기준으로 담당, 산출물, 핵심 체크, 주의사항을 재정리했습니다.</span>
+        </div>
+        <div class="toolbar">
+          <button class="btn compact" id="prevStep" type="button">이전 단계</button>
+          <button class="btn compact" id="nextStep" type="button">다음 단계</button>
+        </div>
+      </div>
+      <div class="section-body manual-grid">
+        <div class="step-list" id="stepList"></div>
+        <div class="manual-detail" id="manualDetail"></div>
+      </div>
+    </section>
+
+    <section class="section" id="documents">
+      <div class="section-head">
+        <div class="section-title">
+          <h3>문서 흐름과 판단 기준</h3>
+          <span>표 대신 업무 카드로 문서가 어디서 만들어지고 어디로 넘어가는지 보여줍니다.</span>
+        </div>
+      </div>
+      <div class="section-body">
+        <div class="doc-flow" id="docCards"></div>
+        <div class="decision-grid" id="decisionCards"></div>
+      </div>
+    </section>
+
+    <section class="section" id="mail">
+      <div class="section-head">
+        <div class="section-title">
+          <h3>Gmail 작성 플로우</h3>
+          <span>업무 상황별 메일 템플릿을 선택하고 Gmail 작성창을 준비합니다. 발송은 사용자가 최종 확인합니다.</span>
+        </div>
+      </div>
+      <div class="section-body mail-layout">
+        <div>
+          <div class="flow-step"><b>1. 목적 선택</b><br>견적 요청, 일정 확인, 발주 요청, FAT 공유 중 선택합니다.</div>
+          <div class="flow-step"><b>2. 첨부 확인</b><br>사양서, 레이아웃, 견적서, 회의록, 검수성적서 누락을 확인합니다.</div>
+          <div class="flow-step"><b>3. 본문 보정</b><br>프로젝트명, 담당자, 회신 기한, 첨부 목록을 실제 값으로 바꿉니다.</div>
+          <div class="flow-step"><b>4. Gmail 열기</b><br>제목과 본문이 채워진 상태로 Gmail을 열고 최종 발송은 직접 확인합니다.</div>
+        </div>
+        <div>
+          <div class="template-grid" id="templateButtons"></div>
+          <div class="composer">
+            <input id="mailTo" placeholder="받는 사람 이메일" />
+            <input id="mailCc" placeholder="참조 이메일" />
+            <input id="mailSubject" placeholder="제목" />
+            <textarea id="mailBody" placeholder="본문"></textarea>
+            <div class="toolbar">
+              <button class="btn primary" id="gmailBtn" type="button">Gmail 작성창 열기</button>
+              <button class="btn" id="copyBtn" type="button">본문 복사</button>
+              <a class="btn" id="mailtoBtn" href="#">기본 메일앱</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="sources">
+      <div class="section-head">
+        <div class="section-title">
+          <h3>원본 반영 확인</h3>
+          <span>현재 반영 기준과 추가 확인이 필요한 자료를 투명하게 표시합니다.</span>
+        </div>
+      </div>
+      <div class="section-body source-grid">
+        <div class="source-item"><b>Notion 회의록</b><br>수주 전/후, 장납기품, 사급품, 승인도, 테스트, 양산 안정화, AI 활용 과제를 반영했습니다.</div>
+        <div class="source-item"><b>엑셀 정리본</b><br>업무 지도, 체크리스트, 서류 흐름, 판단 기준을 사이트 데이터 구조로 옮겼습니다.</div>
+        <div class="source-item"><b>PPT 기준원본</b><br>현재 작업 폴더에는 PPT가 없습니다. PPT가 제공되면 문구·순서·디자인을 다시 대조하겠습니다.</div>
+      </div>
+    </section>
+  </main>
+
   <div class="toast" id="toast"></div>
 
   <script type="module">
     const phases = [
-      { name: "수주 전", color: "#2f6fed", three: 0x2f6fed },
-      { name: "수주 후", color: "#00897b", three: 0x00897b },
-      { name: "설계·제작", color: "#d88725", three: 0xd88725 },
-      { name: "설치", color: "#7659c9", three: 0x7659c9 },
-      { name: "테스트", color: "#c94b4b", three: 0xc94b4b },
-      { name: "양산", color: "#2f8f5b", three: 0x2f8f5b }
+      { name: "수주 전", color: "#356fe5", three: 0x356fe5 },
+      { name: "수주 후", color: "#008d7f", three: 0x008d7f },
+      { name: "설계·제작", color: "#c87b26", three: 0xc87b26 },
+      { name: "설치", color: "#7357bd", three: 0x7357bd },
+      { name: "테스트", color: "#c75050", three: 0xc75050 },
+      { name: "양산", color: "#2f895b", three: 0x2f895b }
     ];
 
     const steps = [
@@ -896,53 +1072,42 @@
       ["수주 전", "협력업체 견적 요청 시 공사 가능 일정 함께 요청", "회신 일정 기록"],
       ["수주 전", "견적서의 사양 누락, 스코프 누락, 과소 견적 확인", "검토 의견 남김"],
       ["수주 전", "원가집계표에 맨데이, 안전관리비, 보험료 반영", "보험 산출 시트와 대조"],
-      ["수주 전", "영업 최종 견적서 제출 전 엔지니어링팀 공동 검토", "누락 항목 체크"],
       ["수주 후", "발주서·계약서 수령 여부 확인", "사업지원팀 오이석 선임 확인"],
       ["수주 후", "킥오프 미팅에서 역할, 일정, 스코프 확정", "회의록 공유"],
       ["수주 후", "장납기품과 사급품 목록 작성", "발주 상태 업데이트"],
-      ["수주 후", "이행팀 이관 자료 4종 확인", "레이아웃/원가집계표/알티올 견적/외주 견적"],
       ["설계·제작", "승인도 모듈별 검토 및 고객 승인 요청", "승인 전 제작 금지 원칙"],
-      ["설계·제작", "레이아웃 최신본 배포 및 변경 이력 관리", "버전과 배포처 기록"],
-      ["설계·제작", "제작 검수 후 검수성적서와 보고서 작성", "사진과 조치사항 첨부"],
       ["설치", "현장 반입 일정, 안전관리자, PM 인계 확인", "현장 비상연락망 공유"],
-      ["설치", "기구/전기/PLC/WCS 인터페이스 기준 공유", "담당자별 확인"],
       ["테스트", "단동 → 연동 → WCS 통합 → FAT 순서로 테스트", "테스트 결과표 작성"],
-      ["테스트", "FAT 미승인 항목 이슈화", "담당·기한 지정"],
       ["양산", "초기 양산 30일 에러 대응 및 디버깅 기록", "재발방지안 포함"]
     ];
 
     const documents = [
-      ["검토 의뢰", "영업부", "엔지니어링팀", "고객 요구 일정, 요구 범위"],
-      ["사양서", "고객사/영업부", "엔지니어링팀", "기준 사양 존재 여부"],
-      ["레이아웃", "고객사/엔지니어링팀", "협력업체/고객사/이행팀", "최신본, 변경 이력, 배포 대상"],
-      ["협력업체 견적서", "협력업체", "엔지니어링팀", "스코프·사양 누락, 일정 가능 여부"],
-      ["원가집계표", "엔지니어링팀", "영업부/이행팀", "맨데이, 보험료, 안전관리비, 마진 구조"],
-      ["발주서·계약서", "고객사/사업지원팀", "엔지니어링팀", "수령 여부, 선진행 판단"],
-      ["킥오프 회의록", "엔지니어링팀", "전체 담당자", "역할, 일정, 스코프, 누락 항목"],
-      ["장납기품/사급품 목록", "엔지니어링팀", "이행팀/외주업체", "키엔스 라이트커튼, PCR, 오토 라벨 프린터"],
-      ["승인도", "협력업체", "엔지니어링팀/고객사", "모듈별 상세도, 고객 승인"],
-      ["검수성적서/보고서", "협력업체/엔지니어링팀", "내부 공유", "현장 사진, 이슈, 조치"],
-      ["테스트 결과표", "엔지니어링팀/이행팀", "고객사/외주업체", "단동, 연동, WCS 통합, FAT 결과"]
+      ["검토 의뢰", "영업부", "엔지니어링팀", "고객 요구 일정과 범위를 먼저 고정"],
+      ["사양서/레이아웃", "고객사·영업부", "엔지니어링팀·협력업체", "최신본과 변경 이력을 함께 관리"],
+      ["협력업체 견적서", "협력업체", "엔지니어링팀", "스코프·사양 누락과 일정 가능 여부 확인"],
+      ["원가집계표", "엔지니어링팀", "영업부·이행팀", "맨데이, 보험료, 안전관리비, 마진 구조 확인"],
+      ["발주서·계약서", "고객사·사업지원팀", "엔지니어링팀", "수령 여부와 선진행 판단 기준"],
+      ["킥오프 회의록", "엔지니어링팀", "전체 담당자", "역할, 일정, 스코프, 누락 항목 확정"],
+      ["승인도", "협력업체", "엔지니어링팀·고객사", "모듈별 상세도와 고객 승인 상태"],
+      ["테스트 결과표", "엔지니어링팀·이행팀", "고객사·외주업체", "단동, 연동, WCS 통합, FAT 결과"]
     ];
 
     const decisions = [
       ["사양서/레이아웃", "고객사가 기준안을 줬는가?", "기준 유무와 설계 범위를 회의록에 기록"],
-      ["협력업체 선정", "턴키가 유리한가, 분리 발주가 유리한가?", "후보별 장단점과 견적 요청 범위 정리"],
-      ["견적 검토", "견적에 빠진 사양이나 스코프가 있는가?", "업체에 재확인 후 검토 의견 남김"],
+      ["협력업체 선정", "턴키와 분리 발주 중 무엇이 유리한가?", "후보별 장단점과 견적 요청 범위 정리"],
+      ["견적 검토", "빠진 사양이나 스코프가 있는가?", "업체에 재확인 후 검토 의견 남김"],
       ["원가 산출", "보험료와 안전관리비가 반영됐는가?", "산출 근거 파일을 함께 보관"],
       ["선진행", "발주서·계약서를 받았는가?", "상급자 보고 후 진행 여부 결정"],
-      ["장납기품", "납기가 1개월 이상인가?", "목록화하고 발주 상태를 별도 관리"],
-      ["승인도", "고객 승인을 받았는가?", "일정상 선진행 필요 시 사전 협의 기록"],
-      ["테스트", "FAT 미승인 항목이 남았는가?", "담당자, 기한, 조치 결과 관리"]
+      ["FAT", "미승인 항목이 남았는가?", "담당자, 기한, 조치 결과를 별도 관리"]
     ];
 
     const templates = [
-      ["협력업체 견적 요청", "[견적요청] {프로젝트명} 사양서/레이아웃 검토 및 견적 요청", "안녕하세요.\n\n{프로젝트명} 관련 사양서 및 레이아웃 검토 후 견적 회신 요청드립니다.\n\n확인 요청사항\n1. 견적 범위 및 제외 범위\n2. 공사 가능 일정 및 투입 가능 인원\n3. 장납기품 여부\n4. 추가 확인이 필요한 사양\n\n첨부 예정 자료\n- 사양서\n- 레이아웃\n\n회신 요청일: {회신요청일}\n\n감사합니다."],
-      ["협력업체 일정 확인", "[일정확인] {프로젝트명} 공사 가능 일정 확인 요청", "안녕하세요.\n\n{프로젝트명} 진행 가능 일정 확인 요청드립니다.\n\n확인 부탁드리는 내용\n1. 설계 가능 시작일\n2. 제작 가능 기간\n3. 현장 설치 가능 기간\n4. 병행 진행 가능 여부\n5. 일정 리스크 또는 사전 발주 필요 항목\n\n감사합니다."],
-      ["발주/계약 요청", "[발주요청] {프로젝트명} 외주업체 발주 및 계약 진행 요청", "안녕하세요.\n\n{프로젝트명} 관련 외주업체 발주 및 계약 진행 요청드립니다.\n\n요청 내용\n1. 업체명: {업체명}\n2. 발주 범위: {발주범위}\n3. 금액: {금액}\n4. 요청 일정: {요청일정}\n\n외주업체 공식 발송은 사업지원팀 기준으로 진행 부탁드립니다.\n\n감사합니다."],
-      ["킥오프 미팅 안내", "[킥오프] {프로젝트명} 킥오프 미팅 안내", "안녕하세요.\n\n{프로젝트명} 킥오프 미팅을 아래와 같이 진행하고자 합니다.\n\n일시: {미팅일시}\n장소/방식: {장소}\n참석 대상: 엔지니어링팀, 이행팀/PM, 협력업체, 관련 담당자\n\n주요 안건\n1. 사양 및 레이아웃 확인\n2. 담당 범위와 스코프 확정\n3. 일정 및 장납기품 확인\n4. 자료 공유 및 이슈 정리\n\n감사합니다."],
+      ["협력업체 견적 요청", "[견적요청] {프로젝트명} 사양서/레이아웃 검토 및 견적 요청", "안녕하세요.\n\n{프로젝트명} 관련 사양서 및 레이아웃 검토 후 견적 회신 요청드립니다.\n\n확인 요청사항\n1. 견적 범위 및 제외 범위\n2. 공사 가능 일정 및 투입 가능 인원\n3. 장납기품 여부\n4. 추가 확인이 필요한 사양\n\n감사합니다."],
+      ["협력업체 일정 확인", "[일정확인] {프로젝트명} 공사 가능 일정 확인 요청", "안녕하세요.\n\n{프로젝트명} 진행 가능 일정 확인 요청드립니다.\n\n1. 설계 가능 시작일\n2. 제작 가능 기간\n3. 현장 설치 가능 기간\n4. 병행 진행 가능 여부\n5. 일정 리스크\n\n감사합니다."],
+      ["발주/계약 요청", "[발주요청] {프로젝트명} 외주업체 발주 및 계약 진행 요청", "안녕하세요.\n\n{프로젝트명} 관련 외주업체 발주 및 계약 진행 요청드립니다.\n\n업체명: {업체명}\n발주 범위: {발주범위}\n금액: {금액}\n요청 일정: {요청일정}\n\n감사합니다."],
+      ["킥오프 미팅 안내", "[킥오프] {프로젝트명} 킥오프 미팅 안내", "안녕하세요.\n\n{프로젝트명} 킥오프 미팅을 아래와 같이 진행하고자 합니다.\n\n일시: {미팅일시}\n장소/방식: {장소}\n참석 대상: 엔지니어링팀, 이행팀/PM, 협력업체, 관련 담당자\n\n주요 안건\n1. 사양 및 레이아웃 확인\n2. 담당 범위와 스코프 확정\n3. 일정 및 장납기품 확인\n\n감사합니다."],
       ["승인도 검토 요청", "[승인도검토] {프로젝트명} 모듈별 승인도 검토 요청", "안녕하세요.\n\n{프로젝트명} 모듈별 승인도 검토 요청드립니다.\n\n검토 요청사항\n1. 레이아웃 최신본 반영 여부\n2. 모듈별 어셈블리 구성 적정성\n3. 고객 요구 사양 반영 여부\n4. 제작 전 보완 필요 사항\n\n감사합니다."],
-      ["FAT 일정/결과 공유", "[FAT] {프로젝트명} FAT 일정 및 확인 요청", "안녕하세요.\n\n{프로젝트명} FAT 진행 관련 일정 및 확인사항 공유드립니다.\n\n진행 순서\n1. 단동 Test\n2. 연동 Test\n3. WCS 통합 Test\n4. FAT 고객 승인\n\n확인 요청사항\n- FAT 예정일: {FAT일정}\n- 미승인 보완 항목 여부\n- 고객 승인 기준\n- 양산 전 이슈화 필요 항목\n\n감사합니다."]
+      ["FAT 일정/결과 공유", "[FAT] {프로젝트명} FAT 일정 및 확인 요청", "안녕하세요.\n\n{프로젝트명} FAT 진행 관련 일정 및 확인사항 공유드립니다.\n\n진행 순서\n1. 단동 Test\n2. 연동 Test\n3. WCS 통합 Test\n4. FAT 고객 승인\n\n감사합니다."]
     ];
 
     const defaultProjects = [
@@ -951,7 +1116,7 @@
       { id: "fat-ready", name: "FAT 준비 샘플", owner: "PM", step: 18, due: "2026-08-18", status: "위험", vendor: "PLC/WCS", issue: "WCS 통합 테스트 미해결 항목 존재" }
     ];
 
-    const stateKey = "engineering3dProjectManualV3";
+    const stateKey = "engineering3dProjectManualV4";
     let selectedStep = 1;
     let activeProjectId = "tm-auto";
     let statusFilter = "전체";
@@ -959,13 +1124,10 @@
     let calendarDate = new Date(2026, 7, 1);
     let threeObjects = [];
 
-    function phaseOf(stepId) {
-      return steps.find(s => s.id === Number(stepId))?.phase || "수주 전";
-    }
-
-    function phaseMeta(name) {
-      return phases.find(p => p.name === name) || phases[0];
-    }
+    const phaseOf = stepId => steps.find(s => s.id === Number(stepId))?.phase || "수주 전";
+    const phaseMeta = name => phases.find(p => p.name === name) || phases[0];
+    const statusColor = status => status === "위험" ? "var(--red)" : status === "주의" ? "var(--amber)" : "var(--green)";
+    const projectProgress = project => Math.round((project.step - 1) / (steps.length - 1) * 100);
 
     function readState() {
       try {
@@ -986,25 +1148,18 @@
       setTimeout(() => el.classList.remove("show"), 1800);
     }
 
-    function projectProgress(project) {
-      return Math.round((project.step - 1) / (steps.length - 1) * 100);
-    }
-
     function renderLegend() {
-      document.getElementById("phaseLegend").innerHTML = phases.map(p => `<span class="phase-chip"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${p.color};margin-right:6px"></span>${p.name}</span>`).join("");
+      document.getElementById("phaseLegend").innerHTML = phases.map(p => `<span class="phase-chip"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${p.color};margin-right:7px"></span>${p.name}</span>`).join("");
     }
 
     function renderStepSelect() {
-      const select = document.getElementById("projectStepInput");
-      select.innerHTML = steps.map(step => `<option value="${step.id}">${step.id}. ${step.task}</option>`).join("");
+      document.getElementById("projectStepInput").innerHTML = steps.map(step => `<option value="${step.id}">${step.id}. ${step.task}</option>`).join("");
     }
 
     function renderStats() {
       const state = readState();
       const done = Object.values(state.checks).filter(Boolean).length;
       const pct = Math.round(done / checklist.length * 100);
-      const active = state.projects.find(p => p.id === activeProjectId) || state.projects[0];
-      const issueCount = state.projects.filter(p => p.issue && p.issue.trim()).length;
       const month = calendarDate.getMonth();
       const year = calendarDate.getFullYear();
       const eventCount = state.projects.filter(p => {
@@ -1012,14 +1167,9 @@
         return d.getMonth() === month && d.getFullYear() === year;
       }).length;
       document.getElementById("globalProgressText").textContent = `${pct}%`;
-      document.getElementById("globalProgressFill").style.width = `${pct}%`;
       document.getElementById("statProjects").textContent = state.projects.length;
-      document.getElementById("statIssues").textContent = issueCount;
+      document.getElementById("statIssues").textContent = state.projects.filter(p => p.issue?.trim()).length;
       document.getElementById("statEvents").textContent = eventCount;
-      if (active) {
-        document.getElementById("activeProjectShort").textContent = active.name.slice(0, 2);
-        document.getElementById("activeProjectName").textContent = `${active.name} · ${active.step}단계 ${steps[active.step - 1].task}`;
-      }
     }
 
     function renderProjects() {
@@ -1028,15 +1178,21 @@
       document.getElementById("projectList").innerHTML = filtered.map(project => {
         const phase = phaseOf(project.step);
         const meta = phaseMeta(phase);
-        return `<button class="project-row ${project.id === activeProjectId ? "active" : ""}" data-project="${project.id}" type="button">
-          <div>
-            <div class="project-title"><span>${project.name}</span><span class="badge" style="background:${statusColor(project.status)}">${project.status}</span><span class="badge" style="background:${meta.color}">${phase}</span></div>
-            <div class="project-meta">담당: ${project.owner || "-"} · 협력/PM: ${project.vendor || "-"} · 마감: ${project.due || "-"}<br>${project.issue || "등록된 이슈 없음"}</div>
-            <div class="bar" style="background:#e8eef4"><span style="width:${projectProgress(project)}%;background:${meta.color}"></span></div>
+        return `<button class="project-card ${project.id === activeProjectId ? "active" : ""}" style="--accent:${meta.color}" data-project="${project.id}" type="button">
+          <div class="project-top">
+            <div>
+              <div class="project-name">${project.name}</div>
+              <div class="project-meta"><span>${project.owner || "담당 미정"}</span><span>${project.vendor || "협력/PM 미정"}</span><span>${project.due || "마감 미정"}</span></div>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:end">
+              <span class="badge" style="background:${statusColor(project.status)}">${project.status}</span>
+              <span class="badge" style="background:${meta.color}">${phase}</span>
+            </div>
           </div>
-          <div style="display:grid;gap:6px;justify-items:end">
-            <span style="font-size:22px;font-weight:900;color:var(--navy)">${projectProgress(project)}%</span>
-            <span style="font-size:12px;color:var(--muted)">${project.step}/20</span>
+          <div class="project-issue">${project.issue || "등록된 이슈 없음"}</div>
+          <div>
+            <div class="project-meta" style="justify-content:space-between"><span>${project.step}/20 · ${steps[project.step - 1].task}</span><b>${projectProgress(project)}%</b></div>
+            <div class="progress-track"><span style="width:${projectProgress(project)}%"></span></div>
           </div>
         </button>`;
       }).join("");
@@ -1044,26 +1200,20 @@
         btn.addEventListener("click", () => {
           activeProjectId = btn.dataset.project;
           const active = readState().projects.find(p => p.id === activeProjectId);
-          if (active) selectStep(active.step, false);
+          if (active) selectedStep = active.step;
           renderAll();
         });
       });
       renderBoard();
     }
 
-    function statusColor(status) {
-      if (status === "위험") return "var(--red)";
-      if (status === "주의") return "var(--amber)";
-      return "var(--green)";
-    }
-
     function renderBoard() {
       const state = readState();
       document.getElementById("projectBoard").innerHTML = phases.map(phase => {
         const items = state.projects.filter(p => phaseOf(p.step) === phase.name);
-        return `<div class="lane">
-          <h4><span style="display:inline-block;width:9px;height:9px;border-radius:50%;background:${phase.color};margin-right:6px"></span>${phase.name}</h4>
-          ${items.map(p => `<div class="lane-item" style="border-left-color:${phase.color}"><b>${p.name}</b><br>${p.step}. ${steps[p.step - 1].task}<br><span style="color:var(--muted)">마감 ${p.due || "-"} · ${p.status}</span></div>`).join("") || `<div style="color:var(--muted);font-size:12px">등록 프로젝트 없음</div>`}
+        return `<div class="lane" style="--accent:${phase.color}">
+          <h4>${phase.name}</h4>
+          ${items.map(p => `<div class="lane-item"><b>${p.name}</b><br>${p.step}. ${steps[p.step - 1].task}<br><span style="color:var(--muted)">마감 ${p.due || "-"} · ${p.status}</span></div>`).join("") || `<div style="color:var(--muted);font-size:12px;margin-top:12px">등록 프로젝트 없음</div>`}
         </div>`;
       }).join("");
     }
@@ -1083,7 +1233,7 @@
         const events = state.projects.filter(p => p.due === iso);
         cells.push(`<div class="day ${d.getMonth() === m ? "" : "dim"}">
           <strong>${d.getDate()}</strong>
-          ${events.map(p => `<div class="event" style="border-left-color:${statusColor(p.status)}"><b>${p.name}</b><br>${p.step}. ${steps[p.step - 1].task}</div>`).join("")}
+          ${events.map(p => `<div class="event" style="--accent:${statusColor(p.status)}"><b>${p.name}</b><br>${p.step}. ${steps[p.step - 1].task}</div>`).join("")}
         </div>`);
       }
       document.getElementById("calendarGrid").innerHTML = cells.join("");
@@ -1096,9 +1246,9 @@
       const state = readState();
       const related = checklist.map((row, index) => ({ index, phase: row[0], item: row[1], standard: row[2] })).filter(row => row.phase === step.phase);
       document.getElementById("manualDetail").innerHTML = `
-        <div>
+        <div class="manual-hero">
           <span class="badge" style="background:${phaseMeta(step.phase).color}">${step.phase} · ${step.id}단계</span>
-          <h2 style="margin:10px 0;color:var(--navy)">${step.task}</h2>
+          <h2>${step.task}</h2>
         </div>
         <div class="detail-grid">
           <div class="info"><label>담당/협업</label>${step.owner}</div>
@@ -1106,7 +1256,7 @@
           <div class="info"><label>핵심 체크</label>${step.check}</div>
           <div class="info"><label>주의사항</label>${step.caution}</div>
         </div>
-        <div style="display:grid;gap:8px">
+        <div class="check-grid">
           ${related.map(row => `<label class="check-row ${state.checks[row.index] ? "done" : ""}">
             <input type="checkbox" data-check="${row.index}" ${state.checks[row.index] ? "checked" : ""}>
             <span><b>${row.item}</b><small>${row.standard}</small></span>
@@ -1118,12 +1268,20 @@
         writeState(next);
         renderAll();
       }));
-      updateThreeSelection();
     }
 
-    function renderTables() {
-      document.getElementById("docRows").innerHTML = documents.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("");
-      document.getElementById("decisionRows").innerHTML = decisions.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("");
+    function renderDocuments() {
+      document.getElementById("docCards").innerHTML = documents.map((row, i) => `<div class="doc-card">
+        <span class="badge" style="background:${phaseMeta(phases[i % phases.length].name).color}">DOC ${String(i + 1).padStart(2, "0")}</span>
+        <b style="margin-top:12px">${row[0]}</b>
+        <p>${row[1]} → ${row[2]}</p>
+        <p style="margin-top:8px">${row[3]}</p>
+      </div>`).join("");
+      document.getElementById("decisionCards").innerHTML = decisions.map(row => `<div class="decision-card">
+        <b>${row[0]}</b>
+        <p><strong style="color:var(--ink)">질문</strong> ${row[1]}</p>
+        <p style="margin-top:6px"><strong style="color:var(--ink)">행동</strong> ${row[2]}</p>
+      </div>`).join("");
     }
 
     function renderMail() {
@@ -1236,35 +1394,35 @@
       renderProjects();
       renderCalendar();
       renderManual();
-      renderTables();
+      renderDocuments();
     }
 
     async function initThree() {
       try {
         const THREE = await import("https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js");
         const canvas = document.getElementById("threeStage");
-        const stage = document.querySelector(".stage");
+        const stage = document.querySelector(".hero");
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(48, stage.clientWidth / stage.clientHeight, .1, 1000);
-        camera.position.set(0, 16, 32);
+        const camera = new THREE.PerspectiveCamera(46, stage.clientWidth / stage.clientHeight, .1, 1000);
+        camera.position.set(0, 16, 34);
         camera.lookAt(0, 0, 0);
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.setSize(stage.clientWidth, stage.clientHeight);
 
-        scene.add(new THREE.HemisphereLight(0xffffff, 0x506680, 2.2));
-        const light = new THREE.DirectionalLight(0xffffff, 2.7);
+        scene.add(new THREE.HemisphereLight(0xffffff, 0x25384c, 2.1));
+        const light = new THREE.DirectionalLight(0xffffff, 2.8);
         light.position.set(10, 18, 12);
         scene.add(light);
 
-        const floor = new THREE.Mesh(new THREE.PlaneGeometry(52, 24), new THREE.MeshStandardMaterial({ color: 0xdfe8ef, roughness: .82, metalness: .05 }));
+        const floor = new THREE.Mesh(new THREE.PlaneGeometry(56, 26), new THREE.MeshStandardMaterial({ color: 0x223348, roughness: .74, metalness: .12 }));
         floor.rotation.x = -Math.PI / 2;
-        floor.position.y = -1.15;
+        floor.position.y = -1.2;
         scene.add(floor);
 
-        const railMat = new THREE.MeshStandardMaterial({ color: 0x536779, roughness: .45, metalness: .25 });
+        const railMat = new THREE.MeshStandardMaterial({ color: 0x8fb0c8, roughness: .38, metalness: .36 });
         [-1.25, 1.25].forEach(z => {
-          const rail = new THREE.Mesh(new THREE.BoxGeometry(46, .16, .20), railMat);
+          const rail = new THREE.Mesh(new THREE.BoxGeometry(48, .16, .2), railMat);
           rail.position.set(0, -.52, z);
           scene.add(rail);
         });
@@ -1275,25 +1433,22 @@
         threeObjects = [];
 
         steps.forEach((step, index) => {
-          const x = (index - 9.5) * 2.22;
-          const y = index % 2 ? .58 : 0;
+          const x = (index - 9.5) * 2.24;
+          const y = index % 2 ? .62 : 0;
           const meta = phaseMeta(step.phase);
-          const body = new THREE.Mesh(new THREE.BoxGeometry(1.55, 1.1, 1.55), new THREE.MeshStandardMaterial({ color: meta.three, roughness: .38, metalness: .16 }));
+          const body = new THREE.Mesh(new THREE.BoxGeometry(1.52, 1.05, 1.52), new THREE.MeshStandardMaterial({ color: meta.three, roughness: .34, metalness: .22 }));
           body.position.set(x, y, 0);
           body.userData.stepId = step.id;
           scene.add(body);
-          const cap = new THREE.Mesh(new THREE.CylinderGeometry(.46, .46, .16, 32), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .4, metalness: .08 }));
-          cap.position.set(x, y + .68, 0);
+          const cap = new THREE.Mesh(new THREE.CylinderGeometry(.44, .44, .15, 32), new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .32, metalness: .12 }));
+          cap.position.set(x, y + .67, 0);
           cap.userData.stepId = step.id;
           scene.add(cap);
-          const label = makeLabel(THREE, `${step.id}. ${step.task}`, meta.color);
-          label.position.set(x, y + 1.95, index % 2 ? 1.85 : -1.85);
-          scene.add(label);
-          movers.push(body, cap);
           threeObjects.push(body, cap);
+          movers.push(body, cap);
         });
 
-        const shuttle = new THREE.Mesh(new THREE.SphereGeometry(.34, 32, 16), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x1f9bb4, emissiveIntensity: .6 }));
+        const shuttle = new THREE.Mesh(new THREE.SphereGeometry(.36, 32, 16), new THREE.MeshStandardMaterial({ color: 0xffffff, emissive: 0x31d1b7, emissiveIntensity: .65 }));
         scene.add(shuttle);
 
         canvas.addEventListener("click", event => {
@@ -1312,75 +1467,44 @@
         });
 
         function animate(time) {
-          const targetX = (selectedStep - 1 - 9.5) * 2.22;
+          const targetX = (selectedStep - 1 - 9.5) * 2.24;
           shuttle.position.x += (targetX - shuttle.position.x) * .08;
-          shuttle.position.y = 1.4 + Math.sin(time * .004) * .16;
+          shuttle.position.y = 1.45 + Math.sin(time * .004) * .18;
           shuttle.position.z = Math.sin(time * .002) * .9;
           movers.forEach(obj => {
             const active = obj.userData.stepId === selectedStep;
-            obj.rotation.y += active ? .028 : .006;
+            obj.rotation.y += active ? .03 : .006;
             obj.scale.setScalar(active ? 1.18 : 1);
           });
           renderer.render(scene, camera);
           requestAnimationFrame(animate);
         }
         requestAnimationFrame(animate);
-      } catch (error) {
-        drawFallback();
+      } catch {
+        const canvas = document.getElementById("threeStage");
+        const ctx = canvas.getContext("2d");
+        function draw() {
+          const stage = document.querySelector(".hero");
+          const dpr = Math.min(window.devicePixelRatio || 1, 2);
+          canvas.width = stage.clientWidth * dpr;
+          canvas.height = stage.clientHeight * dpr;
+          canvas.style.width = stage.clientWidth + "px";
+          canvas.style.height = stage.clientHeight + "px";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
+          steps.forEach((step, index) => {
+            const x = 80 + (index % 5) * 150;
+            const y = 260 + Math.floor(index / 5) * 78;
+            ctx.fillStyle = phaseMeta(step.phase).color;
+            ctx.fillRect(x, y, 118, 48);
+            ctx.fillStyle = "#fff";
+            ctx.font = "700 12px Malgun Gothic";
+            ctx.fillText(`${step.id}. ${step.task}`.slice(0, 13), x + 8, y + 28);
+          });
+        }
+        draw();
+        window.addEventListener("resize", draw);
       }
-    }
-
-    function makeLabel(THREE, text, color) {
-      const canvas = document.createElement("canvas");
-      canvas.width = 560;
-      canvas.height = 160;
-      const ctx = canvas.getContext("2d");
-      ctx.fillStyle = "rgba(255,255,255,.94)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = color;
-      ctx.fillRect(0, 0, 16, canvas.height);
-      ctx.strokeStyle = "#d8e0e8";
-      ctx.lineWidth = 8;
-      ctx.strokeRect(4, 4, canvas.width - 8, canvas.height - 8);
-      ctx.fillStyle = "#122238";
-      ctx.font = "800 34px Malgun Gothic, sans-serif";
-      const lines = text.match(/.{1,14}/g) || [text];
-      lines.slice(0, 2).forEach((line, i) => ctx.fillText(line, 34, 58 + i * 42));
-      const texture = new THREE.CanvasTexture(canvas);
-      const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: texture }));
-      sprite.scale.set(5.5, 1.6, 1);
-      return sprite;
-    }
-
-    function updateThreeSelection() {}
-
-    function drawFallback() {
-      const canvas = document.getElementById("threeStage");
-      const stage = document.querySelector(".stage");
-      const ctx = canvas.getContext("2d");
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      function size() {
-        canvas.width = stage.clientWidth * dpr;
-        canvas.height = stage.clientHeight * dpr;
-        canvas.style.width = stage.clientWidth + "px";
-        canvas.style.height = stage.clientHeight + "px";
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      }
-      function draw() {
-        size();
-        ctx.clearRect(0, 0, stage.clientWidth, stage.clientHeight);
-        steps.forEach((step, index) => {
-          const x = 80 + (index % 5) * 150;
-          const y = 270 + Math.floor(index / 5) * 82;
-          ctx.fillStyle = phaseMeta(step.phase).color;
-          ctx.fillRect(x, y, 118, 48);
-          ctx.fillStyle = "#fff";
-          ctx.font = "700 12px Malgun Gothic";
-          ctx.fillText(`${step.id}. ${step.task}`.slice(0, 13), x + 8, y + 28);
-        });
-      }
-      draw();
-      window.addEventListener("resize", draw);
     }
 
     renderLegend();
