@@ -51,10 +51,10 @@
     }
 
     .topbar-inner {
-      max-width: 1480px;
+      width: 100%;
       margin: 0 auto;
-      min-height: 72px;
-      padding: 12px 22px;
+      min-height: 68px;
+      padding: 10px clamp(14px, 1.4vw, 28px);
       display: grid;
       grid-template-columns: minmax(260px, 1fr) auto auto;
       gap: 18px;
@@ -165,11 +165,15 @@
     }
 
     .app {
-      max-width: 1480px;
+      width: 100%;
       margin: 0 auto;
-      padding: 22px;
+      padding: clamp(12px, 1.25vw, 24px);
       display: grid;
-      gap: 22px;
+      gap: clamp(12px, 1.15vw, 20px);
+    }
+
+    .app.is-view-mode .hero {
+      display: none;
     }
 
     .hero {
@@ -335,21 +339,24 @@
 
     .workspace-shell {
       display: grid;
-      grid-template-columns: 220px minmax(0, 1fr) 330px;
-      gap: 18px;
+      grid-template-columns: clamp(188px, 12vw, 240px) minmax(0, 1fr) clamp(300px, 19vw, 380px);
+      gap: clamp(12px, 1vw, 18px);
       align-items: start;
+      min-height: calc(100vh - 96px);
     }
 
     .side-menu,
     .ai-panel {
       position: sticky;
-      top: 92px;
+      top: 84px;
       border: 1px solid rgba(255,255,255,.74);
       border-radius: 24px;
       background:
         linear-gradient(180deg, rgba(255,255,255,.95), rgba(246,249,252,.78));
       box-shadow: var(--soft-shadow);
       padding: 14px;
+      max-height: calc(100vh - 104px);
+      overflow: auto;
     }
 
     .side-menu h3,
@@ -407,6 +414,7 @@
     .view-stack {
       display: grid;
       gap: 18px;
+      min-width: 0;
     }
 
     .view-stack .section {
@@ -415,11 +423,13 @@
 
     .view-stack .section.active-view {
       display: block;
+      min-height: calc(100vh - 96px);
     }
 
     .ai-panel {
       display: grid;
       gap: 12px;
+      align-content: start;
     }
 
     .ai-card {
@@ -446,6 +456,56 @@
     .ai-card textarea {
       min-height: 150px;
       font-size: 12px;
+    }
+
+    .agent-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .agent-card {
+      border: 1px solid rgba(21,32,43,.10);
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.92), rgba(238,243,248,.72));
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .agent-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .agent-head b {
+      color: var(--navy);
+      font-size: 14px;
+    }
+
+    .agent-state {
+      border-radius: 999px;
+      background: rgba(47,109,246,.10);
+      color: var(--blue);
+      padding: 5px 8px;
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .agent-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 12px;
+    }
+
+    .agent-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
     }
 
     .action-strip {
@@ -1351,7 +1411,7 @@
     </div>
   </header>
 
-  <main class="app">
+  <main class="app is-view-mode">
     <section class="hero" aria-label="3D 프로젝트 프로세스">
       <canvas id="threeStage"></canvas>
       <div class="hero-content">
@@ -1541,16 +1601,29 @@
       </div>
 
       <aside class="ai-panel" aria-label="AI 질문 패널">
-        <h3>AI Copilot</h3>
+        <h3>Agent Console</h3>
+        <div class="agent-grid">
+          <div class="agent-card">
+            <div class="agent-head"><b>GPT Agent</b><span class="agent-state">로그인 후 사용</span></div>
+            <p>질문 초안을 복사한 뒤 ChatGPT에 로그인하면 프로젝트 리스크와 다음 액션을 바로 점검할 수 있습니다.</p>
+            <div class="agent-actions">
+              <button class="btn primary compact" id="openGptBtn" type="button">GPT 열기</button>
+              <button class="btn compact" id="copyAiPromptBtn" type="button">질문 복사</button>
+            </div>
+          </div>
+          <div class="agent-card">
+            <div class="agent-head"><b>Gemini Agent</b><span class="agent-state">로그인 후 사용</span></div>
+            <p>Google 계정으로 로그인한 뒤 같은 질문을 Gemini에서 검토하거나 메일 문안 대안을 만들 수 있습니다.</p>
+            <div class="agent-actions">
+              <button class="btn primary compact" id="openGeminiBtn" type="button">Gemini 열기</button>
+              <button class="btn compact" id="copyAiPromptBtnAlt" type="button">질문 복사</button>
+            </div>
+          </div>
+        </div>
         <div class="ai-card">
           <b>현재 프로젝트/단계 질문</b>
-          <p>선택된 프로젝트와 업무 단계 기준으로 질문 초안을 만듭니다. 버튼을 누르면 질문을 복사하고 AI 화면을 엽니다.</p>
+          <p>선택된 프로젝트와 업무 단계 기준으로 질문 초안을 만듭니다.</p>
           <textarea id="aiPrompt" placeholder="AI에게 물어볼 질문"></textarea>
-          <div class="toolbar">
-            <button class="btn primary compact" id="openGptBtn" type="button">GPT 열기</button>
-            <button class="btn compact" id="openGeminiBtn" type="button">Gemini 열기</button>
-            <button class="btn compact" id="copyAiPromptBtn" type="button">질문 복사</button>
-          </div>
         </div>
         <div class="ai-card">
           <b>추천 질문</b>
@@ -1791,6 +1864,7 @@
 
     function switchView(view, pushHash = true) {
       activeView = view || "projects";
+      document.querySelector(".app")?.classList.add("is-view-mode");
       document.querySelectorAll("[data-view-section]").forEach(section => section.classList.toggle("active-view", section.dataset.viewSection === activeView));
       document.querySelectorAll("[data-view]").forEach(btn => btn.classList.toggle("active", btn.dataset.view === activeView));
       if (pushHash) history.replaceState(null, "", `#${activeView}`);
@@ -2243,6 +2317,7 @@
       });
       ["mailTo", "mailCc", "mailSubject", "mailBody"].forEach(id => document.getElementById(id).addEventListener("input", updateMailto));
       document.getElementById("copyAiPromptBtn").addEventListener("click", copyAiPrompt);
+      document.getElementById("copyAiPromptBtnAlt").addEventListener("click", copyAiPrompt);
       document.getElementById("openGptBtn").addEventListener("click", async () => {
         await copyAiPrompt();
         window.open("https://chatgpt.com/", "_blank", "noopener");
