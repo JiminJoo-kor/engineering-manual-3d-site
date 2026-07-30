@@ -904,6 +904,91 @@
       gap: 10px;
     }
 
+    .project-control-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .project-control-grid label,
+    .project-memo label {
+      display: grid;
+      gap: 6px;
+      color: rgba(238,246,255,.64);
+      font-size: 11px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .project-control-grid select {
+      min-height: 40px;
+      border-radius: 14px;
+    }
+
+    .project-checks {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .project-check-item {
+      display: grid;
+      grid-template-columns: 20px 1fr;
+      gap: 10px;
+      align-items: start;
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,.065);
+      padding: 10px 11px;
+      color: rgba(238,246,255,.86);
+      line-height: 1.45;
+    }
+
+    .project-check-item input {
+      width: 18px;
+      height: 18px;
+      min-height: 18px;
+      margin: 2px 0 0;
+      accent-color: #66d7ff;
+    }
+
+    .project-check-item b {
+      display: block;
+      color: #fff;
+      font-size: 12px;
+    }
+
+    .project-check-item small {
+      display: block;
+      margin-top: 3px;
+      color: rgba(238,246,255,.58);
+      font-size: 11px;
+    }
+
+    .project-check-item.done {
+      border-color: rgba(63,205,142,.34);
+      background: rgba(63,205,142,.10);
+    }
+
+    .project-memo {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .project-memo textarea {
+      min-height: 96px;
+      border-radius: 18px;
+    }
+
+    .project-detail-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
     .timeline-title {
       display: flex;
       align-items: center;
@@ -1024,7 +1109,7 @@
 
     .operations-grid {
       display: grid;
-      grid-template-columns: minmax(360px, .94fr) minmax(520px, 1.06fr);
+      grid-template-columns: minmax(360px, .82fr) minmax(520px, 1.18fr);
       gap: 16px;
       align-items: start;
       margin-bottom: 16px;
@@ -1033,6 +1118,7 @@
     .work-panel {
       display: grid;
       gap: 12px;
+      min-height: 0;
     }
 
     .panel-label {
@@ -1054,7 +1140,12 @@
 
     .project-list {
       display: grid;
-      gap: 12px;
+      gap: 10px;
+      max-height: min(62vh, 740px);
+      overflow: auto;
+      padding-right: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(102,215,255,.45) rgba(255,255,255,.06);
     }
 
     .project-card {
@@ -1063,9 +1154,9 @@
       border-radius: 22px;
       background:
         linear-gradient(145deg, rgba(255,255,255,.96), rgba(255,255,255,.70));
-      padding: 16px;
+      padding: 14px 14px 14px 16px;
       display: grid;
-      gap: 12px;
+      gap: 10px;
       text-align: left;
       box-shadow: 0 14px 34px rgba(22,31,42,.08);
       overflow: hidden;
@@ -1100,7 +1191,7 @@
 
     .project-name {
       color: var(--navy);
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 900;
       line-height: 1.35;
     }
@@ -1516,11 +1607,180 @@
 
     .toast.show { opacity: 1; transform: translateY(0); }
 
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(102,215,255,.17), transparent 27%),
+        radial-gradient(circle at 82% 14%, rgba(63,205,142,.14), transparent 25%),
+        radial-gradient(circle at 72% 82%, rgba(199,123,38,.12), transparent 28%),
+        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px),
+        linear-gradient(180deg, rgba(255,255,255,.026) 1px, transparent 1px);
+      background-size: auto, auto, auto, 42px 42px, 42px 42px;
+      transform: perspective(900px) rotateX(58deg) translateY(-18%);
+      transform-origin: top;
+      opacity: .9;
+      pointer-events: none;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(7,13,22,.2), rgba(7,13,22,.86) 72%),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.035) 0 1px, transparent 1px 8px);
+      mix-blend-mode: screen;
+      opacity: .34;
+    }
+
+    .topbar,
+    .section,
+    .side-menu,
+    .ai-panel,
+    .hero {
+      transform-style: preserve-3d;
+    }
+
+    .topbar {
+      box-shadow: 0 18px 44px rgba(0,0,0,.28);
+    }
+
+    .section,
+    .side-menu,
+    .ai-panel {
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(16,28,43,.92), rgba(5,11,20,.9) 68%),
+        linear-gradient(135deg, rgba(102,215,255,.16), rgba(63,205,142,.06));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.13),
+        inset 0 -1px 0 rgba(0,0,0,.44),
+        0 32px 70px rgba(0,0,0,.34);
+    }
+
+    .section::after,
+    .side-menu::after,
+    .ai-panel::after {
+      content: "";
+      position: absolute;
+      inset: 1px;
+      border-radius: inherit;
+      pointer-events: none;
+      border: 1px solid rgba(102,215,255,.08);
+      background: linear-gradient(135deg, rgba(255,255,255,.06), transparent 46%);
+      transform: translateZ(12px);
+    }
+
+    .btn,
+    .tab-btn,
+    .mini-action,
+    .menu-btn,
+    .template-btn {
+      position: relative;
+      overflow: hidden;
+      border-color: rgba(102,215,255,.22);
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,.04)),
+        linear-gradient(135deg, rgba(15,29,44,.96), rgba(7,15,25,.94));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.22),
+        inset 0 -10px 18px rgba(0,0,0,.22),
+        0 14px 30px rgba(0,0,0,.26);
+    }
+
+    .btn::after,
+    .tab-btn::after,
+    .mini-action::after,
+    .menu-btn::after,
+    .template-btn::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0 34%, rgba(255,255,255,.18) 45%, transparent 58%);
+      transform: translateX(-120%);
+      transition: transform .42s ease;
+      pointer-events: none;
+    }
+
+    .btn:hover::after,
+    .tab-btn:hover::after,
+    .mini-action:hover::after,
+    .menu-btn:hover::after,
+    .template-btn:hover::after {
+      transform: translateX(120%);
+    }
+
+    .btn:hover,
+    .mini-action:hover,
+    .menu-btn:hover,
+    .template-btn:hover {
+      transform: translateY(-2px) translateZ(8px);
+      border-color: rgba(102,215,255,.46);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.26),
+        inset 0 -10px 18px rgba(0,0,0,.18),
+        0 20px 42px rgba(0,0,0,.34),
+        0 0 28px rgba(102,215,255,.10);
+    }
+
+    .project-card,
+    .lane,
+    .radar-card,
+    .detail-metric,
+    .project-check-item,
+    .timeline-item,
+    .agent-card,
+    .ai-card,
+    .source-item,
+    .doc-card,
+    .decision-card {
+      border-radius: 18px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.115), rgba(255,255,255,.035)),
+        linear-gradient(135deg, rgba(102,215,255,.055), rgba(63,205,142,.025));
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.12),
+        inset 0 -1px 0 rgba(0,0,0,.32),
+        0 18px 40px rgba(0,0,0,.24);
+    }
+
+    .project-card.active {
+      border-color: rgba(102,215,255,.54);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.18),
+        0 24px 54px rgba(0,0,0,.32),
+        0 0 0 1px rgba(102,215,255,.10),
+        0 0 36px rgba(102,215,255,.14);
+    }
+
+    .project-detail-panel,
+    .project-radar {
+      position: sticky;
+      top: 92px;
+      background:
+        linear-gradient(145deg, rgba(10,20,33,.96), rgba(4,10,18,.94) 72%),
+        radial-gradient(circle at top right, rgba(102,215,255,.18), transparent 36%);
+    }
+
+    .board {
+      max-height: min(62vh, 740px);
+      overflow: auto;
+      padding-right: 8px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(63,205,142,.42) rgba(255,255,255,.06);
+    }
+
     @media (max-width: 1180px) {
       .topbar-inner { grid-template-columns: 1fr; }
       .nav, .top-actions { justify-content: start; }
       .hero-grid, .workspace-shell, .project-command, .operations-grid, .manual-grid, .mail-layout { grid-template-columns: 1fr; }
       .side-menu, .ai-panel { position: static; }
+      .project-detail-panel, .project-radar { position: static; }
       .project-form { grid-template-columns: repeat(2, 1fr); }
       .doc-flow, .source-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -1530,7 +1790,8 @@
       .hero, .hero-content { min-height: 620px; }
       .hero-content { padding: 18px; }
       .hero h2 { font-size: 30px; }
-      .hero-stats, .project-form, .project-toolbar, .detail-metrics, .board, .calendar, .detail-grid, .check-grid, .doc-flow, .decision-grid, .template-grid, .source-grid { grid-template-columns: 1fr; }
+      .hero-stats, .project-form, .project-toolbar, .detail-metrics, .project-control-grid, .board, .calendar, .detail-grid, .check-grid, .doc-flow, .decision-grid, .template-grid, .source-grid { grid-template-columns: 1fr; }
+      .project-list, .board { max-height: none; overflow: visible; padding-right: 0; }
       .timeline-item { grid-template-columns: 28px 1fr; }
       .timeline-state { grid-column: 2; justify-self: start; }
       .section-head { grid-template-columns: 1fr; }
@@ -1977,6 +2238,29 @@
       ];
     }
 
+    function projectCheckItems(project) {
+      const currentStep = steps[project.step - 1] || steps[0];
+      const phaseRows = checklist
+        .map((row, index) => ({ key: `checklist-${index}`, title: row[1], detail: row[2], phase: row[0] }))
+        .filter(row => row.phase === currentStep.phase)
+        .slice(0, 4);
+      return [
+        { key: "scope", title: "범위·스코프 확인", detail: `${currentStep.task} 기준으로 누락 범위가 없는지 확인` },
+        { key: "owner", title: "담당자·협력업체 확인", detail: project.vendor ? `${project.vendor}와 다음 액션 담당 확정` : "협력업체 또는 PM 담당 미정 항목 확인" },
+        { key: "schedule", title: "일정·마감 리스크 확인", detail: project.due ? `${project.due} 마감 기준으로 지연 가능성 확인` : "마감일 미정이면 일정 기준 먼저 입력" },
+        ...phaseRows
+      ].slice(0, 6);
+    }
+
+    function updateProject(projectId, updater) {
+      const next = readState();
+      const index = next.projects.findIndex(p => p.id === projectId);
+      if (index < 0) return null;
+      next.projects[index] = normalizeProject(updater(normalizeProject(next.projects[index], index)), index);
+      writeState(next);
+      return next.projects[index];
+    }
+
     function timelineStateColor(state) {
       if (state === "완료") return "var(--green)";
       if (state === "진행") return "var(--blue)";
@@ -1991,6 +2275,8 @@
         client: project.client || fallback.client || "",
         priority: project.priority || fallback.priority || "보통",
         nextAction: project.nextAction || "",
+        checks: project.checks || {},
+        memoDraft: project.memoDraft || "",
         history: Array.isArray(project.history) && project.history.length ? project.history : []
       };
     }
@@ -2152,6 +2438,7 @@
       const meta = phaseMeta(phase);
       const progress = projectProgress(project);
       const history = projectHistory(project).slice(-5);
+      const checkItems = projectCheckItems(project);
       document.getElementById("projectDetailPanel").innerHTML = `
         <h4>Selected Project</h4>
         <div class="detail-title-row">
@@ -2173,10 +2460,43 @@
           <div class="detail-metric"><span>협력/PM</span><b>${escapeHtml(project.vendor || "미정")}</b></div>
           <div class="detail-metric"><span>마감일</span><b>${escapeHtml(project.due || "미정")}</b></div>
         </div>
+        <div class="project-control-grid">
+          <label>진행 단계
+            <select data-project-step-control="${project.id}">
+              ${steps.map(row => `<option value="${row.id}" ${row.id === Number(project.step) ? "selected" : ""}>${row.id}. ${escapeHtml(row.task)}</option>`).join("")}
+            </select>
+          </label>
+          <label>진행 상태
+            <select data-project-status-control="${project.id}">
+              ${["정상", "주의", "위험"].map(value => `<option ${value === project.status ? "selected" : ""}>${value}</option>`).join("")}
+            </select>
+          </label>
+          <label>우선순위
+            <select data-project-priority-control="${project.id}">
+              ${["보통", "높음", "긴급"].map(value => `<option ${value === (project.priority || "보통") ? "selected" : ""}>${value}</option>`).join("")}
+            </select>
+          </label>
+        </div>
         <div class="next-action"><b>${project.step}. ${escapeHtml(step.task)}</b><br>${escapeHtml(nextAction(project))}
           <div class="action-strip">
             <button class="mini-action" data-project-mail="${project.id}" type="button">이 단계 Gmail 준비</button>
             <button class="mini-action" data-ask-ai="${project.id}" type="button">AI에게 리스크 질문</button>
+          </div>
+        </div>
+        <div class="project-checks">
+          <div class="timeline-title"><b>진행여부 체크</b><span>${Object.values(project.checks || {}).filter(Boolean).length}/${checkItems.length}</span></div>
+          ${checkItems.map(item => `<label class="project-check-item ${project.checks?.[item.key] ? "done" : ""}">
+            <input type="checkbox" data-project-check="${project.id}" data-check-key="${escapeHtml(item.key)}" ${project.checks?.[item.key] ? "checked" : ""}>
+            <span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(item.detail)}</small></span>
+          </label>`).join("")}
+        </div>
+        <div class="project-memo">
+          <label>진행 메모
+            <textarea data-project-memo="${project.id}" placeholder="오늘 확인한 내용, 변경사항, 담당자 피드백, 다음 액션을 적어주세요.">${escapeHtml(project.memoDraft || "")}</textarea>
+          </label>
+          <div class="project-detail-actions">
+            <button class="mini-action" data-save-project-memo="${project.id}" type="button">메모를 이력에 추가</button>
+            <button class="mini-action" data-clear-project-memo="${project.id}" type="button">메모 비우기</button>
           </div>
         </div>
         <div class="project-timeline">
@@ -2402,6 +2722,86 @@
           updateAiPrompt();
           toast("우측 AI 질문 패널에 단계 질문을 준비했습니다.");
         }
+        const saveMemo = event.target.closest("[data-save-project-memo]");
+        if (saveMemo) {
+          const projectId = saveMemo.dataset.saveProjectMemo;
+          const memoEl = document.querySelector(`[data-project-memo="${projectId}"]`);
+          const memo = memoEl?.value.trim();
+          if (!memo) return toast("이력에 남길 메모를 입력해주세요.");
+          updateProject(projectId, project => ({
+            ...project,
+            memoDraft: "",
+            history: [
+              ...(project.history || []),
+              { date: new Date().toISOString().slice(0, 10), step: Number(project.step), state: "메모", note: memo }
+            ]
+          }));
+          renderAll();
+          toast("진행 메모를 이력에 추가했습니다.");
+          return;
+        }
+        const clearMemo = event.target.closest("[data-clear-project-memo]");
+        if (clearMemo) {
+          updateProject(clearMemo.dataset.clearProjectMemo, project => ({ ...project, memoDraft: "" }));
+          renderAll();
+          toast("메모 입력칸을 비웠습니다.");
+        }
+      });
+      document.addEventListener("change", event => {
+        const check = event.target.closest("[data-project-check]");
+        if (check) {
+          updateProject(check.dataset.projectCheck, project => ({
+            ...project,
+            checks: { ...(project.checks || {}), [check.dataset.checkKey]: check.checked }
+          }));
+          renderAll();
+          toast(check.checked ? "진행 체크를 완료했습니다." : "진행 체크를 해제했습니다.");
+          return;
+        }
+        const stepControl = event.target.closest("[data-project-step-control]");
+        if (stepControl) {
+          const stepId = Number(stepControl.value);
+          updateProject(stepControl.dataset.projectStepControl, project => ({
+            ...project,
+            step: stepId,
+            history: [
+              ...(project.history || []),
+              { date: new Date().toISOString().slice(0, 10), step: stepId, state: "진행", note: `${stepId}. ${steps[stepId - 1].task} 단계로 업데이트` }
+            ]
+          }));
+          selectedStep = stepId;
+          renderAll();
+          toast("프로젝트 진행 단계를 업데이트했습니다.");
+          return;
+        }
+        const statusControl = event.target.closest("[data-project-status-control]");
+        if (statusControl) {
+          updateProject(statusControl.dataset.projectStatusControl, project => ({
+            ...project,
+            status: statusControl.value,
+            history: [
+              ...(project.history || []),
+              { date: new Date().toISOString().slice(0, 10), step: Number(project.step), state: statusControl.value, note: `진행 상태를 ${statusControl.value}(으)로 변경` }
+            ]
+          }));
+          renderAll();
+          toast("프로젝트 상태를 업데이트했습니다.");
+          return;
+        }
+        const priorityControl = event.target.closest("[data-project-priority-control]");
+        if (priorityControl) {
+          updateProject(priorityControl.dataset.projectPriorityControl, project => ({
+            ...project,
+            priority: priorityControl.value
+          }));
+          renderAll();
+          toast("우선순위를 업데이트했습니다.");
+        }
+      });
+      document.addEventListener("input", event => {
+        const memoEl = event.target.closest("[data-project-memo]");
+        if (!memoEl) return;
+        updateProject(memoEl.dataset.projectMemo, project => ({ ...project, memoDraft: memoEl.value }));
       });
       document.querySelectorAll("[data-status]").forEach(btn => btn.addEventListener("click", () => {
         statusFilter = btn.dataset.status;
@@ -2433,6 +2833,8 @@
           vendor: document.getElementById("projectVendorInput").value.trim(),
           issue: document.getElementById("projectIssueInput").value.trim(),
           nextAction: "",
+          checks: {},
+          memoDraft: "",
           history: [
             { date: new Date().toISOString().slice(0, 10), step: Number(document.getElementById("projectStepInput").value), state: "진행", note: "프로젝트 등록 후 현재 단계에서 관리 시작" }
           ]
