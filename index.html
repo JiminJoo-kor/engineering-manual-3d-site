@@ -366,9 +366,139 @@
       box-shadow: 0 8px 18px rgba(17,27,38,.18);
     }
 
+    .project-command {
+      display: grid;
+      grid-template-columns: minmax(280px, .8fr) minmax(380px, 1.2fr);
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .project-radar,
+    .project-detail-panel {
+      border: 1px solid rgba(42,55,68,.12);
+      border-radius: 22px;
+      background:
+        linear-gradient(145deg, rgba(255,255,255,.92), rgba(255,255,255,.62));
+      box-shadow: 0 18px 40px rgba(22,31,42,.08);
+      padding: 16px;
+    }
+
+    .project-radar h4,
+    .project-detail-panel h4 {
+      margin: 0 0 12px;
+      color: var(--navy);
+      font-size: 14px;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .radar-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 10px;
+    }
+
+    .radar-card {
+      border: 1px solid rgba(42,55,68,.10);
+      border-radius: 16px;
+      background: rgba(255,255,255,.72);
+      padding: 12px;
+    }
+
+    .radar-card span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .radar-card b {
+      display: block;
+      margin-top: 6px;
+      color: var(--navy);
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .project-toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      margin: 16px 0;
+      align-items: center;
+    }
+
+    .project-toolbar input {
+      min-height: 46px;
+      border-radius: 999px;
+      padding-left: 16px;
+    }
+
+    .project-detail-panel {
+      min-height: 100%;
+    }
+
+    .detail-title-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .detail-title-row h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: 24px;
+      line-height: 1.25;
+    }
+
+    .detail-pills {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+
+    .detail-metrics {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(90px, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+
+    .detail-metric {
+      border-radius: 16px;
+      background: rgba(25,37,48,.05);
+      padding: 11px;
+    }
+
+    .detail-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .detail-metric b {
+      display: block;
+      margin-top: 6px;
+      color: var(--navy);
+      font-size: 15px;
+    }
+
+    .next-action {
+      border-left: 4px solid var(--blue);
+      border-radius: 16px;
+      background: rgba(53,111,229,.08);
+      padding: 13px 14px;
+      line-height: 1.55;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
     .project-form {
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1.35fr .85fr .85fr 1fr 1.25fr auto;
+      grid-template-columns: 1.25fr 1fr 1fr 1.25fr .8fr .8fr 1fr 1.15fr auto;
       gap: 10px;
       padding: 14px;
       border: 1px solid var(--line);
@@ -424,6 +554,12 @@
       text-align: left;
       box-shadow: 0 14px 34px rgba(22,31,42,.08);
       overflow: hidden;
+      cursor: pointer;
+    }
+
+    .project-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 46px rgba(22,31,42,.12);
     }
 
     .project-card::before {
@@ -481,6 +617,34 @@
       padding: 10px 12px;
       font-size: 13px;
       line-height: 1.5;
+    }
+
+    .project-action {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 14px;
+      background: rgba(53,111,229,.08);
+      color: var(--ink);
+      padding: 9px 10px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .project-action b {
+      color: var(--blue);
+      white-space: nowrap;
+    }
+
+    .empty-state {
+      border: 1px dashed rgba(42,55,68,.22);
+      border-radius: 18px;
+      padding: 22px;
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      background: rgba(255,255,255,.48);
     }
 
     .progress-track {
@@ -840,7 +1004,7 @@
     @media (max-width: 1180px) {
       .topbar-inner { grid-template-columns: 1fr; }
       .nav, .top-actions { justify-content: start; }
-      .hero-grid, .operations-grid, .manual-grid, .mail-layout { grid-template-columns: 1fr; }
+      .hero-grid, .project-command, .operations-grid, .manual-grid, .mail-layout { grid-template-columns: 1fr; }
       .project-form { grid-template-columns: repeat(2, 1fr); }
       .doc-flow, .source-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -850,7 +1014,7 @@
       .hero, .hero-content { min-height: 620px; }
       .hero-content { padding: 18px; }
       .hero h2 { font-size: 30px; }
-      .hero-stats, .project-form, .board, .calendar, .detail-grid, .check-grid, .doc-flow, .decision-grid, .template-grid, .source-grid { grid-template-columns: 1fr; }
+      .hero-stats, .project-form, .project-toolbar, .detail-metrics, .board, .calendar, .detail-grid, .check-grid, .doc-flow, .decision-grid, .template-grid, .source-grid { grid-template-columns: 1fr; }
       .section-head { grid-template-columns: 1fr; }
       .toolbar { justify-content: start; }
     }
@@ -917,8 +1081,20 @@
         </div>
       </div>
       <div class="section-body">
+        <div class="project-command">
+          <div class="project-radar">
+            <h4>Project Radar</h4>
+            <div class="radar-grid" id="projectRadar"></div>
+            <div class="project-toolbar">
+              <input id="projectSearchInput" placeholder="프로젝트명, 고객사, 담당자, 이슈 검색" />
+              <button class="btn compact" id="clearSearchBtn" type="button">검색 초기화</button>
+            </div>
+          </div>
+          <div class="project-detail-panel" id="projectDetailPanel"></div>
+        </div>
         <div class="project-form">
           <input id="projectNameInput" placeholder="프로젝트명" />
+          <input id="projectClientInput" placeholder="고객사/현장" />
           <input id="projectOwnerInput" placeholder="담당자" />
           <select id="projectStepInput"></select>
           <input id="projectDueInput" type="date" />
@@ -926,6 +1102,11 @@
             <option>정상</option>
             <option>주의</option>
             <option>위험</option>
+          </select>
+          <select id="projectPriorityInput">
+            <option>보통</option>
+            <option>높음</option>
+            <option>긴급</option>
           </select>
           <input id="projectVendorInput" placeholder="협력업체/PM" />
           <input id="projectIssueInput" placeholder="현재 이슈" />
@@ -1111,15 +1292,16 @@
     ];
 
     const defaultProjects = [
-      { id: "tm-auto", name: "TM적입 자동화", owner: "엔지니어링팀", step: 10, due: "2026-08-07", status: "주의", vendor: "PM/이행팀 협의", issue: "킥오프 자료와 협력업체 일정 취합 필요" },
-      { id: "globis-layout", name: "글로비스 레이아웃 검토", owner: "주니어 담당", step: 5, due: "2026-08-02", status: "정상", vendor: "협력업체 후보", issue: "견적 범위와 공사 가능 일정 확인 중" },
-      { id: "fat-ready", name: "FAT 준비 샘플", owner: "PM", step: 18, due: "2026-08-18", status: "위험", vendor: "PLC/WCS", issue: "WCS 통합 테스트 미해결 항목 존재" }
+      { id: "tm-auto", name: "TM적입 자동화", client: "국내 물류센터", owner: "엔지니어링팀", step: 10, due: "2026-08-07", status: "주의", priority: "높음", vendor: "PM/이행팀 협의", issue: "킥오프 자료와 협력업체 일정 취합 필요", nextAction: "킥오프 회의록에 역할, 일정, 스코프를 확정하고 장납기품 목록을 분리 관리합니다." },
+      { id: "globis-layout", name: "글로비스 레이아웃 검토", client: "글로비스", owner: "주니어 담당", step: 5, due: "2026-08-02", status: "정상", priority: "보통", vendor: "협력업체 후보", issue: "견적 범위와 공사 가능 일정 확인 중", nextAction: "협력업체 견적서의 사양 누락, 스코프 누락, 공사 가능 일정을 비교표로 정리합니다." },
+      { id: "fat-ready", name: "FAT 준비 샘플", client: "테스트 라인", owner: "PM", step: 18, due: "2026-08-18", status: "위험", priority: "긴급", vendor: "PLC/WCS", issue: "WCS 통합 테스트 미해결 항목 존재", nextAction: "이슈별 원인, 담당자, 조치 기한을 고정하고 FAT 전 재검증 일정을 캘린더에 올립니다." }
     ];
 
     const stateKey = "engineering3dProjectManualV4";
     let selectedStep = 1;
     let activeProjectId = "tm-auto";
     let statusFilter = "전체";
+    let projectQuery = "";
     let selectedTemplate = 0;
     let calendarDate = new Date(2026, 7, 1);
     let threeObjects = [];
@@ -1127,7 +1309,32 @@
     const phaseOf = stepId => steps.find(s => s.id === Number(stepId))?.phase || "수주 전";
     const phaseMeta = name => phases.find(p => p.name === name) || phases[0];
     const statusColor = status => status === "위험" ? "var(--red)" : status === "주의" ? "var(--amber)" : "var(--green)";
+    const priorityColor = priority => priority === "긴급" ? "var(--red)" : priority === "높음" ? "var(--amber)" : "var(--blue)";
     const projectProgress = project => Math.round((project.step - 1) / (steps.length - 1) * 100);
+    const escapeHtml = value => String(value ?? "").replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[char]));
+    const searchable = project => [project.name, project.client, project.owner, project.vendor, project.issue, project.status, project.priority].join(" ").toLowerCase();
+
+    function daysUntil(due) {
+      if (!due) return null;
+      const today = new Date();
+      const base = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+      const target = new Date(`${due}T00:00:00`);
+      return Math.ceil((target - base) / 86400000);
+    }
+
+    function dueText(project) {
+      const days = daysUntil(project.due);
+      if (days === null || Number.isNaN(days)) return "마감 미정";
+      if (days < 0) return `D+${Math.abs(days)}`;
+      if (days === 0) return "D-Day";
+      return `D-${days}`;
+    }
+
+    function nextAction(project) {
+      if (project.nextAction) return project.nextAction;
+      const step = steps[project.step - 1] || steps[0];
+      return `${step.check} 후 ${step.caution}`;
+    }
 
     function readState() {
       try {
@@ -1174,28 +1381,35 @@
 
     function renderProjects() {
       const state = readState();
-      const filtered = state.projects.filter(p => statusFilter === "전체" || p.status === statusFilter);
-      document.getElementById("projectList").innerHTML = filtered.map(project => {
+      const query = projectQuery.trim().toLowerCase();
+      const filtered = state.projects.filter(p => (statusFilter === "전체" || p.status === statusFilter) && (!query || searchable(p).includes(query)));
+      const activeProject = state.projects.find(p => p.id === activeProjectId) || state.projects[0];
+      if (activeProject) activeProjectId = activeProject.id;
+      renderProjectRadar(state.projects);
+      renderProjectDetail(activeProject);
+      document.getElementById("projectList").innerHTML = filtered.length ? filtered.map(project => {
         const phase = phaseOf(project.step);
         const meta = phaseMeta(phase);
         return `<button class="project-card ${project.id === activeProjectId ? "active" : ""}" style="--accent:${meta.color}" data-project="${project.id}" type="button">
           <div class="project-top">
             <div>
-              <div class="project-name">${project.name}</div>
-              <div class="project-meta"><span>${project.owner || "담당 미정"}</span><span>${project.vendor || "협력/PM 미정"}</span><span>${project.due || "마감 미정"}</span></div>
+              <div class="project-name">${escapeHtml(project.name)}</div>
+              <div class="project-meta"><span>${escapeHtml(project.client || "고객사 미정")}</span><span>${escapeHtml(project.owner || "담당 미정")}</span><span>${escapeHtml(project.vendor || "협력/PM 미정")}</span></div>
             </div>
             <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:end">
               <span class="badge" style="background:${statusColor(project.status)}">${project.status}</span>
+              <span class="badge" style="background:${priorityColor(project.priority)}">${project.priority || "보통"}</span>
               <span class="badge" style="background:${meta.color}">${phase}</span>
             </div>
           </div>
-          <div class="project-issue">${project.issue || "등록된 이슈 없음"}</div>
+          <div class="project-issue">${escapeHtml(project.issue || "등록된 이슈 없음")}</div>
+          <div class="project-action"><span>${escapeHtml(nextAction(project))}</span><b>${dueText(project)}</b></div>
           <div>
             <div class="project-meta" style="justify-content:space-between"><span>${project.step}/20 · ${steps[project.step - 1].task}</span><b>${projectProgress(project)}%</b></div>
             <div class="progress-track"><span style="width:${projectProgress(project)}%"></span></div>
           </div>
         </button>`;
-      }).join("");
+      }).join("") : `<div class="empty-state">조건에 맞는 프로젝트가 없습니다. 검색어 또는 상태 필터를 조정해주세요.</div>`;
       document.querySelectorAll("[data-project]").forEach(btn => {
         btn.addEventListener("click", () => {
           activeProjectId = btn.dataset.project;
@@ -1207,13 +1421,60 @@
       renderBoard();
     }
 
+    function renderProjectRadar(projects) {
+      const dueSoon = projects.filter(p => {
+        const d = daysUntil(p.due);
+        return d !== null && d >= 0 && d <= 14;
+      }).length;
+      const riskCount = projects.filter(p => p.status === "위험").length;
+      const attentionCount = projects.filter(p => p.status === "주의").length;
+      const avg = projects.length ? Math.round(projects.reduce((sum, p) => sum + projectProgress(p), 0) / projects.length) : 0;
+      document.getElementById("projectRadar").innerHTML = [
+        ["전체 프로젝트", projects.length],
+        ["위험/주의", `${riskCount}/${attentionCount}`],
+        ["14일 내 마감", dueSoon],
+        ["평균 진행률", `${avg}%`]
+      ].map(row => `<div class="radar-card"><span>${row[0]}</span><b>${row[1]}</b></div>`).join("");
+    }
+
+    function renderProjectDetail(project) {
+      if (!project) {
+        document.getElementById("projectDetailPanel").innerHTML = `<h4>Selected Project</h4><div class="empty-state">등록된 프로젝트가 없습니다.</div>`;
+        return;
+      }
+      const step = steps[project.step - 1] || steps[0];
+      const phase = phaseOf(project.step);
+      const meta = phaseMeta(phase);
+      document.getElementById("projectDetailPanel").innerHTML = `
+        <h4>Selected Project</h4>
+        <div class="detail-title-row">
+          <h3>${escapeHtml(project.name)}</h3>
+          <span class="badge" style="background:${statusColor(project.status)}">${project.status}</span>
+        </div>
+        <div class="detail-pills">
+          <span class="badge" style="background:${meta.color}">${phase}</span>
+          <span class="badge" style="background:${priorityColor(project.priority)}">${project.priority || "보통"}</span>
+          <span class="badge" style="background:var(--navy)">${dueText(project)}</span>
+        </div>
+        <div class="detail-metrics">
+          <div class="detail-metric"><span>고객사/현장</span><b>${escapeHtml(project.client || "미정")}</b></div>
+          <div class="detail-metric"><span>담당자</span><b>${escapeHtml(project.owner || "미정")}</b></div>
+          <div class="detail-metric"><span>협력/PM</span><b>${escapeHtml(project.vendor || "미정")}</b></div>
+          <div class="detail-metric"><span>마감일</span><b>${escapeHtml(project.due || "미정")}</b></div>
+        </div>
+        <div class="next-action"><b>${project.step}. ${escapeHtml(step.task)}</b><br>${escapeHtml(nextAction(project))}</div>
+      `;
+    }
+
     function renderBoard() {
       const state = readState();
+      const query = projectQuery.trim().toLowerCase();
+      const visible = state.projects.filter(p => (statusFilter === "전체" || p.status === statusFilter) && (!query || searchable(p).includes(query)));
       document.getElementById("projectBoard").innerHTML = phases.map(phase => {
-        const items = state.projects.filter(p => phaseOf(p.step) === phase.name);
+        const items = visible.filter(p => phaseOf(p.step) === phase.name);
         return `<div class="lane" style="--accent:${phase.color}">
           <h4>${phase.name}</h4>
-          ${items.map(p => `<div class="lane-item"><b>${p.name}</b><br>${p.step}. ${steps[p.step - 1].task}<br><span style="color:var(--muted)">마감 ${p.due || "-"} · ${p.status}</span></div>`).join("") || `<div style="color:var(--muted);font-size:12px;margin-top:12px">등록 프로젝트 없음</div>`}
+          ${items.map(p => `<div class="lane-item"><b>${escapeHtml(p.name)}</b><br>${p.step}. ${escapeHtml(steps[p.step - 1].task)}<br><span style="color:var(--muted)">${dueText(p)} · ${p.due || "-"} · ${p.status}</span></div>`).join("") || `<div style="color:var(--muted);font-size:12px;margin-top:12px">등록 프로젝트 없음</div>`}
         </div>`;
       }).join("");
     }
@@ -1323,6 +1584,15 @@
         document.querySelectorAll("[data-status]").forEach(b => b.classList.toggle("active", b === btn));
         renderProjects();
       }));
+      document.getElementById("projectSearchInput").addEventListener("input", event => {
+        projectQuery = event.target.value;
+        renderProjects();
+      });
+      document.getElementById("clearSearchBtn").addEventListener("click", () => {
+        projectQuery = "";
+        document.getElementById("projectSearchInput").value = "";
+        renderProjects();
+      });
       document.getElementById("addProjectBtn").addEventListener("click", () => {
         const name = document.getElementById("projectNameInput").value.trim();
         if (!name) return toast("프로젝트명을 입력해주세요.");
@@ -1330,16 +1600,19 @@
         next.projects.unshift({
           id: `${Date.now()}`,
           name,
+          client: document.getElementById("projectClientInput").value.trim(),
           owner: document.getElementById("projectOwnerInput").value.trim(),
           step: Number(document.getElementById("projectStepInput").value),
           due: document.getElementById("projectDueInput").value,
           status: document.getElementById("projectStatusInput").value,
+          priority: document.getElementById("projectPriorityInput").value,
           vendor: document.getElementById("projectVendorInput").value.trim(),
-          issue: document.getElementById("projectIssueInput").value.trim()
+          issue: document.getElementById("projectIssueInput").value.trim(),
+          nextAction: ""
         });
         activeProjectId = next.projects[0].id;
         writeState(next);
-        ["projectNameInput","projectOwnerInput","projectDueInput","projectVendorInput","projectIssueInput"].forEach(id => document.getElementById(id).value = "");
+        ["projectNameInput","projectClientInput","projectOwnerInput","projectDueInput","projectVendorInput","projectIssueInput"].forEach(id => document.getElementById(id).value = "");
         renderAll();
         toast("프로젝트를 추가했습니다.");
       });
