@@ -1,4 +1,9 @@
-{
-  "cleanUrls": true,
-  "trailingSlash": false
+﻿{
+    "framework":  "vite",
+    "buildCommand":  "npm run build",
+    "cleanUrls":  true,
+    "installCommand":  "npm install",
+    "outputDirectory":  "dist",
+    "trailingSlash":  false,
+    "$schema":  "https://openapi.vercel.sh/vercel.json"
 }
