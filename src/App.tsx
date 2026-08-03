@@ -118,8 +118,9 @@ export default function App() {
   };
 
   const template = mailTemplates[mailTemplate];
-  const mailSubject = selectedProject ? template[1].replaceAll("{프로젝트명}", selectedProject.name) : template[1];
-  const mailBody = selectedProject ? `${template[2].replaceAll("{프로젝트명}", selectedProject.name)}\n\n---\n현재 단계: ${selectedProject.step}. ${steps[selectedProject.step - 1].task}\n현재 이슈: ${selectedProject.issue || "등록된 이슈 없음"}\n다음 액션: ${selectedProject.nextAction}` : template[2];
+  const applyProjectName = (value: string) => value.split("{프로젝트명}").join(selectedProject?.name || "프로젝트");
+  const mailSubject = selectedProject ? applyProjectName(template[1]) : template[1];
+  const mailBody = selectedProject ? `${applyProjectName(template[2])}\n\n---\n현재 단계: ${selectedProject.step}. ${steps[selectedProject.step - 1].task}\n현재 이슈: ${selectedProject.issue || "등록된 이슈 없음"}\n다음 액션: ${selectedProject.nextAction}` : template[2];
 
   const openGmail = () => {
     const params = new URLSearchParams({ view: "cm", fs: "1", to: mailTo, cc: mailCc, su: mailSubject, body: mailBody });
@@ -178,3 +179,4 @@ export default function App() {
     </main>
   );
 }
+
