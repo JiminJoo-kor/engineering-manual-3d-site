@@ -1,4 +1,4 @@
-﻿export type PhaseName = "수주 전" | "수주 후" | "설계·제작" | "설치" | "테스트" | "양산";
+export type PhaseName = "수주 전" | "수주 후" | "설계·제작" | "설치" | "테스트" | "양산";
 export type ProjectStatus = "정상" | "주의" | "위험";
 export type ProjectPriority = "보통" | "높음" | "긴급";
 export type ViewKey = "home" | "projects" | "calendar" | "manual" | "documents" | "mail" | "sources";

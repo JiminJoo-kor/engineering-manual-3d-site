@@ -1,4 +1,4 @@
-﻿import type { Phase, ProcessStep, Project } from "./types";
+import type { Phase, ProcessStep, Project } from "./types";
 
 export const phases: Phase[] = [
   { name: "수주 전", color: "#4f8cff", three: 0x4f8cff },
