@@ -218,3 +218,25 @@ button.active { background: linear-gradient(135deg, #13233a, #2b6cff 48%, #20d49
   .dashboard-grid .wide { grid-column: auto; }
   .project-list, .step-list { max-height: none; overflow: visible; padding-right: 0; }
 }
+
+.agent-chat-panel { gap: 10px; max-height: calc(100vh - 96px); }
+.agent-title { display: flex; justify-content: space-between; gap: 10px; align-items: flex-start; }
+.agent-title h3 { margin-bottom: 3px; }
+.agent-title span { border: 1px solid rgba(103,220,255,.28); border-radius: 999px; padding: 6px 9px; color: var(--cyan); font-size: 12px; font-weight: 900; background: rgba(103,220,255,.08); }
+.agent-provider { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.agent-provider button { border-radius: 12px; padding: 9px 10px; }
+.quick-prompts { display: grid; grid-template-columns: 1fr; gap: 7px; }
+.quick-prompts button { border-radius: 12px; padding: 9px 10px; text-align: left; color: var(--muted); font-size: 13px; }
+.quick-prompts button:hover, .quick-prompts button:focus { color: var(--text); }
+.agent-chat-log { display: grid; gap: 9px; max-height: min(36vh, 360px); overflow: auto; padding-right: 4px; scrollbar-width: thin; scrollbar-color: rgba(103,220,255,.44) rgba(255,255,255,.06); }
+.agent-message { border: 1px solid var(--line); border-radius: 14px; padding: 10px; background: rgba(255,255,255,.055); }
+.agent-message.user { border-color: rgba(91,140,255,.38); background: rgba(91,140,255,.11); }
+.agent-message.assistant { border-color: rgba(103,220,255,.25); }
+.agent-message b { display: block; margin-bottom: 5px; color: var(--cyan); font-size: 12px; }
+.agent-message p { margin: 0; white-space: pre-wrap; color: var(--muted); font-size: 13px; line-height: 1.55; }
+.agent-input-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: end; }
+.agent-input-row textarea { min-height: 86px; max-height: 150px; }
+.agent-input-row button { border-radius: 14px; min-width: 72px; height: 44px; }
+.agent-input-row button:disabled, .quick-prompts button:disabled { cursor: not-allowed; opacity: .48; transform: none; }
+@media (max-width: 1280px) { .agent-chat-log { max-height: 320px; } }
+@media (max-width: 760px) { .agent-input-row { grid-template-columns: 1fr; } }

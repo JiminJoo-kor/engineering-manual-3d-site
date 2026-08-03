@@ -16,6 +16,8 @@ const views: Array<{ key: ViewKey; label: string; hint: string }> = [
 
 const statusOrder: Array<ProjectStatus | "전체"> = ["전체", "정상", "주의", "위험"];
 const priorityOrder: ProjectPriority[] = ["보통", "높음", "긴급"];
+type AiProvider = "openai" | "gemini";
+interface AgentMessage { role: "user" | "assistant"; content: string; provider?: AiProvider }
 
 const phaseOf = (stepId: number) => steps.find((step) => step.id === Number(stepId))?.phase ?? "수주 전";
 const phaseMeta = (stepId: number) => phases.find((phase) => phase.name === phaseOf(stepId)) ?? phases[0];
@@ -72,6 +74,10 @@ export default function App() {
   const [mailTemplate, setMailTemplate] = useState(0);
   const [mailTo, setMailTo] = useState("");
   const [mailCc, setMailCc] = useState("");
+  const [aiProvider, setAiProvider] = useState<AiProvider>("openai");
+  const [agentInput, setAgentInput] = useState("");
+  const [agentLoading, setAgentLoading] = useState(false);
+  const [agentMessages, setAgentMessages] = useState<AgentMessage[]>([{ role: "assistant", content: "프로젝트를 선택하고 질문하면 현재 단계, 이슈, 다음 액션을 함께 분석합니다.", provider: "openai" }]);
 
   useEffect(() => localStorage.setItem(stateKey, JSON.stringify(state)), [state]);
   useEffect(() => history.replaceState(null, "", `#${view}`), [view]);
@@ -141,6 +147,45 @@ export default function App() {
     window.open(`https://mail.google.com/mail/?${params.toString()}`, "_blank", "noopener");
   };
 
+  const projectContext = () => selectedProject ? [
+    `프로젝트명: ${selectedProject.name}`,
+    `고객사: ${selectedProject.client || "미정"}`,
+    `담당자: ${selectedProject.owner || "미정"}`,
+    `현재 단계: ${selectedProject.step}. ${stepAt(selectedProject.step).task}`,
+    `진행률: ${progressOf(selectedProject)}%`,
+    `상태: ${selectedProject.status}`,
+    `우선순위: ${selectedProject.priority}`,
+    `마감: ${selectedProject.due || "미정"}`,
+    `현재 이슈: ${selectedProject.issue || "없음"}`,
+    `다음 액션: ${selectedProject.nextAction}`
+  ].join("\n") : "선택된 프로젝트 없음";
+
+  const sendAgentPrompt = async (preset?: string) => {
+    const question = (preset ?? agentInput).trim();
+    if (!question || agentLoading) return;
+    const provider = aiProvider;
+    setAgentMessages((current) => [...current, { role: "user", content: question, provider }]);
+    setAgentInput("");
+    setAgentLoading(true);
+    try {
+      const response = await fetch(`/api/${provider}-chat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question, context: projectContext() })
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data?.error || "AI 응답을 가져오지 못했습니다.");
+      setAgentMessages((current) => [...current, { role: "assistant", content: data.answer || "응답 내용이 비어 있습니다.", provider }]);
+    } catch (error) {
+      setAgentMessages((current) => [...current, { role: "assistant", content: error instanceof Error ? error.message : "AI 연결 중 오류가 발생했습니다.", provider }]);
+    } finally {
+      setAgentLoading(false);
+    }
+  };
+
+  const quickAgentPrompts = ["현재 프로젝트 리스크 분석", "다음 액션 5개 정리", "협력업체 메일 초안", "FAT 전 체크리스트", "회의 보고용 요약"];
+
+
   return (
     <main className="app">
       <header className="topbar">
@@ -202,11 +247,15 @@ export default function App() {
           {view === "sources" && <div className="glass-panel"><h2>원본 반영 확인</h2><p>Notion 업무 흐름, 엑셀 업무 프로세스, 프로젝트 관리 요구사항을 프로젝트 관제 화면과 단계별 체크 흐름에 반영했습니다.</p></div>}
         </section>
 
-        <aside className="agent-panel">
-          <h3>AI Agent</h3>
-          <button onClick={() => window.open("https://chatgpt.com/", "_blank")}>GPT 열기</button>
-          <button onClick={() => window.open("https://gemini.google.com/app", "_blank")}>Gemini 열기</button>
-          <textarea readOnly value={selectedProject ? `${selectedProject.name}\n현재 단계: ${selectedProject.step}. ${stepAt(selectedProject.step).task}\n이슈: ${selectedProject.issue || "없음"}\n다음 액션과 리스크를 정리해줘.` : "프로젝트를 선택하면 질문 초안이 준비됩니다."} />
+        <aside className="agent-panel agent-chat-panel">
+          <div className="agent-title"><div><h3>AI Agent Group</h3><small>프로젝트 맥락 자동 첨부</small></div><span>{aiProvider === "openai" ? "GPT" : "Gemini"}</span></div>
+          <div className="agent-provider" role="tablist" aria-label="AI provider">
+            <button className={aiProvider === "openai" ? "active" : ""} onClick={() => setAiProvider("openai")}>OpenAI</button>
+            <button className={aiProvider === "gemini" ? "active" : ""} onClick={() => setAiProvider("gemini")}>Gemini</button>
+          </div>
+          <div className="quick-prompts">{quickAgentPrompts.map((prompt) => <button key={prompt} onClick={() => sendAgentPrompt(prompt)} disabled={agentLoading}>{prompt}</button>)}</div>
+          <div className="agent-chat-log">{agentMessages.map((message, index) => <div key={`${message.role}-${index}`} className={`agent-message ${message.role}`}><b>{message.role === "user" ? "You" : message.provider === "gemini" ? "Gemini" : "OpenAI"}</b><p>{message.content}</p></div>)}{agentLoading && <div className="agent-message assistant"><b>{aiProvider === "openai" ? "OpenAI" : "Gemini"}</b><p>분석 중입니다...</p></div>}</div>
+          <div className="agent-input-row"><textarea value={agentInput} onChange={(event) => setAgentInput(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && (event.ctrlKey || event.metaKey)) sendAgentPrompt(); }} placeholder="질문 입력: 현재 프로젝트 리스크, 메일 초안, 다음 액션 등" /><button onClick={() => sendAgentPrompt()} disabled={agentLoading || !agentInput.trim()}>전송</button></div>
         </aside>
       </div>
     </main>
