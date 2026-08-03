@@ -79,6 +79,9 @@ export default function App() {
   const [agentLoading, setAgentLoading] = useState(false);
   const [agentMessages, setAgentMessages] = useState<AgentMessage[]>([{ role: "assistant", content: "프로젝트를 선택하고 질문하면 현재 단계, 이슈, 다음 액션을 함께 분석합니다.", provider: "openai" }]);
 
+  const [personalOpenAiKey, setPersonalOpenAiKey] = useState("");
+  const [personalGeminiKey, setPersonalGeminiKey] = useState("");
+  const activePersonalKey = aiProvider === "openai" ? personalOpenAiKey.trim() : personalGeminiKey.trim();
   useEffect(() => localStorage.setItem(stateKey, JSON.stringify(state)), [state]);
   useEffect(() => history.replaceState(null, "", `#${view}`), [view]);
 
