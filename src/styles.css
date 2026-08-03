@@ -266,3 +266,12 @@ button.active { background: linear-gradient(135deg, #13233a, #2b6cff 48%, #20d49
 .chat-composer button { width: 100%; min-width: 0; height: 40px; padding: 8px 12px; border-radius: 13px; font-size: 13px; }
 @media (max-width: 1180px) { .workbench { grid-template-columns: 76px minmax(0, 1fr); } .chat-window { grid-column: 1 / -1; min-width: 0; height: auto; max-height: none; } .chat-body { max-height: 420px; } }
 @media (max-width: 680px) { .chat-window { padding: 10px; } .chat-window-header { align-items: center; } .chat-chips button { min-width: 112px; } .agent-message.bubble { width: 100%; } }
+
+/* Personal AI connection */
+.personal-ai-card { display: grid; gap: 8px; padding: 11px 12px; border: 1px solid rgba(103, 220, 255, .22); border-radius: 14px; background: linear-gradient(180deg, rgba(18, 35, 54, .78), rgba(9, 19, 32, .82)); }
+.personal-ai-card div { display: grid; gap: 3px; }
+.personal-ai-card b { font-size: 13px; color: var(--text); }
+.personal-ai-card small { color: var(--muted); font-size: 11px; line-height: 1.45; }
+.personal-ai-card input { width: 100%; height: 36px; border-radius: 11px; border: 1px solid rgba(103, 220, 255, .2); background: rgba(5, 13, 23, .72); color: var(--text); padding: 0 10px; font-size: 12px; box-sizing: border-box; outline: none; }
+.personal-ai-card input:focus { border-color: rgba(103, 220, 255, .55); box-shadow: 0 0 0 3px rgba(103, 220, 255, .1); }
+.privacy-note { color: rgba(160, 178, 199, .82) !important; }

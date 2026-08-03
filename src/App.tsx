@@ -171,7 +171,7 @@ export default function App() {
       const response = await fetch(`/api/${provider}-chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, context: projectContext() })
+        body: JSON.stringify({ question, context: projectContext(), apiKey: activePersonalKey || undefined })
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data?.error || "AI 응답을 가져오지 못했습니다.");
@@ -258,6 +258,11 @@ export default function App() {
           <div className="agent-provider segmented-control" role="tablist" aria-label="AI provider">
             <button className={aiProvider === "openai" ? "active" : ""} onClick={() => setAiProvider("openai")}>OpenAI</button>
             <button className={aiProvider === "gemini" ? "active" : ""} onClick={() => setAiProvider("gemini")}>Gemini</button>
+          </div>
+          <div className="personal-ai-card">
+            <div><b>媛쒖씤 AI ?곌껐</b><small>{activePersonalKey ? "?꾩옱 ?좏깮??AI媛 媛쒖씤 ?ㅻ줈 ?곌껐?⑸땲??" : "媛쒖씤 ?ㅺ? ?놁쑝硫??ъ씠??湲곕낯 ?ㅻ? ?ъ슜?⑸땲??"}</small></div>
+            {aiProvider === "openai" ? <input type="password" value={personalOpenAiKey} onChange={(event) => setPersonalOpenAiKey(event.target.value)} placeholder="OpenAI API Key ?낅젰" autoComplete="off" /> : <input type="password" value={personalGeminiKey} onChange={(event) => setPersonalGeminiKey(event.target.value)} placeholder="Gemini API Key ?낅젰" autoComplete="off" />}
+            <small className="privacy-note">?ㅻ뒗 ??ν븯吏 ?딄퀬 ?꾩옱 ?붾㈃?먯꽌留??ъ슜?⑸땲??</small>
           </div>
           <div className="chat-context-card">
             <b>{selectedProject?.name || "프로젝트 미선택"}</b>
